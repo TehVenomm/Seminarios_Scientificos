@@ -1,2 +1,3 @@
-# sem_cie
+# Seminarios Cientificos
 
+Projeto em JUnit5
