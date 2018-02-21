@@ -9,7 +9,14 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary.Failure;
 
+import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoCheckInSobreInscricao;
+import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoComprarSobreInscricao;
+import br.com.mauda.seminario.cientificos.junit.tests.TesteAreaCientifica;
+import br.com.mauda.seminario.cientificos.junit.tests.TesteCurso;
+import br.com.mauda.seminario.cientificos.junit.tests.TesteEstudante;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteInstituicao;
+import br.com.mauda.seminario.cientificos.junit.tests.TesteProfessor;
+import br.com.mauda.seminario.cientificos.junit.tests.TesteSeminario;
 
 /**
  * Essa classe realizara os testes de uma so vez, em uma determinada ordem.<br/>
@@ -26,7 +33,15 @@ public class RunnerTestes {
     @Test
     public void execucao() {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
-            .selectors(DiscoverySelectors.selectClass(TesteInstituicao.class))
+            .selectors(
+            	DiscoverySelectors.selectClass(TesteAreaCientifica.class),
+                DiscoverySelectors.selectClass(TesteCurso.class),
+                DiscoverySelectors.selectClass(TesteInstituicao.class),
+                DiscoverySelectors.selectClass(TesteEstudante.class),
+                DiscoverySelectors.selectClass(TesteProfessor.class),
+                DiscoverySelectors.selectClass(TesteSeminario.class),
+                DiscoverySelectors.selectClass(TesteAcaoComprarSobreInscricao.class),
+                DiscoverySelectors.selectClass(TesteAcaoCheckInSobreInscricao.class))
             .build();
         Launcher launcher = LauncherFactory.create();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
