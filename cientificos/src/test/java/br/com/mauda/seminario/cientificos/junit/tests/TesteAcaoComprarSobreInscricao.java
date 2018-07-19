@@ -20,7 +20,7 @@ public class TesteAcaoComprarSobreInscricao {
 
     @Tag("modelTest")
     @DisplayName("Compra de uma inscricao para o Seminario")
-    @ParameterizedTest
+    @ParameterizedTest(name = "Compra da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoComprar.class)
     public void comprarInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO object) {
         // Verifica se os atributos estao preenchidos

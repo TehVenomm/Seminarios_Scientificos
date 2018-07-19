@@ -20,7 +20,7 @@ public class TesteAcaoCheckInSobreInscricao {
 
     @Tag("modelTest")
     @DisplayName("CheckIn de uma inscricao para o Seminario")
-    @ParameterizedTest
+    @ParameterizedTest(name = "CheckIn da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCheckIn.class)
     public void checkInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO object) {
         // Verifica se os atributos estao preenchidos
