@@ -6,28 +6,34 @@ import static br.com.mauda.seminario.cientificos.junit.massa.MassaAreaCientifica
 
 public enum MassaCurso {
 
-    CURSO_ANALISE_SISTEMAS("Analise de Sistemas", AC_TECNOLOGIAS_GESTAO_INFORMACAO),
-    CURSO_CIENCIA_COMPUTACAO("Ciencia da Computacao", AC_TECNOLOGIAS_GESTAO_INFORMACAO),
-    CURSO_ENGENHARIA_COMPUTACAO("Engenharia da Computacao", AC_TECNOLOGIAS_GESTAO_INFORMACAO),
+    CURSO_ANALISE_SISTEMAS(1L, "Analise de Sistemas", AC_TECNOLOGIAS_GESTAO_INFORMACAO),
+    CURSO_CIENCIA_COMPUTACAO(2L, "Ciencia da Computacao", AC_TECNOLOGIAS_GESTAO_INFORMACAO),
+    CURSO_ENGENHARIA_COMPUTACAO(3L, "Engenharia da Computacao", AC_TECNOLOGIAS_GESTAO_INFORMACAO),
 
-    CURSO_CALCULO("Calculo", AC_MATEMATICA),
-    CURSO_DISCRETA("Matematica Discreta", AC_MATEMATICA),
-    CURSO_FINANCEIRA("Matematica Financeira", AC_MATEMATICA),
+    CURSO_CALCULO(4L, "Calculo", AC_MATEMATICA),
+    CURSO_DISCRETA(5L, "Matematica Discreta", AC_MATEMATICA),
+    CURSO_FINANCEIRA(6L, "Matematica Financeira", AC_MATEMATICA),
 
-    CURSO_INGLES("Ingles", AC_LINGUAS),
-    CURSO_FRANCES("Frances", AC_LINGUAS),
-    CURSO_PORTUGUES("Portugues", AC_LINGUAS);
+    CURSO_INGLES(7L, "Ingles", AC_LINGUAS),
+    CURSO_FRANCES(8L, "Frances", AC_LINGUAS),
+    CURSO_PORTUGUES(9L, "Portugues", AC_LINGUAS);
 
+    private Long id;
     private MassaAreaCientifica areaCientifica;
     private String nome;
 
-    private MassaCurso(String nome, MassaAreaCientifica areaCientifica) {
+    private MassaCurso(Long id, String nome, MassaAreaCientifica areaCientifica) {
+        this.id = id;
         this.nome = nome;
         this.areaCientifica = areaCientifica;
     }
 
     public MassaAreaCientifica getAreaCientifica() {
         return this.areaCientifica;
+    }
+
+    public Long getId() {
+        return this.id;
     }
 
     public String getNome() {

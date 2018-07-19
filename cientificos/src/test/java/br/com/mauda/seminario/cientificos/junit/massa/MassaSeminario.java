@@ -17,6 +17,7 @@ import org.apache.commons.lang3.time.DateUtils;
 public enum MassaSeminario {
 
     SEMINARIO_TECNOLOGIAS_GESTAO_INFORMACAO(
+        1L,
         "Seminario de Tecnologias de Gestao da Informacao",
         DateUtils.addDays(new Date(), 1),
         "Seminario Especializado em Tecnologias de Gestao da Informacao",
@@ -26,6 +27,7 @@ public enum MassaSeminario {
         AC_TECNOLOGIAS_GESTAO_INFORMACAO),
 
     SEMINARIO_JAVA(
+        2L,
         "Seminario de Java",
         DateUtils.addDays(new Date(), 2),
         "Seminario Especializado na Linguagem Java",
@@ -35,6 +37,7 @@ public enum MassaSeminario {
         AC_TECNOLOGIAS_GESTAO_INFORMACAO),
 
     SEMINARIO_MATEMATICA_DISCRETA(
+        3L,
         "Seminario de Discreta, a Matematica",
         DateUtils.addDays(new Date(), 3),
         "Seminario de Matematica Discreta",
@@ -44,6 +47,7 @@ public enum MassaSeminario {
         AC_MATEMATICA),
 
     SEMINARIO_MATEMATICA(
+        4L,
         "Seminario de Matematica",
         DateUtils.addDays(new Date(), 4),
         "Seminario Especializado em Matematica",
@@ -53,6 +57,7 @@ public enum MassaSeminario {
         AC_MATEMATICA),
 
     SEMINARIO_LINGUAS(
+        5L,
         "Seminario de Linguas",
         DateUtils.addDays(new Date(), 5),
         "Seminario Especializado em Linguas",
@@ -62,6 +67,7 @@ public enum MassaSeminario {
         AC_LINGUAS),
 
     SEMINARIO_INGLES(
+        6L,
         "Seminario de Lingua Inglesa",
         DateUtils.addDays(new Date(), 6),
         "Seminario Especializado em Lingua Inglesa",
@@ -70,6 +76,7 @@ public enum MassaSeminario {
         PROFESSOR_06,
         AC_LINGUAS);
 
+    private Long id;
     private MassaAreaCientifica areaCientifica;
     private Date data;
     private String descricao;
@@ -78,9 +85,10 @@ public enum MassaSeminario {
     private int qtdInscricoes;
     private String titulo;
 
-    private MassaSeminario(String titulo, Date data, String descricao, Boolean mesaRedonda,
-        int qtdInscricoes, MassaProfessor professor,
+    private MassaSeminario(Long id, String titulo, Date data, String descricao, Boolean mesaRedonda, int qtdInscricoes, MassaProfessor professor,
         MassaAreaCientifica areaCientifica) {
+
+        this.id = id;
         this.areaCientifica = areaCientifica;
         this.data = data;
         this.descricao = descricao;
@@ -88,6 +96,10 @@ public enum MassaSeminario {
         this.professor = professor;
         this.qtdInscricoes = qtdInscricoes;
         this.titulo = titulo;
+    }
+
+    public Long getId() {
+        return this.id;
     }
 
     public MassaAreaCientifica getAreaCientifica() {

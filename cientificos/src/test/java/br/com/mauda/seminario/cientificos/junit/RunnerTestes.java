@@ -34,7 +34,7 @@ public class RunnerTestes {
     public void execucao() {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
             .selectors(
-            	DiscoverySelectors.selectClass(TesteAreaCientifica.class),
+                DiscoverySelectors.selectClass(TesteAreaCientifica.class),
                 DiscoverySelectors.selectClass(TesteCurso.class),
                 DiscoverySelectors.selectClass(TesteInstituicao.class),
                 DiscoverySelectors.selectClass(TesteEstudante.class),
@@ -48,10 +48,11 @@ public class RunnerTestes {
         launcher.registerTestExecutionListeners(listener);
         launcher.execute(request, listener);
         for (Failure fail : listener.getSummary().getFailures()) {
-            System.out.println("#######################################\nFalha:");
-            System.out.println(fail.getTestIdentifier());
-            System.out.println(fail.getException().getMessage());
-            System.out.println(fail.getException().getCause());
+            System.out.println("#######################################");
+            System.out.println("Falha no Teste: " + fail.getTestIdentifier().getDisplayName());
+            System.out.println("Informacoes detalhadas: " + fail.getTestIdentifier().getSource().toString());
+            System.out.println("Mensagem de Erro: " + fail.getException().getMessage());
+            System.out.println("stackTrace: \n" + fail.getException().getCause());
         }
         System.out.println("###################################################");
         System.out.println("Quantidade de Testes executados: \t\t" + listener.getSummary().getTestsStartedCount());

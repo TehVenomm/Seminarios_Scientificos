@@ -47,12 +47,4 @@ public class ProfessorConverter implements ArgumentConverter {
         professor.setTelefone(enumm.getTelefone());
         professor.setSalario(enumm.getSalario());
     }
-
-    public void update(Professor professor, String codigo) {
-        professor.setEmail(codigo + professor.getEmail());
-        professor.setNome(codigo + professor.getNome());
-        professor.setTelefone(codigo + professor.getTelefone());
-        professor.setSalario(1000 + professor.getSalario());
-    }
-
 }

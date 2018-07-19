@@ -42,8 +42,4 @@ public class AreaCientificaConverter implements ArgumentConverter {
     public void update(AreaCientifica area, MassaAreaCientifica enumm) {
         area.setNome(enumm.getNome());
     }
-
-    public void update(AreaCientifica area, String codigo) {
-        area.setNome(codigo + area.getNome());
-    }
 }

@@ -11,7 +11,6 @@ import br.com.mauda.seminario.cientificos.junit.converter.ProfessorConverter;
 import br.com.mauda.seminario.cientificos.junit.executable.ProfessorExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaProfessor;
 import br.com.mauda.seminario.cientificos.model.Professor;
-import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
 public class TesteProfessor {
 
@@ -19,24 +18,9 @@ public class TesteProfessor {
 
     @Tag("modelTest")
     @DisplayName("Criacao de um Professor")
-    @ParameterizedTest
+    @ParameterizedTest(name = "Criacao do Professor [{arguments}]")
     @EnumSource(MassaProfessor.class)
     public void criar(@ConvertWith(ProfessorConverter.class) Professor object) {
-        // Verifica se os atributos estao preenchidos corretamente
-        Assertions.assertAll(new ProfessorExecutable(object));
-    }
-
-    @Tag("modelTest")
-    @DisplayName("Atualizacao dos atributos de um Professor")
-    @ParameterizedTest
-    @EnumSource(MassaProfessor.class)
-    public void atualizar(@ConvertWith(ProfessorConverter.class) Professor object) {
-        // Cria o objeto
-        this.criar(object);
-
-        // Atualiza as informacoes de um objeto
-        this.converter.update(object, EnumUtils.getInstanceRandomly(MassaProfessor.class));
-
         // Verifica se os atributos estao preenchidos corretamente
         Assertions.assertAll(new ProfessorExecutable(object));
     }

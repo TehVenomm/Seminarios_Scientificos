@@ -1,6 +1,5 @@
 package br.com.mauda.seminario.cientificos.junit.converter;
 
-import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.ArgumentConverter;
@@ -55,11 +54,4 @@ public class SeminarioConverter implements ArgumentConverter {
         seminario.setMesaRedonda(enumm.getMesaRedonda());
         seminario.setTitulo(enumm.getTitulo());
     }
-
-    public void update(Seminario seminario, String codigo) {
-        seminario.setData(DateUtils.addDays(seminario.getData(), 10));
-        seminario.setDescricao(codigo + seminario.getDescricao());
-        seminario.setTitulo(codigo + seminario.getTitulo());
-    }
-
 }

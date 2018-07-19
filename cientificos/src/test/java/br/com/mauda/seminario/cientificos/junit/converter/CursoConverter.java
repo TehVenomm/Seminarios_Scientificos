@@ -45,8 +45,4 @@ public class CursoConverter implements ArgumentConverter {
     public void update(Curso curso, MassaCurso enumm) {
         curso.setNome(enumm.getNome());
     }
-
-    public void update(Curso curso, String codigo) {
-        curso.setNome(codigo + curso.getNome());
-    }
 }

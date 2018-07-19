@@ -9,7 +9,7 @@ import br.com.mauda.seminario.cientificos.model.Curso;
 
 public class CursoExecutable implements Executable {
 
-    private Curso curso, cursoBD;
+    private Curso curso;
     private MassaCurso cursoEnum;
 
     public CursoExecutable(Curso curso) {
@@ -19,11 +19,6 @@ public class CursoExecutable implements Executable {
     public CursoExecutable(Curso curso, MassaCurso enumm) {
         this(curso);
         this.cursoEnum = enumm;
-    }
-
-    public CursoExecutable(Curso curso, Curso cursoBD) {
-        this(curso);
-        this.cursoBD = cursoBD;
     }
 
     public void basicVerification(Curso curso) throws Throwable {
@@ -48,14 +43,6 @@ public class CursoExecutable implements Executable {
 
             Assertions.assertAll(new AreaCientificaExecutable(this.curso.getAreaCientifica(), this.cursoEnum.getAreaCientifica()));
             return;
-        }
-
-        if (this.cursoBD != null) {
-            this.basicVerification(this.cursoBD);
-            Assertions.assertEquals(this.cursoBD.getId(), this.curso.getId(), "Ids dos cursos nao sao iguais");
-            Assertions.assertEquals(this.cursoBD.getNome(), this.curso.getNome(), "Nomes dos cursos nao sao iguais");
-
-            Assertions.assertAll(new AreaCientificaExecutable(this.curso.getAreaCientifica(), this.cursoBD.getAreaCientifica()));
         }
     }
 }

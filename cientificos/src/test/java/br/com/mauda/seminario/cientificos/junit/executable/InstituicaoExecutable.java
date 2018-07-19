@@ -9,7 +9,7 @@ import br.com.mauda.seminario.cientificos.model.Instituicao;
 
 public class InstituicaoExecutable implements Executable {
 
-    private Instituicao instituicao, instituicaoBD;
+    private Instituicao instituicao;
     private MassaInstituicao instituicaoEnum;
 
     public InstituicaoExecutable(Instituicao instituicao) {
@@ -19,11 +19,6 @@ public class InstituicaoExecutable implements Executable {
     public InstituicaoExecutable(Instituicao instituicao, MassaInstituicao enumm) {
         this(instituicao);
         this.instituicaoEnum = enumm;
-    }
-
-    public InstituicaoExecutable(Instituicao instituicao, Instituicao instituicaoBD) {
-        this(instituicao);
-        this.instituicaoBD = instituicaoBD;
     }
 
     public void basicVerification(Instituicao instituicao) throws Throwable {
@@ -46,16 +41,6 @@ public class InstituicaoExecutable implements Executable {
             Assertions.assertEquals(this.instituicaoEnum.getPais(), this.instituicao.getPais(), "Paises das instituicoes nao sao iguais");
             Assertions.assertEquals(this.instituicaoEnum.getSigla(), this.instituicao.getSigla(), "Siglas das instituicoes nao sao iguais");
             return;
-        }
-
-        if (this.instituicaoBD != null) {
-            this.basicVerification(this.instituicaoBD);
-            Assertions.assertEquals(this.instituicaoBD.getCidade(), this.instituicao.getCidade(), "Cidades das instituicoes nao sao iguais");
-            Assertions.assertEquals(this.instituicaoBD.getEstado(), this.instituicao.getEstado(), "Estados das instituicoes nao sao iguais");
-            Assertions.assertEquals(this.instituicaoBD.getId(), this.instituicao.getId(), "Ids das instituicoes nao sao iguais");
-            Assertions.assertEquals(this.instituicaoBD.getNome(), this.instituicao.getNome(), "Nomes das instituicoes nao sao iguais");
-            Assertions.assertEquals(this.instituicaoBD.getPais(), this.instituicao.getPais(), "Paises das instituicoes nao sao iguais");
-            Assertions.assertEquals(this.instituicaoBD.getSigla(), this.instituicao.getSigla(), "Siglas das instituicoes nao sao iguais");
         }
     }
 }

@@ -47,10 +47,4 @@ public class EstudanteConverter implements ArgumentConverter {
         estudante.setEmail(enumm.getEmail());
         estudante.setTelefone(enumm.getTelefone());
     }
-
-    public void update(Estudante estudante, String codigo) {
-        estudante.setEmail(codigo + estudante.getEmail());
-        estudante.setNome(codigo + estudante.getNome());
-        estudante.setTelefone(codigo + estudante.getTelefone());
-    }
 }

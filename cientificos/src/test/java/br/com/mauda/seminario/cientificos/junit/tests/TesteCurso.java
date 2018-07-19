@@ -11,32 +11,14 @@ import br.com.mauda.seminario.cientificos.junit.converter.CursoConverter;
 import br.com.mauda.seminario.cientificos.junit.executable.CursoExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaCurso;
 import br.com.mauda.seminario.cientificos.model.Curso;
-import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
 public class TesteCurso {
 
-    protected CursoConverter converter = new CursoConverter();
-
     @Tag("modelTest")
     @DisplayName("Criacao de um Curso")
-    @ParameterizedTest
+    @ParameterizedTest(name = "Criacao do Curso [{arguments}]")
     @EnumSource(MassaCurso.class)
     public void criar(@ConvertWith(CursoConverter.class) Curso object) {
-        // Verifica se os atributos estao preenchidos corretamente
-        Assertions.assertAll(new CursoExecutable(object));
-    }
-
-    @Tag("modelTest")
-    @DisplayName("Atualizacao dos atributos de um Curso")
-    @ParameterizedTest
-    @EnumSource(MassaCurso.class)
-    public void atualizar(@ConvertWith(CursoConverter.class) Curso object) {
-        // Cria o objeto
-        this.criar(object);
-
-        // Atualiza as informacoes de um objeto
-        this.converter.update(object, EnumUtils.getInstanceRandomly(MassaCurso.class));
-
         // Verifica se os atributos estao preenchidos corretamente
         Assertions.assertAll(new CursoExecutable(object));
     }
