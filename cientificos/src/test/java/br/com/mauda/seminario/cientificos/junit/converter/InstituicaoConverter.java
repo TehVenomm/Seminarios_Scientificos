@@ -40,13 +40,4 @@ public class InstituicaoConverter implements ArgumentConverter {
         instituicao.setPais(enumm.getPais());
         instituicao.setSigla(enumm.getSigla());
     }
-
-    public void update(Instituicao instituicao, String codigo) {
-        instituicao.setNome(codigo + instituicao.getNome());
-        instituicao.setCidade(codigo + instituicao.getCidade());
-        instituicao.setEstado(codigo + instituicao.getEstado());
-        instituicao.setNome(codigo + instituicao.getNome());
-        instituicao.setPais(codigo + instituicao.getPais());
-        instituicao.setSigla(codigo + instituicao.getSigla());
-    }
 }
