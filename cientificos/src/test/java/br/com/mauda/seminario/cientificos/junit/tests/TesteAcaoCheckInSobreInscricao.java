@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.InscricaoBC;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+import br.com.mauda.seminario.cientificos.junit.converter.dao.AcaoInscricaoDTODAOConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.dto.AcaoInscricaoDTOConverter;
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
 import br.com.mauda.seminario.cientificos.junit.executable.EstudanteExecutable;
@@ -33,11 +34,11 @@ public class TesteAcaoCheckInSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoComprar.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @DisplayName("CheckIn de uma inscricao para o Seminario")
     @ParameterizedTest(name = "CheckIn da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCheckIn.class)
-    public void checkInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO object) {
+    public void checkInscricao(@ConvertWith(AcaoInscricaoDTODAOConverter.class) AcaoInscricaoDTO object) {
         // Verifica se os atributos estao preenchidos
         Assertions.assertAll(new SeminarioExecutable(object.getSeminario()));
 
@@ -52,25 +53,17 @@ public class TesteAcaoCheckInSobreInscricao {
         // Verifica se os atributos estao preenchidos
         Assertions.assertAll(new InscricaoExecutable(inscricao));
 
-        // Compra a inscricao pro seminario
-        this.bc.comprar(inscricao, object.getEstudante(), object.getDireitoMaterial());
-
-        // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new InscricaoExecutable(inscricao));
-
-        // Verifica se a situacao da inscricao ficou como comprado
-        Assertions.assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO);
-
         // Realiza o check in da inscricao pro seminario
         this.bc.realizarCheckIn(inscricao);
 
-        // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new InscricaoExecutable(inscricao));
-
         // Verifica se a situacao da inscricao ficou como comprado
         Assertions.assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.CHECKIN);
+
+        // Verifica se os atributos estao preenchidos
+        Assertions.assertAll(new InscricaoExecutable(inscricao));
     }
 
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("CheckIn com inscricao nula")
     public void validarCheckInComInscricaoNula() {
@@ -78,6 +71,7 @@ public class TesteAcaoCheckInSobreInscricao {
         Assertions.assertEquals("ER0040", exception.getMessage());
     }
 
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("CheckIn com situacao da inscricao diferente de Disponivel")
     public void validarCheckInComSituacaoInscricaoNaoDisponivel() {

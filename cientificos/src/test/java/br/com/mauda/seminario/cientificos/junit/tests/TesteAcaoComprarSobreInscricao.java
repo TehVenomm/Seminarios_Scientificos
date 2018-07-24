@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.InscricaoBC;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+import br.com.mauda.seminario.cientificos.junit.converter.dao.AcaoInscricaoDTODAOConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.dto.AcaoInscricaoDTOConverter;
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
 import br.com.mauda.seminario.cientificos.junit.executable.EstudanteExecutable;
@@ -32,11 +33,11 @@ public class TesteAcaoComprarSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoComprar.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @DisplayName("Compra de uma inscricao para o Seminario")
     @ParameterizedTest(name = "Compra da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoComprar.class)
-    public void comprarInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO object) {
+    public void comprarInscricao(@ConvertWith(AcaoInscricaoDTODAOConverter.class) AcaoInscricaoDTO object) {
         // Verifica se os atributos estao preenchidos
         Assertions.assertAll(new SeminarioExecutable(object.getSeminario()));
 
@@ -54,14 +55,14 @@ public class TesteAcaoComprarSobreInscricao {
         // Compra a inscricao pro seminario
         this.bc.comprar(inscricao, object.getEstudante(), object.getDireitoMaterial());
 
-        // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new InscricaoExecutable(inscricao));
-
         // Verifica se a situacao da inscricao ficou como comprado
         Assertions.assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO);
+
+        // Verifica se os atributos estao preenchidos
+        Assertions.assertAll(new InscricaoExecutable(inscricao));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Compra com inscricao nula")
     public void validarCompraComInscricaoNula() {
@@ -70,7 +71,7 @@ public class TesteAcaoComprarSobreInscricao {
         Assertions.assertEquals("ER0040", exception.getMessage());
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Compra com estudante nulo")
     public void validarCompraComEstudanteNulo() {
@@ -79,7 +80,7 @@ public class TesteAcaoComprarSobreInscricao {
         Assertions.assertEquals("ER0003", exception.getMessage());
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Compra com direito material nulo")
     public void validarCompraComDireitoMaterialNulo() {
@@ -88,7 +89,7 @@ public class TesteAcaoComprarSobreInscricao {
         Assertions.assertEquals("ER0041", exception.getMessage());
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Compra com situacao da inscricao diferente de Disponivel")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() {

@@ -17,6 +17,13 @@ import br.com.mauda.seminario.cientificos.junit.tests.TesteEstudante;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteInstituicao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteProfessor;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteSeminario;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteAreaCientificaQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteCursoQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteEstudanteQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteInscricaoQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteInstituicaoQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteProfessorQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteSeminarioQueries;
 
 /**
  * Essa classe realizara os testes de uma so vez, em uma determinada ordem.<br/>
@@ -41,7 +48,14 @@ public class RunnerTestes {
                 DiscoverySelectors.selectClass(TesteProfessor.class),
                 DiscoverySelectors.selectClass(TesteSeminario.class),
                 DiscoverySelectors.selectClass(TesteAcaoComprarSobreInscricao.class),
-                DiscoverySelectors.selectClass(TesteAcaoCheckInSobreInscricao.class))
+                DiscoverySelectors.selectClass(TesteAcaoCheckInSobreInscricao.class),
+                DiscoverySelectors.selectClass(TesteAreaCientificaQueries.class),
+                DiscoverySelectors.selectClass(TesteCursoQueries.class),
+                DiscoverySelectors.selectClass(TesteInstituicaoQueries.class),
+                DiscoverySelectors.selectClass(TesteEstudanteQueries.class),
+                DiscoverySelectors.selectClass(TesteProfessorQueries.class),
+                DiscoverySelectors.selectClass(TesteSeminarioQueries.class),
+                DiscoverySelectors.selectClass(TesteInscricaoQueries.class))
             .build();
         Launcher launcher = LauncherFactory.create();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();

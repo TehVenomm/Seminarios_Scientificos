@@ -1,0 +1,150 @@
+package br.com.mauda.seminario.cientificos.junit.tests.queries;
+
+import java.util.Collection;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+
+import br.com.mauda.seminario.cientificos.bc.InscricaoBC;
+import br.com.mauda.seminario.cientificos.dto.InscricaoDTO;
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+import br.com.mauda.seminario.cientificos.junit.executable.InscricaoExecutable;
+import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricao;
+import br.com.mauda.seminario.cientificos.model.Inscricao;
+import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
+
+public class TesteInscricaoQueries {
+
+    protected InscricaoBC bc = InscricaoBC.getInstance();
+
+    /**
+     * Realiza um teste com o filtro nulo, esperando que ocorram problemas
+     */
+    @Tag("queriesDaoTest")
+    @Test
+    @DisplayName("FindByFilter utilizando um filtro nulo")
+    public void validarNulo() {
+        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.findByFilter(null));
+        Assertions.assertEquals("ER0001", exception.getMessage());
+    }
+
+    @Tag("queriesDaoTest")
+    @Test
+    @DisplayName("FindByFilter utilizando um filtro vazio")
+    public void validarFiltroVazio() {
+        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
+            () -> this.bc.findByFilter(new InscricaoDTO()));
+        Assertions.assertEquals("ER0001", exception.getMessage());
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("FindByFilter utilizando um filtro com a situacao como Disponivel")
+    @Test
+    public void testFindByFilterDisponivel() {
+        InscricaoDTO filter = new InscricaoDTO();
+        filter.getSituacoes().add(SituacaoInscricaoEnum.DISPONIVEL);
+
+        // Obtem as informacoes do banco de dados
+        Collection<Inscricao> results = this.bc.findByFilter(filter);
+        Assertions.assertEquals(44, results.size(),
+            "O metodo findByFilter deveria ter retornado 44 resultados, verificar se existem problemas na compra e checkin");
+
+        // Verifica para cada item da collection se esta de acordo com o esperado
+        results.stream().forEach(i -> Assertions.assertAll(new InscricaoExecutable(i)));
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("FindByFilter utilizando um filtro com a situacao como Comprado")
+    @Test
+    public void testFindByFilterComprado() {
+        InscricaoDTO filter = new InscricaoDTO();
+        filter.getSituacoes().add(SituacaoInscricaoEnum.COMPRADO);
+
+        // Obtem as informacoes do banco de dados
+        Collection<Inscricao> results = this.bc.findByFilter(filter);
+        Assertions.assertEquals(18, results.size(),
+            "O metodo findByFilter deveria ter retornado 18 resultados, verificar se existem problemas na compra e checkin");
+
+        // Verifica para cada item da collection se esta de acordo com o esperado
+        results.stream().forEach(i -> Assertions.assertAll(new InscricaoExecutable(i)));
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("FindByFilter utilizando um filtro com a situacao como CheckIn")
+    @Test
+    public void testFindByFilterCheckIn() {
+        InscricaoDTO filter = new InscricaoDTO();
+        filter.getSituacoes().add(SituacaoInscricaoEnum.CHECKIN);
+
+        // Obtem as informacoes do banco de dados
+        Collection<Inscricao> results = this.bc.findByFilter(filter);
+        Assertions.assertEquals(18, results.size(),
+            "O metodo findByFilter deveria ter retornado 18 resultados, verificar se existem problemas na compra e checkin");
+
+        // Verifica para cada item da collection se esta de acordo com o esperado
+        results.stream().forEach(i -> Assertions.assertAll(new InscricaoExecutable(i)));
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("FindByFilter utilizando um filtro com o direito ao material do seminario")
+    @ParameterizedTest(name = "Pesquisa da Inscricao a partir do direito ao material [{arguments}] pelo metodo FindByFilter")
+    @EnumSource(MassaInscricao.class)
+    public void validarFiltroDireitoMaterial(MassaInscricao massa) {
+        InscricaoDTO filter = new InscricaoDTO();
+        filter.setDireitoMaterial(massa.isDireitoMaterial());
+
+        // Obtem as informacoes do banco de dados
+        Collection<Inscricao> results = this.bc.findByFilter(filter);
+        Assertions.assertEquals(18, results.size(),
+            "O metodo findByFilter deveria ter retornado 18 resultados, favor deletar os itens duplicados");
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("FindByFilter utilizando um filtro a data do seminario")
+    @ParameterizedTest(name = "Pesquisa da Inscricao a partir do data do seminario [{arguments}] pelo metodo FindByFilter")
+    @EnumSource(MassaInscricao.class)
+    public void validarFiltroDataSeminario(MassaInscricao massa) {
+        InscricaoDTO filter = new InscricaoDTO();
+        filter.setDataSeminario(massa.getSeminario().getData());
+
+        // Obtem as informacoes do banco de dados
+        Collection<Inscricao> results = this.bc.findByFilter(filter);
+        Assertions.assertTrue(results.size() == 10 || results.size() == 15,
+            "O metodo findByFilter deveria ter retornado 10 ou 15 resultados, favor deletar os itens duplicados");
+
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("FindByFilter utilizando um filtro o titulo do seminario")
+    @ParameterizedTest(name = "Pesquisa da Inscricao a partir do titulo do seminario [{arguments}] pelo metodo FindByFilter")
+    @EnumSource(MassaInscricao.class)
+    public void validarFiltroTituloSeminario(MassaInscricao massa) {
+        InscricaoDTO filter = new InscricaoDTO();
+        filter.setTituloSeminario(massa.getSeminario().getTitulo());
+
+        // Obtem as informacoes do banco de dados
+        Collection<Inscricao> results = this.bc.findByFilter(filter);
+        Assertions.assertTrue(results.size() == 10 || results.size() == 15,
+            "O metodo findByFilter deveria ter retornado 10 ou 15 resultados, favor deletar os itens duplicados");
+
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("FindByFilter utilizando um filtro o nome do estudante")
+    @ParameterizedTest(name = "Pesquisa da Inscricao a partir do nome do estudante [{arguments}] pelo metodo FindByFilter")
+    @EnumSource(MassaInscricao.class)
+    public void validarFiltroNomeEstudante(MassaInscricao massa) {
+        InscricaoDTO filter = new InscricaoDTO();
+        filter.setNomeEstudante(massa.getEstudante().getNome());
+
+        // Obtem as informacoes do banco de dados
+        Collection<Inscricao> results = this.bc.findByFilter(filter);
+        Assertions.assertEquals(6, results.size(),
+            "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
+
+    }
+}

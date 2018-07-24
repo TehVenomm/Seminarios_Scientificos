@@ -1,9 +1,12 @@
 package br.com.mauda.seminario.cientificos.bc;
 
+import java.util.Collection;
+
 import br.com.mauda.seminario.cientificos.dao.PatternCrudDAO;
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.IdentifierInterface;
 
-public abstract class PatternCrudBC<T extends IdentifierInterface, DAO extends PatternCrudDAO<T>> {
+public abstract class PatternCrudBC<T extends IdentifierInterface, DTO, DAO extends PatternCrudDAO<T, DTO>> {
 
     ///////////////////////////////////////////////////////////////////
     // METODOS UTILITARIOS
@@ -32,6 +35,33 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DAO extends P
         this.dao.insert(object);
     }
 
+    /**
+     * Utilizado para realizar a validacao do object e a chamada do metodo de atualizacao correspondente na classe DAO.
+     *
+     * Devera verificar se o objeto esta de acordo com as regras de negocio para ser atualizado na base de dados.
+     *
+     * @param object
+     * @return
+     */
+    public void update(T object) {
+        this.validateForDataModification(object);
+        this.dao.update(object);
+    }
+
+    /**
+     * Utilizado para chamar um metodo de delecao correspondente na classe DAO.
+     *
+     * Devera verificar se o objeto passado nao eh null
+     *
+     * @param object
+     * @return
+     */
+    public void delete(T object) {
+        if (object != null) {
+            this.dao.delete(object);
+        }
+    }
+
     ///////////////////////////////////////////////////////////////////
     // METODOS DE BUSCA
     ///////////////////////////////////////////////////////////////////
@@ -51,6 +81,28 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DAO extends P
         return this.dao.findById(id);
     }
 
+    /**
+     * Utilizado para buscas com o filtro da entidade, onde este conterah as informacoes relacionadas com a filtragem de dados
+     *
+     * @param filter
+     * @return
+     */
+    public Collection<T> findByFilter(DTO filter) {
+        if (!this.validateForFindData(filter)) {
+            throw new SeminariosCientificosException("ER0001");
+        }
+        return this.dao.findByFilter(filter);
+    }
+
+    /**
+     * Utilizado para retornar todas as instancias de uma determinada classe, atraves do metodo de busca correspondente da classe DAO
+     *
+     * @return
+     */
+    public Collection<T> findAll() {
+        return this.dao.findAll();
+    }
+
     ///////////////////////////////////////////////////////////////////
     // METODOS DE VALIDACAO
     ///////////////////////////////////////////////////////////////////
@@ -63,4 +115,14 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DAO extends P
      * @param object
      */
     protected abstract void validateForDataModification(T object);
+
+    /**
+     * Realiza a validacao de um objeto para a busca de informacoes quando este eh um filtro da tela
+     *
+     * As validacoes de regras de negocio deverao ser realizadas nesse metodo
+     *
+     * @param object
+     * @return
+     */
+    protected abstract boolean validateForFindData(DTO object);
 }

@@ -33,7 +33,7 @@ public class TesteProfessor {
         this.professor = this.converter.create(EnumUtils.getInstanceRandomly(MassaProfessor.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @DisplayName("Criacao de um Professor")
     @ParameterizedTest(name = "Criacao do Professor [{arguments}]")
     @EnumSource(MassaProfessor.class)
@@ -54,7 +54,49 @@ public class TesteProfessor {
         Assertions.assertAll(new ProfessorExecutable(object, objectBD));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
+    @DisplayName("Atualizacao dos atributos de um Professor")
+    @ParameterizedTest(name = "Atualizacao do Professor [{arguments}]")
+    @EnumSource(MassaProfessor.class)
+    public void atualizar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
+        // Cria o objeto
+        this.criar(object);
+
+        // Atualiza as informacoes de um objeto
+        this.converter.update(object, EnumUtils.getInstanceRandomly(MassaProfessor.class));
+
+        // Realiza o update no banco de dados atraves da Business Controller
+        this.bc.update(object);
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        Professor objectBD = this.bc.findById(object.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        Assertions.assertAll(new ProfessorExecutable(object, objectBD));
+
+        // Realiza o delete no banco de dados atraves da Business Controller para nao deixar o registro
+        this.bc.delete(object);
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("Delecao de um Professor")
+    @ParameterizedTest(name = "Delecao do Professor [{arguments}]")
+    @EnumSource(MassaProfessor.class)
+    public void deletar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
+        // Realiza a insercao do objeto no banco de dados
+        this.criar(object);
+
+        // Remove o objeto do BD
+        this.bc.delete(object);
+
+        // Obtem o objeto do BD a partir do ID do objeto
+        Professor objectBD = this.bc.findById(object.getId());
+
+        // Verifica se o objeto deixou de existir no BD
+        Assertions.assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
+    }
+
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Criacao de um professor nulo")
     public void validarNulo() {
@@ -62,7 +104,7 @@ public class TesteProfessor {
         Assertions.assertEquals("ER0003", exception.getMessage());
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o email do Professor")
     class EmailProfessor implements TestsEmailField {
@@ -83,7 +125,7 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o nome do Professor")
     class NomeProfessor implements TestsStringField {
@@ -104,7 +146,7 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o telefone do Professor")
     class TelefoneProfessor implements TestsStringField {
@@ -130,7 +172,7 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o salario do Professor")
     class SalarioProfessor implements TestsDoublePositiveField {
@@ -151,12 +193,12 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a Instituicao dentro do Professor")
     class InstituicaoDoProfessor {
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Test
         @DisplayName("Criacao de um professor com Instituicao nula")
         public void validarNulo() {
@@ -166,7 +208,7 @@ public class TesteProfessor {
             Assertions.assertEquals("ER0003", exception.getMessage());
         }
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para a cidade da Instituicao")
         class CidadeInstituicao implements TestsStringField {
@@ -187,7 +229,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para o estado da Instituicao")
         class EstadoInstituicao implements TestsStringField {
@@ -208,7 +250,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para o nome da Instituicao")
         class NomeInstituicao implements TestsStringField {
@@ -234,7 +276,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para o pais da Instituicao")
         class PaisInstituicao implements TestsStringField {
@@ -255,7 +297,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para a sigla da Instituicao")
         class SiglaInstituicao implements TestsStringField {
