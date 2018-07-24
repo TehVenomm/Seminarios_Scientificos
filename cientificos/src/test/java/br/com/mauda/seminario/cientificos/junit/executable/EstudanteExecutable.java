@@ -9,7 +9,7 @@ import br.com.mauda.seminario.cientificos.model.Estudante;
 
 public class EstudanteExecutable implements Executable {
 
-    private Estudante estudante;
+    private Estudante estudante, estudanteBD;
     private MassaEstudante estudanteEnum;
 
     public EstudanteExecutable(Estudante estudante) {
@@ -19,6 +19,11 @@ public class EstudanteExecutable implements Executable {
     public EstudanteExecutable(Estudante estudante, MassaEstudante enumm) {
         this(estudante);
         this.estudanteEnum = enumm;
+    }
+
+    public EstudanteExecutable(Estudante estudante, Estudante estudanteBD) {
+        this(estudante);
+        this.estudanteBD = estudanteBD;
     }
 
     public void basicVerification(Estudante estudante) throws Throwable {
@@ -42,6 +47,16 @@ public class EstudanteExecutable implements Executable {
 
             Assertions.assertAll(new InstituicaoExecutable(this.estudante.getInstituicao(), this.estudanteEnum.getInstituicao()));
             return;
+        }
+
+        if (this.estudanteBD != null) {
+            this.basicVerification(this.estudanteBD);
+            Assertions.assertEquals(this.estudanteBD.getEmail(), this.estudante.getEmail(), "Emails dos estudantes nao sao iguais");
+            Assertions.assertEquals(this.estudanteBD.getId(), this.estudante.getId(), "Ids dos estudantes nao sao iguais");
+            Assertions.assertEquals(this.estudanteBD.getNome(), this.estudante.getNome(), "Nomes dos estudantes nao sao iguais");
+            Assertions.assertEquals(this.estudanteBD.getTelefone(), this.estudante.getTelefone(), "Telefones dos estudantes nao sao iguais");
+
+            Assertions.assertAll(new InstituicaoExecutable(this.estudante.getInstituicao(), this.estudanteBD.getInstituicao()));
         }
     }
 }

@@ -32,7 +32,7 @@ public class TesteAcaoComprarSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoComprar.class));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("Compra de uma inscricao para o Seminario")
     @ParameterizedTest(name = "Compra da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoComprar.class)
@@ -61,7 +61,7 @@ public class TesteAcaoComprarSobreInscricao {
         Assertions.assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO);
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Compra com inscricao nula")
     public void validarCompraComInscricaoNula() {
@@ -70,7 +70,7 @@ public class TesteAcaoComprarSobreInscricao {
         Assertions.assertEquals("ER0040", exception.getMessage());
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Compra com estudante nulo")
     public void validarCompraComEstudanteNulo() {
@@ -79,7 +79,7 @@ public class TesteAcaoComprarSobreInscricao {
         Assertions.assertEquals("ER0003", exception.getMessage());
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Compra com direito material nulo")
     public void validarCompraComDireitoMaterialNulo() {
@@ -88,7 +88,7 @@ public class TesteAcaoComprarSobreInscricao {
         Assertions.assertEquals("ER0041", exception.getMessage());
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Compra com situacao da inscricao diferente de Disponivel")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() {

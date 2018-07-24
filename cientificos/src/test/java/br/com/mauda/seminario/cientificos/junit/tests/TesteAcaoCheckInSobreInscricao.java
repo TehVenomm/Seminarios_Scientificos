@@ -33,7 +33,7 @@ public class TesteAcaoCheckInSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoComprar.class));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("CheckIn de uma inscricao para o Seminario")
     @ParameterizedTest(name = "CheckIn da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCheckIn.class)
@@ -72,15 +72,15 @@ public class TesteAcaoCheckInSobreInscricao {
     }
 
     @Test
-    @DisplayName("Compra com inscricao nula")
-    public void validarCompraComInscricaoNula() {
+    @DisplayName("CheckIn com inscricao nula")
+    public void validarCheckInComInscricaoNula() {
         SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.realizarCheckIn(null));
         Assertions.assertEquals("ER0040", exception.getMessage());
     }
 
     @Test
-    @DisplayName("Compra com situacao da inscricao diferente de Disponivel")
-    public void validarCompraComSituacaoInscricaoNaoDisponivel() {
+    @DisplayName("CheckIn com situacao da inscricao diferente de Disponivel")
+    public void validarCheckInComSituacaoInscricaoNaoDisponivel() {
         this.acaoInscricaoDTO.getInscricao().setSituacao(SituacaoInscricaoEnum.DISPONIVEL);
         SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
             () -> this.bc.realizarCheckIn(this.acaoInscricaoDTO.getInscricao()));

@@ -1,8 +1,20 @@
 package br.com.mauda.seminario.cientificos.bc;
 
+import br.com.mauda.seminario.cientificos.dao.PatternCrudDAO;
 import br.com.mauda.seminario.cientificos.model.IdentifierInterface;
 
-public abstract class PatternCrudBC<T extends IdentifierInterface> {
+public abstract class PatternCrudBC<T extends IdentifierInterface, DAO extends PatternCrudDAO<T>> {
+
+    ///////////////////////////////////////////////////////////////////
+    // METODOS UTILITARIOS
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * Utilizado para obter a instancia de DAO corretamente na filha da PatternCrudBC
+     *
+     * @return
+     */
+    protected DAO dao;
 
     ///////////////////////////////////////////////////////////////////
     // METODOS DE MODIFICACAO
@@ -17,6 +29,26 @@ public abstract class PatternCrudBC<T extends IdentifierInterface> {
      */
     public void insert(T object) {
         this.validateForDataModification(object);
+        this.dao.insert(object);
+    }
+
+    ///////////////////////////////////////////////////////////////////
+    // METODOS DE BUSCA
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * Utilizado para verificar se o id passado nao eh nulo e chamar o metodo de busca correspondente da classe DAO
+     *
+     * Devera verificar se o id eh negativo ou null
+     *
+     * @param id
+     * @return
+     */
+    public T findById(Long id) {
+        if (id < 0) {
+            return null;
+        }
+        return this.dao.findById(id);
     }
 
     ///////////////////////////////////////////////////////////////////

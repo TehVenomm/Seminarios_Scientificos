@@ -13,7 +13,7 @@ import br.com.mauda.seminario.cientificos.model.Seminario;
 
 public class SeminarioExecutable implements Executable {
 
-    private Seminario seminario;
+    private Seminario seminario, seminarioBD;
     private MassaSeminario seminarioEnum;
 
     public SeminarioExecutable(Seminario seminario) {
@@ -23,6 +23,11 @@ public class SeminarioExecutable implements Executable {
     public SeminarioExecutable(Seminario seminario, MassaSeminario enumm) {
         this(seminario);
         this.seminarioEnum = enumm;
+    }
+
+    public SeminarioExecutable(Seminario seminario, Seminario seminarioBD) {
+        this(seminario);
+        this.seminarioBD = seminarioBD;
     }
 
     public void basicVerification(Seminario seminario) throws Throwable {
@@ -93,6 +98,44 @@ public class SeminarioExecutable implements Executable {
                 Assertions.fail("Nao encontrou area cientifica correspondente");
             }
             return;
+        }
+
+        if (this.seminarioBD != null) {
+            this.basicVerification(this.seminarioBD);
+            Assertions.assertTrue(DateUtils.isSameDay(this.seminarioBD.getData(), this.seminario.getData()), "Datas dos seminarios nao sao iguais");
+            Assertions.assertEquals(this.seminarioBD.getDescricao(), this.seminario.getDescricao(), "Descricao dos seminarios nao sao iguais");
+            Assertions.assertEquals(this.seminarioBD.getId(), this.seminario.getId(), "Ids dos seminarios nao sao iguais");
+            Assertions.assertEquals(this.seminarioBD.getQtdInscricoes(), this.seminario.getQtdInscricoes(),
+                "Quantidade de inscricoes nao sao iguais");
+            Assertions.assertEquals(this.seminarioBD.getTitulo(), this.seminario.getTitulo(), "Titulo dos seminarios nao sao iguais");
+
+            for (Professor professor : this.seminario.getProfessores()) {
+                boolean naoAchou = true;
+                for (Professor professorBD : this.seminarioBD.getProfessores()) {
+                    if (professor.getNome().equals(professorBD.getNome())) {
+                        Assertions.assertAll(new ProfessorExecutable(professor, professorBD));
+                        naoAchou = false;
+                        break;
+                    }
+                }
+                if (naoAchou) {
+                    Assertions.fail("Nao encontrou professor correspondente");
+                }
+            }
+
+            for (AreaCientifica area : this.seminario.getAreasCientificas()) {
+                boolean naoAchou = true;
+                for (AreaCientifica areaBD : this.seminarioBD.getAreasCientificas()) {
+                    if (area.getNome().equals(areaBD.getNome())) {
+                        Assertions.assertAll(new AreaCientificaExecutable(area, areaBD));
+                        naoAchou = false;
+                        break;
+                    }
+                }
+                if (naoAchou) {
+                    Assertions.fail("Nao encontrou area cientifica correspondente");
+                }
+            }
         }
     }
 }

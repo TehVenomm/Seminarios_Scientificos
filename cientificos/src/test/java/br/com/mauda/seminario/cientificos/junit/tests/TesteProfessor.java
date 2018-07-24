@@ -16,6 +16,7 @@ import br.com.mauda.seminario.cientificos.junit.contract.TestsDoublePositiveFiel
 import br.com.mauda.seminario.cientificos.junit.contract.TestsEmailField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
 import br.com.mauda.seminario.cientificos.junit.converter.ProfessorConverter;
+import br.com.mauda.seminario.cientificos.junit.converter.dao.ProfessorDAOConverter;
 import br.com.mauda.seminario.cientificos.junit.executable.ProfessorExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaProfessor;
 import br.com.mauda.seminario.cientificos.model.Professor;
@@ -32,17 +33,28 @@ public class TesteProfessor {
         this.professor = this.converter.create(EnumUtils.getInstanceRandomly(MassaProfessor.class));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("Criacao de um Professor")
     @ParameterizedTest(name = "Criacao do Professor [{arguments}]")
     @EnumSource(MassaProfessor.class)
-    public void criar(@ConvertWith(ProfessorConverter.class) Professor object) {
+    public void criar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
         // Verifica se os atributos estao preenchidos corretamente
         Assertions.assertAll(new ProfessorExecutable(object));
+
+        // Realiza o insert no banco de dados atraves da Business Controller
         this.bc.insert(object);
+
+        // Verifica se o id eh maior que zero, indicando que foi inserido no banco
+        Assertions.assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        Professor objectBD = this.bc.findById(object.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        Assertions.assertAll(new ProfessorExecutable(object, objectBD));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Criacao de um professor nulo")
     public void validarNulo() {
@@ -50,7 +62,7 @@ public class TesteProfessor {
         Assertions.assertEquals("ER0003", exception.getMessage());
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o email do Professor")
     class EmailProfessor implements TestsEmailField {
@@ -71,7 +83,7 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o nome do Professor")
     class NomeProfessor implements TestsStringField {
@@ -92,7 +104,7 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o telefone do Professor")
     class TelefoneProfessor implements TestsStringField {
@@ -118,7 +130,7 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o salario do Professor")
     class SalarioProfessor implements TestsDoublePositiveField {
@@ -139,12 +151,12 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para a Instituicao dentro do Professor")
     class InstituicaoDoProfessor {
 
-        @Tag("businessTest")
+        @Tag("MapeamentoDAOTest")
         @Test
         @DisplayName("Criacao de um professor com Instituicao nula")
         public void validarNulo() {
@@ -154,7 +166,7 @@ public class TesteProfessor {
             Assertions.assertEquals("ER0003", exception.getMessage());
         }
 
-        @Tag("businessTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para a cidade da Instituicao")
         class CidadeInstituicao implements TestsStringField {
@@ -175,7 +187,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("businessTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o estado da Instituicao")
         class EstadoInstituicao implements TestsStringField {
@@ -196,7 +208,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("businessTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o nome da Instituicao")
         class NomeInstituicao implements TestsStringField {
@@ -222,7 +234,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("businessTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o pais da Instituicao")
         class PaisInstituicao implements TestsStringField {
@@ -243,7 +255,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("businessTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para a sigla da Instituicao")
         class SiglaInstituicao implements TestsStringField {

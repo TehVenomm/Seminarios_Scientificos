@@ -9,7 +9,7 @@ import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 
 public class InscricaoExecutable implements Executable {
 
-    private Inscricao inscricao;
+    private Inscricao inscricao, inscricaoBD;
     private MassaInscricao inscricaoEnum;
 
     public InscricaoExecutable(Inscricao inscricao) {
@@ -19,6 +19,11 @@ public class InscricaoExecutable implements Executable {
     public InscricaoExecutable(Inscricao inscricao, MassaInscricao enumm) {
         this(inscricao);
         this.inscricaoEnum = enumm;
+    }
+
+    public InscricaoExecutable(Inscricao inscricao, Inscricao inscricaoBD) {
+        this(inscricao);
+        this.inscricaoBD = inscricaoBD;
     }
 
     public void basicVerification(Inscricao inscricao) throws Throwable {
@@ -56,6 +61,20 @@ public class InscricaoExecutable implements Executable {
             }
             Assertions.assertAll(new SeminarioExecutable(this.inscricao.getSeminario(), this.inscricaoEnum.getSeminario()));
             return;
+        }
+
+        if (this.inscricaoBD != null) {
+            this.basicVerification(this.inscricaoBD);
+
+            Assertions.assertEquals(this.inscricaoBD.getDireitoMaterial(), this.inscricao.getDireitoMaterial(),
+                "Direito ao Material das inscricoes nao sao iguais");
+            Assertions.assertEquals(this.inscricaoBD.getSituacao(), this.inscricao.getSituacao(), "Situacao das inscricoes nao sao iguais");
+
+            // SENAO for a situacao disponivel
+            if (!SituacaoInscricaoEnum.DISPONIVEL.equals(this.inscricao.getSituacao())) {
+                Assertions.assertAll(new EstudanteExecutable(this.inscricao.getEstudante(), this.inscricaoBD.getEstudante()));
+            }
+            Assertions.assertAll(new SeminarioExecutable(this.inscricao.getSeminario(), this.inscricaoBD.getSeminario()));
         }
     }
 }
