@@ -14,8 +14,6 @@ import br.com.mauda.seminario.cientificos.model.Instituicao;
 
 public class TesteInstituicao {
 
-    protected InstituicaoConverter converter = new InstituicaoConverter();
-
     @Tag("modelTest")
     @DisplayName("Criacao de uma Instituicao")
     @ParameterizedTest(name = "Criacao da Instituicao [{arguments}]")
