@@ -2,7 +2,7 @@ package br.com.mauda.seminario.cientificos.model;
 
 import java.io.Serializable;
 
-public class Instituicao implements IdentifierInterface, Serializable {
+public class Instituicao implements Serializable {
 
     private static final long serialVersionUID = 997084310847650620L;
 
@@ -13,12 +13,10 @@ public class Instituicao implements IdentifierInterface, Serializable {
     private String estado;
     private String pais;
 
-    @Override
     public Long getId() {
         return this.id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }
