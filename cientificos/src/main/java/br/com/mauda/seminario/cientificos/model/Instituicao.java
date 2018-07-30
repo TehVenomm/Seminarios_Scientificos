@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 //comentario para o teste de commit
 
+//comentario para o teste de fetch
+
 public class Instituicao implements Serializable {
 
     private static final long serialVersionUID = 997084310847650620L;
