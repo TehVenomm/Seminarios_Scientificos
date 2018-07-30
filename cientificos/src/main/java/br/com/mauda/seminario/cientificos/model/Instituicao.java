@@ -2,6 +2,8 @@ package br.com.mauda.seminario.cientificos.model;
 
 import java.io.Serializable;
 
+//comentario para o teste de commit
+
 public class Instituicao implements Serializable {
 
     private static final long serialVersionUID = 997084310847650620L;
