@@ -2,10 +2,6 @@ package br.com.mauda.seminario.cientificos.model;
 
 import java.io.Serializable;
 
-//comentario para o teste de commit
-
-//comentario para o teste de fetch
-
 //comentario para testes de conflito entre arquivos diferentes
 
 public class Instituicao implements Serializable {
