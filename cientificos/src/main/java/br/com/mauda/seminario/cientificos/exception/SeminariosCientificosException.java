@@ -6,8 +6,8 @@ package br.com.mauda.seminario.cientificos.exception;
  * @author Mauda
  *
  */
- 
-//comentario para testes de conflito entre arquivos diferentes
+
+// comentario para testes de conflito entre arquivos diferentes - novo teste
 
 public class SeminariosCientificosException extends RuntimeException {
 
