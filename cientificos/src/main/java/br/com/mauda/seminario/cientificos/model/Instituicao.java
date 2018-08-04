@@ -2,7 +2,7 @@ package br.com.mauda.seminario.cientificos.model;
 
 import java.io.Serializable;
 
-//comentario para testes de conflito entre arquivos diferentes
+//comentario para testes de conflito entre arquivos diferentes - novo teste
 
 public class Instituicao implements Serializable {
 
