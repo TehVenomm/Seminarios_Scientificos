@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 //comentario para testes de conflito no mesmo arquivo - Eclipse
 
+//comentario para testes de conflito no mesmo arquivo - bitbucket
+
 public class Instituicao implements Serializable {
 
     private static final long serialVersionUID = 997084310847650620L;
