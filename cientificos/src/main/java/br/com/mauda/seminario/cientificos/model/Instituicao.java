@@ -2,11 +2,7 @@ package br.com.mauda.seminario.cientificos.model;
 
 import java.io.Serializable;
 
-//comentario para testes de conflito entre arquivos diferentes - novo teste
-
-//comentario para testes de conflito no mesmo arquivo - Eclipse
-
-//comentario para testes de conflito no mesmo arquivo - bitbucket
+//Comentario Novo - Bitbucket
 
 public class Instituicao implements Serializable {
 
