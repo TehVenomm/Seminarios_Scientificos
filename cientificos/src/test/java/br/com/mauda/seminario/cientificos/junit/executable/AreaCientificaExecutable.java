@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
 import br.com.mauda.seminario.cientificos.junit.massa.MassaAreaCientifica;
+import br.com.mauda.seminario.cientificos.junit.util.MensagensUtils;
 import br.com.mauda.seminario.cientificos.model.AreaCientifica;
 
 public class AreaCientificaExecutable implements Executable {
@@ -22,8 +23,12 @@ public class AreaCientificaExecutable implements Executable {
     }
 
     public void basicVerification(AreaCientifica areaCientifica) throws Throwable {
-        Assertions.assertNotNull(areaCientifica, "Uma Area Cientifica nao pode ser nula");
-        Assertions.assertTrue(StringUtils.isNotBlank(areaCientifica.getNome()), "O nome de uma Area Cientifica nao pode ser nulo ou em branco");
+        Assertions.assertNotNull(areaCientifica, MensagensUtils.getErrorMessage("Uma Area Cientifica nao pode ser nula"));
+
+        Assertions.assertTrue(areaCientifica.getCursos() != null, MensagensUtils.getErrorMessage("É necessário inicializar a lista de cursos"));
+
+        Assertions.assertTrue(StringUtils.isNotBlank(areaCientifica.getNome()),
+            MensagensUtils.getErrorMessage("O nome de uma Area Cientifica nao pode ser nulo ou em branco"));
     }
 
     @Override
@@ -31,7 +36,8 @@ public class AreaCientificaExecutable implements Executable {
         this.basicVerification(this.areaCientifica);
 
         if (this.areaCientificaEnum != null) {
-            Assertions.assertEquals(this.areaCientificaEnum.getNome(), this.areaCientifica.getNome(), "Nomes das areas cientificas nao sao iguais");
+            Assertions.assertEquals(this.areaCientificaEnum.getNome(), this.areaCientifica.getNome(),
+                MensagensUtils.getErrorMessage("Nomes das areas cientificas nao sao iguais"));
             return;
         }
     }

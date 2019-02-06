@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
 import br.com.mauda.seminario.cientificos.junit.massa.MassaSeminario;
+import br.com.mauda.seminario.cientificos.junit.util.MensagensUtils;
 import br.com.mauda.seminario.cientificos.model.AreaCientifica;
 import br.com.mauda.seminario.cientificos.model.Inscricao;
 import br.com.mauda.seminario.cientificos.model.Professor;
@@ -26,21 +27,35 @@ public class SeminarioExecutable implements Executable {
     }
 
     public void basicVerification(Seminario seminario) throws Throwable {
-        Assertions.assertNotNull(seminario, "Um Seminario nao pode ser nulo");
-        Assertions.assertNotNull(seminario.getData(), "A data de um Seminario nao pode ser nula");
-        Assertions.assertNotNull(seminario.getQtdInscricoes(), "A quantidade de inscricoes de um Seminario nao pode ser nulo");
-        Assertions.assertTrue(seminario.getQtdInscricoes() > 0, "A quantidade de inscricoes de um Seminario deve ser maior que zero");
+        Assertions.assertNotNull(seminario, MensagensUtils.getErrorMessage("Um Seminario nao pode ser nulo"));
 
-        Assertions.assertTrue(StringUtils.isNotBlank(seminario.getDescricao()), "A descricao de um Seminario nao pode ser nulo ou em branco");
-        Assertions.assertTrue(StringUtils.isNotBlank(seminario.getTitulo()), "O titulo de um Seminario nao pode ser nulo ou em branco");
+        Assertions.assertTrue(seminario.getAreasCientificas() != null,
+            MensagensUtils.getErrorMessage("É necessário inicializar a lista de areas cientificas"));
+
+        Assertions.assertTrue(seminario.getInscricoes() != null, MensagensUtils.getErrorMessage("É necessário inicializar a lista de inscricoes"));
+
+        Assertions.assertTrue(seminario.getProfessores() != null, MensagensUtils.getErrorMessage("É necessário inicializar a lista de professores"));
+
+        Assertions.assertNotNull(seminario.getData(), MensagensUtils.getErrorMessage("A data de um Seminario nao pode ser nula"));
+
+        Assertions.assertNotNull(seminario.getQtdInscricoes(),
+            MensagensUtils.getErrorMessage("A quantidade de inscricoes de um Seminario nao pode ser nulo"));
+
+        Assertions.assertTrue(seminario.getQtdInscricoes() > 0,
+            MensagensUtils.getErrorMessage("A quantidade de inscricoes de um Seminario deve ser maior que zero"));
+
+        Assertions.assertTrue(StringUtils.isNotBlank(seminario.getDescricao()),
+            MensagensUtils.getErrorMessage("A descricao de um Seminario nao pode ser nulo ou em branco"));
+
+        Assertions.assertTrue(StringUtils.isNotBlank(seminario.getTitulo()),
+            MensagensUtils.getErrorMessage("O titulo de um Seminario nao pode ser nulo ou em branco"));
 
         for (Professor professor : seminario.getProfessores()) {
             Assertions.assertAll(new ProfessorExecutable(professor));
 
             // Verifica a associacao bidirecional com professor
-            Assertions.assertTrue(professor.getSeminarios().contains(seminario),
-                "A lista de Seminarios do Professor " + professor.getNome()
-                    + " nao contem o seminario em questao - associacao bidirecional nao foi realizada");
+            Assertions.assertTrue(professor.possuiSeminario(seminario), MensagensUtils.getErrorMessage("A lista de Seminarios do Professor "
+                + professor.getNome() + " nao contem o seminario em questao - associacao bidirecional nao foi realizada"));
         }
 
         for (AreaCientifica area : seminario.getAreasCientificas()) {
@@ -49,12 +64,12 @@ public class SeminarioExecutable implements Executable {
 
         // Verifica se a lista de inscricoes contem a quantidade gerada
         Assertions.assertEquals(seminario.getQtdInscricoes(), new Integer(seminario.getInscricoes().size()),
-            "A lista de inscricoes nao contem todas as inscricoes de acordo com a quantidade estipulada");
+            MensagensUtils.getErrorMessage("A lista de inscricoes nao contem todas as inscricoes de acordo com a quantidade estipulada"));
 
         for (Inscricao inscricao : seminario.getInscricoes()) {
             // Verifica a associacao bidirecional com inscricao
             Assertions.assertTrue(inscricao.getSeminario().equals(seminario),
-                "A inscricao nao contem o seminario em questao - associacao bidirecional nao foi realizada");
+                MensagensUtils.getErrorMessage("A inscricao nao contem o seminario em questao - associacao bidirecional nao foi realizada"));
         }
     }
 
@@ -63,11 +78,17 @@ public class SeminarioExecutable implements Executable {
         this.basicVerification(this.seminario);
 
         if (this.seminarioEnum != null) {
-            Assertions.assertTrue(DateUtils.isSameDay(this.seminarioEnum.getData(), this.seminario.getData()), "Datas dos seminarios nao sao iguais");
-            Assertions.assertEquals(this.seminarioEnum.getDescricao(), this.seminario.getDescricao(), "Descricao dos seminarios nao sao iguais");
+            Assertions.assertTrue(DateUtils.isSameDay(this.seminarioEnum.getData(), this.seminario.getData()),
+                MensagensUtils.getErrorMessage("Datas dos seminarios nao sao iguais"));
+
+            Assertions.assertEquals(this.seminarioEnum.getDescricao(), this.seminario.getDescricao(),
+                MensagensUtils.getErrorMessage("Descricao dos seminarios nao sao iguais"));
+
             Assertions.assertEquals(this.seminarioEnum.getQtdInscricoes(), this.seminario.getQtdInscricoes(),
-                "Quantidade de inscricoes nao sao iguais");
-            Assertions.assertEquals(this.seminarioEnum.getTitulo(), this.seminario.getTitulo(), "Titulo dos seminarios nao sao iguais");
+                MensagensUtils.getErrorMessage("Quantidade de inscricoes nao sao iguais"));
+
+            Assertions.assertEquals(this.seminarioEnum.getTitulo(), this.seminario.getTitulo(),
+                MensagensUtils.getErrorMessage("Titulo dos seminarios nao sao iguais"));
 
             boolean naoAchou = true;
             for (Professor professor : this.seminario.getProfessores()) {
