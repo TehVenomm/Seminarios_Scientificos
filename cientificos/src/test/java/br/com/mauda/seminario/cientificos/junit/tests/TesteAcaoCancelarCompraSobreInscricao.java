@@ -13,17 +13,17 @@ import org.junit.jupiter.params.provider.EnumSource;
 import br.com.mauda.seminario.cientificos.junit.converter.dto.AcaoInscricaoDTOConverter;
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
 import br.com.mauda.seminario.cientificos.junit.executable.InscricaoExecutable;
-import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoCheckIn;
+import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoCancelarCompra;
 import br.com.mauda.seminario.cientificos.junit.util.MensagensUtils;
 import br.com.mauda.seminario.cientificos.model.Inscricao;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 
-public class TesteAcaoCheckInSobreInscricao {
+public class TesteAcaoCancelarCompraSobreInscricao {
 
     @Tag("modelTest")
     @DisplayName("CheckIn de uma inscricao para o Seminario")
     @ParameterizedTest(name = "CheckIn da inscricao [{arguments}] para o Seminario")
-    @EnumSource(MassaInscricaoCheckIn.class)
+    @EnumSource(MassaInscricaoCancelarCompra.class)
     public void checkInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO object) {
         Inscricao inscricao = object.getInscricao();
 
@@ -38,15 +38,12 @@ public class TesteAcaoCheckInSobreInscricao {
         // Verifica se os atributos estao preenchidos
         Assertions.assertAll(new InscricaoExecutable(inscricao));
 
-        Assertions.assertNotNull(inscricao.getDataCheckIn(),
-            MensagensUtils.getErrorMessage("A data de checkin deve estar preenchida em uma inscricao com situacao checkin"));
+        // Verifica se a inscricao foi removida do estudante
+        Assertions.assertTrue(!object.getEstudante().possuiInscricao(inscricao),
+            MensagensUtils.getErrorMessage("Estudante nao deveria possuir a inscricao - remover no metodo cancelarCompra()"));
 
-        Assertions.assertTrue(DateUtils.isSameDay(inscricao.getDataCheckIn(), new Date()),
-            MensagensUtils.getErrorMessage("Data do checkin nao eh igual a hoje"));
-
-        // Verifica se a situacao da inscricao ficou como comprado
-        Assertions.assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.CHECKIN,
-            MensagensUtils.getErrorMessage("Situacao da inscricao nao eh checkIn - trocar a situacao no metodo realizarCheckIn()"));
+        // Verifica se a situacao da inscricao ficou como disponviel
+        Assertions.assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.DISPONIVEL);
     }
 
     private void validarCompra(Inscricao inscricao) {

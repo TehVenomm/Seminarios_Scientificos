@@ -25,7 +25,7 @@ public class ProfessorExecutable implements Executable {
     public void basicVerification(Professor professor) throws Throwable {
         Assertions.assertNotNull(professor, MensagensUtils.getErrorMessage("Um Professor nao pode ser nulo"));
 
-        Assertions.assertTrue(professor.getSeminarios() != null, MensagensUtils.getErrorMessage("É necessário inicializar a lista de seminarios"));
+        Assertions.assertNotNull(professor.getSeminarios(), MensagensUtils.getErrorMessage("É necessário inicializar a lista de seminarios"));
 
         Assertions.assertTrue(StringUtils.isNotBlank(professor.getEmail()),
             MensagensUtils.getErrorMessage("O email de um Professor nao pode ser nulo ou em branco"));

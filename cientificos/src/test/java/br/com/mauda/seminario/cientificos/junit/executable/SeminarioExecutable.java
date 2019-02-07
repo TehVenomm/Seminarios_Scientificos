@@ -29,12 +29,12 @@ public class SeminarioExecutable implements Executable {
     public void basicVerification(Seminario seminario) throws Throwable {
         Assertions.assertNotNull(seminario, MensagensUtils.getErrorMessage("Um Seminario nao pode ser nulo"));
 
-        Assertions.assertTrue(seminario.getAreasCientificas() != null,
+        Assertions.assertNotNull(seminario.getAreasCientificas(),
             MensagensUtils.getErrorMessage("É necessário inicializar a lista de areas cientificas"));
 
-        Assertions.assertTrue(seminario.getInscricoes() != null, MensagensUtils.getErrorMessage("É necessário inicializar a lista de inscricoes"));
+        Assertions.assertNotNull(seminario.getInscricoes(), MensagensUtils.getErrorMessage("É necessário inicializar a lista de inscricoes"));
 
-        Assertions.assertTrue(seminario.getProfessores() != null, MensagensUtils.getErrorMessage("É necessário inicializar a lista de professores"));
+        Assertions.assertNotNull(seminario.getProfessores(), MensagensUtils.getErrorMessage("É necessário inicializar a lista de professores"));
 
         Assertions.assertNotNull(seminario.getData(), MensagensUtils.getErrorMessage("A data de um Seminario nao pode ser nula"));
 

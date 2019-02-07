@@ -25,7 +25,7 @@ public class EstudanteExecutable implements Executable {
     public void basicVerification(Estudante estudante) throws Throwable {
         Assertions.assertNotNull(estudante, MensagensUtils.getErrorMessage("Um Estudante nao pode ser nulo"));
 
-        Assertions.assertTrue(estudante.getInscricoes() != null, MensagensUtils.getErrorMessage("É necessário inicializar a lista de inscricoes"));
+        Assertions.assertNotNull(estudante.getInscricoes(), MensagensUtils.getErrorMessage("É necessário inicializar a lista de inscricoes"));
 
         Assertions.assertTrue(StringUtils.isNotBlank(estudante.getEmail()),
             MensagensUtils.getErrorMessage("O email de um Estudante nao pode ser nulo ou em branco"));

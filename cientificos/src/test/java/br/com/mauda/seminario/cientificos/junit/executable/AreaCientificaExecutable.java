@@ -25,7 +25,7 @@ public class AreaCientificaExecutable implements Executable {
     public void basicVerification(AreaCientifica areaCientifica) throws Throwable {
         Assertions.assertNotNull(areaCientifica, MensagensUtils.getErrorMessage("Uma Area Cientifica nao pode ser nula"));
 
-        Assertions.assertTrue(areaCientifica.getCursos() != null, MensagensUtils.getErrorMessage("É necessário inicializar a lista de cursos"));
+        Assertions.assertNotNull(areaCientifica.getCursos(), MensagensUtils.getErrorMessage("É necessário inicializar a lista de cursos"));
 
         Assertions.assertTrue(StringUtils.isNotBlank(areaCientifica.getNome()),
             MensagensUtils.getErrorMessage("O nome de uma Area Cientifica nao pode ser nulo ou em branco"));

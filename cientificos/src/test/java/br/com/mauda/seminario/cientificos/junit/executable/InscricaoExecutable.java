@@ -27,9 +27,19 @@ public class InscricaoExecutable implements Executable {
 
         Assertions.assertNotNull(inscricao.getSituacao(), MensagensUtils.getErrorMessage("A situacao de uma Inscricao nao pode ser nulo"));
 
+        Assertions.assertNotNull(inscricao.getDataCriacao(),
+            MensagensUtils.getErrorMessage("A data de criacao deve estar preenchida"));
+
         if (SituacaoInscricaoEnum.DISPONIVEL.equals(inscricao.getSituacao())) {
             Assertions.assertNull(inscricao.getEstudante(),
                 MensagensUtils.getErrorMessage("Um estudante nao deve estar atribuido a uma inscricao disponivel"));
+
+            Assertions.assertNull(inscricao.getDataCompra(),
+                MensagensUtils.getErrorMessage("A data de compra nao deve estar preenchida em uma inscricao disponivel"));
+
+            Assertions.assertNull(inscricao.getDataCheckIn(),
+                MensagensUtils.getErrorMessage("A data de checkin nao deve estar preenchida em uma inscricao disponivel"));
+
         } else {
             Assertions.assertNotNull(inscricao.getDireitoMaterial(),
                 MensagensUtils.getErrorMessage("O direito ao material de uma Inscricao nao pode ser nulo"));

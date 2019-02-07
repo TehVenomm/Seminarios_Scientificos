@@ -9,6 +9,7 @@ import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 
+import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoCancelarCompraSobreInscricao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoCheckInSobreInscricao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoComprarSobreInscricao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteAreaCientifica;
@@ -42,6 +43,7 @@ public class RunnerTestes {
                 DiscoverySelectors.selectClass(TesteProfessor.class),
                 DiscoverySelectors.selectClass(TesteSeminario.class),
                 DiscoverySelectors.selectClass(TesteAcaoComprarSobreInscricao.class),
+                DiscoverySelectors.selectClass(TesteAcaoCancelarCompraSobreInscricao.class),
                 DiscoverySelectors.selectClass(TesteAcaoCheckInSobreInscricao.class))
             .build();
         Launcher launcher = LauncherFactory.create();
