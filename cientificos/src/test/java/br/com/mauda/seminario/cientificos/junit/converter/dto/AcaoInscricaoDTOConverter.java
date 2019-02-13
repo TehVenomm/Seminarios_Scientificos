@@ -1,5 +1,6 @@
 package br.com.mauda.seminario.cientificos.junit.converter.dto;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.ArgumentConverter;
@@ -7,6 +8,9 @@ import org.junit.jupiter.params.converter.ArgumentConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.EstudanteConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.SeminarioConverter;
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
+import br.com.mauda.seminario.cientificos.junit.executable.EstudanteExecutable;
+import br.com.mauda.seminario.cientificos.junit.executable.InscricaoExecutable;
+import br.com.mauda.seminario.cientificos.junit.executable.SeminarioExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricao;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoCheckIn;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoComprar;
@@ -52,6 +56,17 @@ public class AcaoInscricaoDTOConverter implements ArgumentConverter {
         // Obtem o direito ao material
         Boolean direitoMaterial = enumm.isDireitoMaterial();
 
-        return new AcaoInscricaoDTO(seminario, estudante, inscricao, direitoMaterial);
+        AcaoInscricaoDTO dto = new AcaoInscricaoDTO(seminario, estudante, inscricao, direitoMaterial);
+
+        // Verifica se os atributos estao preenchidos
+        Assertions.assertAll(new SeminarioExecutable(dto.getSeminario()));
+
+        // Verifica se os atributos estao preenchidos
+        Assertions.assertAll(new EstudanteExecutable(dto.getEstudante()));
+
+        // Verifica se os atributos estao preenchidos
+        Assertions.assertAll(new InscricaoExecutable(dto.getInscricao()));
+
+        return dto;
     }
 }

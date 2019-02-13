@@ -1,5 +1,9 @@
 package br.com.mauda.seminario.cientificos.junit.executable;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
@@ -22,20 +26,22 @@ public class InscricaoExecutable implements Executable {
     }
 
     public void basicVerification(Inscricao inscricao) throws Throwable {
-        Assertions.assertNotNull(inscricao, "Uma Inscricao nao pode ser nula");
-        Assertions.assertNotNull(inscricao.getSituacao(), "A situacao de uma Inscricao nao pode ser nulo");
+        assertNotNull(inscricao, "Uma Inscricao nao pode ser nula");
+        assertNotNull(inscricao.getSituacao(), "A situacao de uma Inscricao nao pode ser nula");
+        assertNotNull(inscricao.getDataCriacao(), "A data de criacao deve estar preenchida");
 
         if (SituacaoInscricaoEnum.DISPONIVEL.equals(inscricao.getSituacao())) {
-            Assertions.assertNull(inscricao.getEstudante(), "Um estudante nao deve estar atribuido a uma inscricao disponivel");
+            assertNull(inscricao.getEstudante(), "Um estudante nao deve estar atribuido a uma inscricao disponivel");
+
         } else {
-            Assertions.assertNotNull(inscricao.getDireitoMaterial(), "O direito ao material de uma Inscricao nao pode ser nulo");
+            assertNotNull(inscricao.getDireitoMaterial(), "O direito ao material de uma Inscricao nao pode ser nulo");
+
             // Verifica se o estudante dentro do inscricao esta preenchido corretamente
             Assertions.assertAll(new EstudanteExecutable(inscricao.getEstudante()));
 
             // Verifica a associacao bidirecional com estudante
-            Assertions.assertTrue(inscricao.getEstudante().getInscricoes().contains(inscricao),
-                "A Lista de inscricoes do Estudante " + inscricao.getEstudante().getNome()
-                    + " nao contem a inscricao em questao - associacao bidirecional nao foi realizada");
+            assertTrue(inscricao.getEstudante().getInscricoes().contains(inscricao), "A Lista de inscricoes do Estudante "
+                + inscricao.getEstudante().getNome() + " nao contem a inscricao em questao - associacao bidirecional nao foi realizada");
         }
 
         Assertions.assertAll(new SeminarioExecutable(inscricao.getSeminario()));
@@ -46,9 +52,9 @@ public class InscricaoExecutable implements Executable {
         this.basicVerification(this.inscricao);
 
         if (this.inscricaoEnum != null) {
-            Assertions.assertEquals(this.inscricaoEnum.isDireitoMaterial(), this.inscricao.getDireitoMaterial(),
+            assertEquals(this.inscricaoEnum.isDireitoMaterial(), this.inscricao.getDireitoMaterial(),
                 "Direito ao Material das inscricoes nao sao iguais");
-            Assertions.assertEquals(this.inscricaoEnum.getSituacao(), this.inscricao.getSituacao(), "Situacao das inscricoes nao sao iguais");
+            assertEquals(this.inscricaoEnum.getSituacao(), this.inscricao.getSituacao(), "Situacao das inscricoes nao sao iguais");
 
             // SENAO for a situacao disponivel
             if (!SituacaoInscricaoEnum.DISPONIVEL.equals(this.inscricao.getSituacao())) {

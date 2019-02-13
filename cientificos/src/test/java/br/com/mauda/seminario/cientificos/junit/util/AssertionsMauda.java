@@ -1,5 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.util;
 
+import java.util.function.BooleanSupplier;
+
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 
@@ -28,6 +30,15 @@ public class AssertionsMauda extends Assertions {
     }
 
     /**
+     * <em>Asserts</em> that {@code actual} is not {@code null}.
+     * <p>
+     * Fails with the supplied failure {@code message}.
+     */
+    public static void assertNull(Object actual, String message) {
+        Assertions.assertNull(actual, MensagensUtils.getErrorMessage(message));
+    }
+
+    /**
      * <em>Asserts</em> that the information{@code information} is not blank {@code true}.
      * <p>
      * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
@@ -36,4 +47,12 @@ public class AssertionsMauda extends Assertions {
         Assertions.assertTrue(StringUtils.isNotBlank(information), MensagensUtils.getErrorMessage(message));
     }
 
+    /**
+     * <em>Asserts</em> that the supplied {@code condition} is {@code true}.
+     * <p>
+     * Fails with the supplied failure {@code message}.
+     */
+    public static void assertTrue(BooleanSupplier booleanSupplier, String message) {
+        Assertions.assertTrue(booleanSupplier, MensagensUtils.getErrorMessage(message));
+    }
 }
