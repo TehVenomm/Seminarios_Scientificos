@@ -1,5 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import org.junit.jupiter.api.Test;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.launcher.Launcher;
@@ -7,9 +9,9 @@ import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
-import org.junit.platform.launcher.listeners.TestExecutionSummary.Failure;
 
 import br.com.mauda.seminario.cientificos.junit.tests.TesteInstituicao;
+import br.com.mauda.seminario.cientificos.junit.util.ErrorTestManager;
 
 /**
  * Essa classe realizara os testes de uma so vez, em uma determinada ordem.<br/>
@@ -28,21 +30,22 @@ public class RunnerTestes {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
             .selectors(DiscoverySelectors.selectClass(TesteInstituicao.class))
             .build();
-        Launcher launcher = LauncherFactory.create();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
+        Launcher launcher = LauncherFactory.create();
         launcher.registerTestExecutionListeners(listener);
         launcher.execute(request, listener);
-        for (Failure fail : listener.getSummary().getFailures()) {
-            System.out.println("#######################################");
-            System.out.println("Falha no Teste: " + fail.getTestIdentifier().getDisplayName());
-            System.out.println("Informacoes detalhadas: " + fail.getTestIdentifier().getSource().toString());
-            System.out.println("Mensagem de Erro: " + fail.getException().getMessage());
-            System.out.println("stackTrace: \n" + fail.getException().getCause());
+
+        ErrorTestManager errorTestManager = new ErrorTestManager(listener.getSummary().getFailures());
+        errorTestManager.printErrors();
+
+        System.out.println("###################################################");
+        System.out.println("Quantidade de Testes executados: \t\t" + listener.getSummary().getTestsStartedCount() / 2);
+        System.out.println("Quantidade de Testes executados com falha: \t" + listener.getSummary().getTestsFailedCount() / 2);
+        System.out.println("Quantidade de Testes executados com sucesso: \t" + listener.getSummary().getTestsSucceededCount() / 2);
+        System.out.println("###################################################");
+
+        if (!listener.getSummary().getFailures().isEmpty()) {
+            fail("Falha no teste! Existem erros, por favor verifique no console!");
         }
-        System.out.println("###################################################");
-        System.out.println("Quantidade de Testes executados: \t\t" + listener.getSummary().getTestsStartedCount());
-        System.out.println("Quantidade de Testes executados com falha: \t" + listener.getSummary().getTestsFailedCount());
-        System.out.println("Quantidade de Testes executados com sucesso: \t" + listener.getSummary().getTestsSucceededCount());
-        System.out.println("###################################################");
     }
 }
