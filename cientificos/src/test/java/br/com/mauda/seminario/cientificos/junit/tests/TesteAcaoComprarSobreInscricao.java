@@ -1,12 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
-import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
-import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
-import java.util.Date;
-
-import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -39,10 +34,6 @@ public class TesteAcaoComprarSobreInscricao {
     private void validarCompra(Inscricao inscricao) {
         // Verifica se os atributos estao preenchidos
         Assertions.assertAll(new InscricaoExecutable(inscricao));
-
-        assertNotNull(inscricao.getDataCompra(), "A data de compra deve estar preenchida em uma inscricao com situacao comprado");
-
-        assertTrue(DateUtils.isSameDay(inscricao.getDataCompra(), new Date()), "Data da compra nao eh igual a hoje");
 
         // Verifica se a situacao da inscricao ficou como comprado
         assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
