@@ -29,7 +29,6 @@ public class InscricaoExecutable implements Executable {
     public void basicVerification(Inscricao inscricao) throws Throwable {
         assertNotNull(inscricao, "Uma Inscricao nao pode ser nula");
         assertNotNull(inscricao.getSituacao(), "A situacao de uma Inscricao nao pode ser nula");
-        assertNotNull(inscricao.getDataCriacao(), "A data de criacao deve estar preenchida");
 
         if (SituacaoInscricaoEnum.DISPONIVEL.equals(inscricao.getSituacao())) {
             assertNull(inscricao.getEstudante(), "Um estudante nao deve estar atribuido a uma inscricao disponivel");

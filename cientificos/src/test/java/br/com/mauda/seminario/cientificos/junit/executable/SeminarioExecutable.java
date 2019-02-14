@@ -45,7 +45,7 @@ public class SeminarioExecutable implements Executable {
             Assertions.assertAll(new ProfessorExecutable(professor));
 
             // Verifica a associacao bidirecional com professor
-            assertTrue(professor.possuiSeminario(seminario), "A lista de Seminarios do Professor "
+            assertTrue(professor.getSeminarios().contains(seminario), "A lista de Seminarios do Professor "
                 + professor.getNome() + " nao contem o seminario em questao - associacao bidirecional nao foi realizada");
         }
 
