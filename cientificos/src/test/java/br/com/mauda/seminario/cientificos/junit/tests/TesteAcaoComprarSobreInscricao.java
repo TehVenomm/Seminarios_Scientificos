@@ -20,7 +20,6 @@ import br.com.mauda.seminario.cientificos.bc.InscricaoBC;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.converter.dto.AcaoInscricaoDTOConverter;
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
-import br.com.mauda.seminario.cientificos.junit.executable.EstudanteExecutable;
 import br.com.mauda.seminario.cientificos.junit.executable.InscricaoExecutable;
 import br.com.mauda.seminario.cientificos.junit.executable.SeminarioExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoComprar;
