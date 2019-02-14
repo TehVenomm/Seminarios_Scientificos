@@ -33,7 +33,6 @@ public class InstituicaoConverter implements ArgumentConverter {
     }
 
     public void update(Instituicao instituicao, MassaInstituicao enumm) {
-        instituicao.setNome(enumm.getNome());
         instituicao.setCidade(enumm.getCidade());
         instituicao.setEstado(enumm.getEstado());
         instituicao.setNome(enumm.getNome());
