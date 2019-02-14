@@ -1,6 +1,10 @@
 package br.com.mauda.seminario.cientificos.junit.executable;
 
-import org.apache.commons.lang3.StringUtils;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertIsNotBlank;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
@@ -27,12 +31,15 @@ public class ProfessorExecutable implements Executable {
     }
 
     public void basicVerification(Professor professor) throws Throwable {
-        Assertions.assertNotNull(professor, "Um Professor nao pode ser nulo");
-        Assertions.assertTrue(StringUtils.isNotBlank(professor.getEmail()), "O email de um Professor nao pode ser nulo ou em branco");
-        Assertions.assertTrue(StringUtils.isNotBlank(professor.getNome()), "O nome de um Professor nao pode ser nulo ou em branco");
-        Assertions.assertTrue(StringUtils.isNotBlank(professor.getTelefone()), "O telefone de um Professor nao pode ser nulo ou em branco");
-        Assertions.assertNotNull(professor.getSalario(), "O salario de um Professor nao pode ser nulo");
-        Assertions.assertTrue(professor.getSalario() > 0, "O salario de um Professor deve ser maior que zero");
+        assertNotNull(professor, "Um Professor nao pode ser nulo");
+        assertNotNull(professor.getSeminarios(), "É necessário inicializar a lista de seminarios");
+
+        assertIsNotBlank(professor.getEmail(), "O email de um Professor nao pode ser nulo ou em branco");
+        assertIsNotBlank(professor.getNome(), "O nome de um Professor nao pode ser nulo ou em branco");
+        assertIsNotBlank(professor.getTelefone(), "O telefone de um Professor nao pode ser nulo ou em branco");
+        assertNotNull(professor.getSalario(), "O salario de um Professor nao pode ser nulo");
+
+        assertTrue(professor.getSalario() > 0, "O salario de um Professor deve ser maior que zero");
 
         // Verifica se a instituicao dentro do professor esta preenchida corretamente
         Assertions.assertAll(new InstituicaoExecutable(professor.getInstituicao()));
@@ -43,10 +50,10 @@ public class ProfessorExecutable implements Executable {
         this.basicVerification(this.professor);
 
         if (this.professorEnum != null) {
-            Assertions.assertEquals(this.professorEnum.getEmail(), this.professor.getEmail(), "Emails dos professores nao sao iguais");
-            Assertions.assertEquals(this.professorEnum.getNome(), this.professor.getNome(), "Nomes dos professores nao sao iguais");
-            Assertions.assertEquals(this.professorEnum.getTelefone(), this.professor.getTelefone(), "Telefones dos professores nao sao iguais");
-            Assertions.assertEquals(this.professorEnum.getSalario(), this.professor.getSalario(), "Salario dos professores nao sao iguais");
+            assertEquals(this.professorEnum.getEmail(), this.professor.getEmail(), "Emails dos professores nao sao iguais");
+            assertEquals(this.professorEnum.getNome(), this.professor.getNome(), "Nomes dos professores nao sao iguais");
+            assertEquals(this.professorEnum.getTelefone(), this.professor.getTelefone(), "Telefones dos professores nao sao iguais");
+            assertEquals(this.professorEnum.getSalario(), this.professor.getSalario(), "Salario dos professores nao sao iguais");
 
             Assertions.assertAll(new InstituicaoExecutable(this.professor.getInstituicao(), this.professorEnum.getInstituicao()));
             return;
@@ -54,11 +61,11 @@ public class ProfessorExecutable implements Executable {
 
         if (this.professorBD != null) {
             this.basicVerification(this.professorBD);
-            Assertions.assertEquals(this.professorBD.getEmail(), this.professor.getEmail(), "Emails dos professores nao sao iguais");
-            Assertions.assertEquals(this.professorBD.getId(), this.professor.getId(), "Ids dos professores nao sao iguais");
-            Assertions.assertEquals(this.professorBD.getNome(), this.professor.getNome(), "Nomes dos professores nao sao iguais");
-            Assertions.assertEquals(this.professorBD.getTelefone(), this.professor.getTelefone(), "Telefones dos professores nao sao iguais");
-            Assertions.assertEquals(this.professorBD.getSalario(), this.professor.getSalario(), "Salario dos professores nao sao iguais");
+            assertEquals(this.professorBD.getEmail(), this.professor.getEmail(), "Emails dos professores nao sao iguais");
+            assertEquals(this.professorBD.getId(), this.professor.getId(), "Ids dos professores nao sao iguais");
+            assertEquals(this.professorBD.getNome(), this.professor.getNome(), "Nomes dos professores nao sao iguais");
+            assertEquals(this.professorBD.getTelefone(), this.professor.getTelefone(), "Telefones dos professores nao sao iguais");
+            assertEquals(this.professorBD.getSalario(), this.professor.getSalario(), "Salario dos professores nao sao iguais");
 
             Assertions.assertAll(new InstituicaoExecutable(this.professor.getInstituicao(), this.professor.getInstituicao()));
         }

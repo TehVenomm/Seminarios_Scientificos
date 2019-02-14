@@ -1,5 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +46,7 @@ public class TesteEstudante {
         this.bc.insert(object);
 
         // Verifica se o id eh maior que zero, indicando que foi inserido no banco
-        Assertions.assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
+        assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
 
         // Obtem uma nova instancia do BD a partir do ID gerado
         Estudante objectBD = this.bc.findById(object.getId());

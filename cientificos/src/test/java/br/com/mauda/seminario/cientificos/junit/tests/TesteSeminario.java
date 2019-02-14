@@ -1,5 +1,8 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+
 import java.util.Date;
 
 import org.junit.jupiter.api.Assertions;
@@ -48,7 +51,7 @@ public class TesteSeminario {
         this.bc.insert(object);
 
         // Verifica se o id eh maior que zero, indicando que foi inserido no banco
-        Assertions.assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
+        assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
 
         // Obtem uma nova instancia do BD a partir do ID gerado
         Seminario objectBD = this.bc.findById(object.getId());
@@ -189,7 +192,7 @@ public class TesteSeminario {
             TesteSeminario.this.seminario.getAreasCientificas().clear();
             SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
                 () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            Assertions.assertEquals("ER0076", exception.getMessage(), "O campo professores contem um valor nulo");
+            assertEquals("ER0076", exception.getMessage(), "O campo professores contem um valor nulo");
         }
 
         @Tag("MapeamentoDAOTest")
@@ -200,7 +203,7 @@ public class TesteSeminario {
             TesteSeminario.this.seminario.getAreasCientificas().add(null);
             SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
                 () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            Assertions.assertEquals("ER0003", exception.getMessage(), "O campo areasCientificas contem um valor nulo");
+            assertEquals("ER0003", exception.getMessage(), "O campo areasCientificas contem um valor nulo");
         }
 
         @Tag("MapeamentoDAOTest")
@@ -237,7 +240,7 @@ public class TesteSeminario {
             TesteSeminario.this.seminario.getProfessores().clear();
             SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
                 () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            Assertions.assertEquals("ER0075", exception.getMessage(), "O campo professores contem um valor nulo");
+            assertEquals("ER0075", exception.getMessage(), "O campo professores contem um valor nulo");
         }
 
         @Tag("MapeamentoDAOTest")
@@ -248,7 +251,7 @@ public class TesteSeminario {
             TesteSeminario.this.seminario.getProfessores().add(null);
             SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
                 () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            Assertions.assertEquals("ER0003", exception.getMessage(), "O campo professores contem um valor nulo");
+            assertEquals("ER0003", exception.getMessage(), "O campo professores contem um valor nulo");
         }
 
         @Tag("MapeamentoDAOTest")

@@ -1,6 +1,10 @@
 package br.com.mauda.seminario.cientificos.junit.executable;
 
-import org.apache.commons.lang3.StringUtils;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertIsNotBlank;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
@@ -27,15 +31,14 @@ public class CursoExecutable implements Executable {
     }
 
     public void basicVerification(Curso curso) throws Throwable {
-        Assertions.assertNotNull(curso, "Um Curso nao pode ser nulo");
-        Assertions.assertTrue(StringUtils.isNotBlank(curso.getNome()),
-            "O nome do Curso nao pode ser nulo ou em branco");
+        assertNotNull(curso, "Um Curso nao pode ser nulo");
+        assertIsNotBlank(curso.getNome(), "O nome do Curso nao pode ser nulo ou em branco");
 
         // Verifica se a area cientifica dentro do curso esta preenchida corretamente
         Assertions.assertAll(new AreaCientificaExecutable(curso.getAreaCientifica()));
 
         // Verifica a associacao bidirecional com area cientifica
-        Assertions.assertTrue(curso.getAreaCientifica().getCursos().contains(curso),
+        assertTrue(curso.getAreaCientifica().getCursos().contains(curso),
             "A lista de Cursos nao contem o curso em questao - associacao bidirecional no construtor nao foi realizada");
     }
 
@@ -44,16 +47,15 @@ public class CursoExecutable implements Executable {
         this.basicVerification(this.curso);
 
         if (this.cursoEnum != null) {
-            Assertions.assertEquals(this.cursoEnum.getNome(), this.curso.getNome(), "Nomes dos cursos nao sao iguais");
-
+            assertEquals(this.cursoEnum.getNome(), this.curso.getNome(), "Nomes dos cursos nao sao iguais");
             Assertions.assertAll(new AreaCientificaExecutable(this.curso.getAreaCientifica(), this.cursoEnum.getAreaCientifica()));
             return;
         }
 
         if (this.cursoBD != null) {
             this.basicVerification(this.cursoBD);
-            Assertions.assertEquals(this.cursoBD.getId(), this.curso.getId(), "Ids dos cursos nao sao iguais");
-            Assertions.assertEquals(this.cursoBD.getNome(), this.curso.getNome(), "Nomes dos cursos nao sao iguais");
+            assertEquals(this.cursoBD.getId(), this.curso.getId(), "Ids dos cursos nao sao iguais");
+            assertEquals(this.cursoBD.getNome(), this.curso.getNome(), "Nomes dos cursos nao sao iguais");
 
             Assertions.assertAll(new AreaCientificaExecutable(this.curso.getAreaCientifica(), this.cursoBD.getAreaCientifica()));
         }
