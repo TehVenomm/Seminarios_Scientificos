@@ -40,7 +40,7 @@ public class TesteAcaoComprarSobreInscricao {
         Inscricao inscricao = dto.getInscricao();
 
         // Compra a inscricao pro seminario
-        this.bc.comprar(inscricao, object.getEstudante(), object.getDireitoMaterial());
+        this.bc.comprar(inscricao, dto.getEstudante(), dto.getDireitoMaterial());
 
         this.validarCompra(inscricao);
     }
