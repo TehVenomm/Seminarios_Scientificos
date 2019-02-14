@@ -9,9 +9,9 @@ public final class MensagensUtils {
 
     public static Supplier<String> getErrorMessage(String mensagem) {
         StackTraceElement[] stack = Thread.currentThread().getStackTrace();
-        String nomeClasse = stack[2].getClassName();
-        String nomeMetodo = stack[2].getMethodName();
-        int linha = stack[2].getLineNumber();
+        String nomeClasse = stack[3].getClassName();
+        String nomeMetodo = stack[3].getMethodName();
+        int linha = stack[3].getLineNumber();
 
         return () -> String.format("Mensagem Erro: [%s]. Classe:[%s]. Metodo:[%s]. Linha:[%d] ", mensagem, nomeClasse, nomeMetodo, linha);
     }
