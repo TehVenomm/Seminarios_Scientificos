@@ -55,4 +55,8 @@ public class AssertionsMauda extends Assertions {
     public static void assertTrue(BooleanSupplier booleanSupplier, String message) {
         Assertions.assertTrue(booleanSupplier, MensagensUtils.getErrorMessage(message));
     }
+
+    public static void assertTrue(boolean condition, String message) {
+        Assertions.assertTrue(condition, MensagensUtils.getErrorMessage(message));
+    }
 }

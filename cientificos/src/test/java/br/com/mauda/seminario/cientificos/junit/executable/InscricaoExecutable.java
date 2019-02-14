@@ -2,6 +2,7 @@ package br.com.mauda.seminario.cientificos.junit.executable;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
 import org.junit.jupiter.api.Assertions;
