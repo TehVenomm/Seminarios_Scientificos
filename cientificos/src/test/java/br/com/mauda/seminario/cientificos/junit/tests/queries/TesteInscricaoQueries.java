@@ -50,7 +50,7 @@ public class TesteInscricaoQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Inscricao> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(44, results.size(),
+        assertEquals(44, results.size(),
             "O metodo findByFilter deveria ter retornado 44 resultados, verificar se existem problemas na compra e checkin");
 
         // Verifica para cada item da collection se esta de acordo com o esperado
@@ -66,7 +66,7 @@ public class TesteInscricaoQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Inscricao> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(18, results.size(),
+        assertEquals(18, results.size(),
             "O metodo findByFilter deveria ter retornado 18 resultados, verificar se existem problemas na compra e checkin");
 
         // Verifica para cada item da collection se esta de acordo com o esperado
@@ -82,7 +82,7 @@ public class TesteInscricaoQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Inscricao> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(18, results.size(),
+        assertEquals(18, results.size(),
             "O metodo findByFilter deveria ter retornado 18 resultados, verificar se existem problemas na compra e checkin");
 
         // Verifica para cada item da collection se esta de acordo com o esperado
@@ -99,8 +99,7 @@ public class TesteInscricaoQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Inscricao> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(18, results.size(),
-            "O metodo findByFilter deveria ter retornado 18 resultados, favor deletar os itens duplicados");
+        assertEquals(18, results.size(), "O metodo findByFilter deveria ter retornado 18 resultados, favor deletar os itens duplicados");
     }
 
     @Tag("queriesDaoTest")
@@ -113,7 +112,7 @@ public class TesteInscricaoQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Inscricao> results = this.bc.findByFilter(filter);
-        Assertions.assertTrue(results.size() == 10 || results.size() == 15,
+        assertTrue(results.size() == 10 || results.size() == 15,
             "O metodo findByFilter deveria ter retornado 10 ou 15 resultados, favor deletar os itens duplicados");
 
     }
@@ -128,7 +127,7 @@ public class TesteInscricaoQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Inscricao> results = this.bc.findByFilter(filter);
-        Assertions.assertTrue(results.size() == 10 || results.size() == 15,
+        assertTrue(results.size() == 10 || results.size() == 15,
             "O metodo findByFilter deveria ter retornado 10 ou 15 resultados, favor deletar os itens duplicados");
 
     }
@@ -143,8 +142,7 @@ public class TesteInscricaoQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Inscricao> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(6, results.size(),
-            "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
+        assertEquals(6, results.size(), "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
 
     }
 }
