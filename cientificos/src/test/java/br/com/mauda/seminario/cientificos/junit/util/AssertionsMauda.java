@@ -21,6 +21,13 @@ public class AssertionsMauda extends Assertions {
     }
 
     /**
+     * <em>Asserts</em> that {@code expected} and {@code actual} are equal.
+     */
+    public static void assertEquals(int expected, int actual, String message) {
+        Assertions.assertEquals(expected, actual, MensagensUtils.getErrorMessage(message));
+    }
+
+    /**
      * <em>Asserts</em> that {@code actual} is not {@code null}.
      * <p>
      * Fails with the supplied failure {@code message}.

@@ -1,5 +1,8 @@
 package br.com.mauda.seminario.cientificos.junit.tests.queries;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+
 import java.util.Collection;
 
 import org.junit.jupiter.api.Assertions;
