@@ -42,8 +42,8 @@ public class RunnerTestes {
         errorTestManager.printErrors();
         errorTestManager.finalReport(listener);
 
-        if (falhas.isEmpty()) {
-        	fail("Falha no teste! Existem erros, por favor verifique no console!");
+        if (!falhas.isEmpty()) {
+            fail("Falha no teste! Existem erros, por favor verifique no console!");
         }
     }
 }
