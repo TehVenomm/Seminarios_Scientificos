@@ -1,8 +1,8 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,7 +34,7 @@ public class TesteAcaoCheckInSobreInscricao {
         inscricao.realizarCheckIn();
 
         // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new InscricaoExecutable(inscricao));
+        assertAll(new InscricaoExecutable(inscricao));
 
         // Verifica se a situacao da inscricao ficou como comprado
         assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.CHECKIN,
@@ -43,7 +43,7 @@ public class TesteAcaoCheckInSobreInscricao {
 
     private void validarCompra(Inscricao inscricao) {
         // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new InscricaoExecutable(inscricao));
+        assertAll(new InscricaoExecutable(inscricao));
 
         // Verifica se a situacao da inscricao ficou como comprado
         assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
