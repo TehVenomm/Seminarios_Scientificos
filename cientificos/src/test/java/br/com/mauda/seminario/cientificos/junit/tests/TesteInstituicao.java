@@ -1,6 +1,6 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
