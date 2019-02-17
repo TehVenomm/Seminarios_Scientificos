@@ -1,11 +1,11 @@
 package br.com.mauda.seminario.cientificos.junit.executable;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertIsNotBlank;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
 import br.com.mauda.seminario.cientificos.junit.massa.MassaCurso;
@@ -35,7 +35,7 @@ public class CursoExecutable implements Executable {
         assertIsNotBlank(curso.getNome(), "O nome do Curso nao pode ser nulo ou em branco");
 
         // Verifica se a area cientifica dentro do curso esta preenchida corretamente
-        Assertions.assertAll(new AreaCientificaExecutable(curso.getAreaCientifica()));
+        assertAll(new AreaCientificaExecutable(curso.getAreaCientifica()));
 
         // Verifica a associacao bidirecional com area cientifica
         assertTrue(curso.getAreaCientifica().getCursos().contains(curso),
@@ -48,7 +48,7 @@ public class CursoExecutable implements Executable {
 
         if (this.cursoEnum != null) {
             assertEquals(this.cursoEnum.getNome(), this.curso.getNome(), "Nomes dos cursos nao sao iguais");
-            Assertions.assertAll(new AreaCientificaExecutable(this.curso.getAreaCientifica(), this.cursoEnum.getAreaCientifica()));
+            assertAll(new AreaCientificaExecutable(this.curso.getAreaCientifica(), this.cursoEnum.getAreaCientifica()));
             return;
         }
 
@@ -57,7 +57,7 @@ public class CursoExecutable implements Executable {
             assertEquals(this.cursoBD.getId(), this.curso.getId(), "Ids dos cursos nao sao iguais");
             assertEquals(this.cursoBD.getNome(), this.curso.getNome(), "Nomes dos cursos nao sao iguais");
 
-            Assertions.assertAll(new AreaCientificaExecutable(this.curso.getAreaCientifica(), this.cursoBD.getAreaCientifica()));
+            assertAll(new AreaCientificaExecutable(this.curso.getAreaCientifica(), this.cursoBD.getAreaCientifica()));
         }
     }
 }

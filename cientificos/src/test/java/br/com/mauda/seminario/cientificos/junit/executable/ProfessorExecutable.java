@@ -1,11 +1,11 @@
 package br.com.mauda.seminario.cientificos.junit.executable;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertIsNotBlank;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
 import br.com.mauda.seminario.cientificos.junit.massa.MassaProfessor;
@@ -42,7 +42,7 @@ public class ProfessorExecutable implements Executable {
         assertTrue(professor.getSalario() > 0, "O salario de um Professor deve ser maior que zero");
 
         // Verifica se a instituicao dentro do professor esta preenchida corretamente
-        Assertions.assertAll(new InstituicaoExecutable(professor.getInstituicao()));
+        assertAll(new InstituicaoExecutable(professor.getInstituicao()));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ProfessorExecutable implements Executable {
             assertEquals(this.professorEnum.getTelefone(), this.professor.getTelefone(), "Telefones dos professores nao sao iguais");
             assertEquals(this.professorEnum.getSalario(), this.professor.getSalario(), "Salario dos professores nao sao iguais");
 
-            Assertions.assertAll(new InstituicaoExecutable(this.professor.getInstituicao(), this.professorEnum.getInstituicao()));
+            assertAll(new InstituicaoExecutable(this.professor.getInstituicao(), this.professorEnum.getInstituicao()));
             return;
         }
 
@@ -67,7 +67,7 @@ public class ProfessorExecutable implements Executable {
             assertEquals(this.professorBD.getTelefone(), this.professor.getTelefone(), "Telefones dos professores nao sao iguais");
             assertEquals(this.professorBD.getSalario(), this.professor.getSalario(), "Salario dos professores nao sao iguais");
 
-            Assertions.assertAll(new InstituicaoExecutable(this.professor.getInstituicao(), this.professor.getInstituicao()));
+            assertAll(new InstituicaoExecutable(this.professor.getInstituicao(), this.professor.getInstituicao()));
         }
     }
 }

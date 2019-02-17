@@ -1,8 +1,9 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -13,7 +14,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.InstituicaoBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
 import br.com.mauda.seminario.cientificos.junit.converter.InstituicaoConverter;
 import br.com.mauda.seminario.cientificos.junit.executable.InstituicaoExecutable;
@@ -38,7 +38,7 @@ public class TesteInstituicao {
     @EnumSource(MassaInstituicao.class)
     public void criar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
         // Cria o objeto
-        Assertions.assertAll(new InstituicaoExecutable(object));
+        assertAll(new InstituicaoExecutable(object));
 
         // Realiza o insert no banco de dados atraves da Business Controller
         this.bc.insert(object);
@@ -50,15 +50,14 @@ public class TesteInstituicao {
         Instituicao objectBD = this.bc.findById(object.getId());
 
         // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        Assertions.assertAll(new InstituicaoExecutable(object, objectBD));
+        assertAll(new InstituicaoExecutable(object, objectBD));
     }
 
     @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Criacao de uma Instituicao nula")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
     @Tag("MapeamentoDAOTest")
