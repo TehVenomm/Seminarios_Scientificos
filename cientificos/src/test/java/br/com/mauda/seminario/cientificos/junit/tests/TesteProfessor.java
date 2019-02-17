@@ -1,6 +1,8 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
-import org.junit.jupiter.api.Assertions;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,7 +13,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.ProfessorBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsDoublePositiveField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsEmailField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
@@ -38,7 +39,7 @@ public class TesteProfessor {
     @EnumSource(MassaProfessor.class)
     public void criar(@ConvertWith(ProfessorConverter.class) Professor object) {
         // Verifica se os atributos estao preenchidos corretamente
-        Assertions.assertAll(new ProfessorExecutable(object));
+        assertAll(new ProfessorExecutable(object));
         this.bc.insert(object);
     }
 
@@ -46,8 +47,7 @@ public class TesteProfessor {
     @Test
     @DisplayName("Criacao de um professor nulo")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
     @Tag("businessTest")
@@ -149,9 +149,7 @@ public class TesteProfessor {
         @DisplayName("Criacao de um professor com Instituicao nula")
         public void validarNulo() {
             TesteProfessor.this.professor.setInstituicao(null);
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteProfessor.this.bc.insert(TesteProfessor.this.professor));
-            Assertions.assertEquals("ER0003", exception.getMessage());
+            assertThrows(() -> TesteProfessor.this.bc.insert(TesteProfessor.this.professor), "ER0003");
         }
 
         @Tag("businessTest")

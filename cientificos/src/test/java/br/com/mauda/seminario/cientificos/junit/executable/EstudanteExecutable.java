@@ -1,10 +1,10 @@
 package br.com.mauda.seminario.cientificos.junit.executable;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertIsNotBlank;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
 import br.com.mauda.seminario.cientificos.junit.massa.MassaEstudante;
@@ -33,7 +33,7 @@ public class EstudanteExecutable implements Executable {
         assertIsNotBlank(estudante.getTelefone(), "O telefone de um Estudante nao pode ser nulo ou em branco");
 
         // Verifica se a instituicao dentro do estudante esta preenchida corretamente
-        Assertions.assertAll(new InstituicaoExecutable(estudante.getInstituicao()));
+        assertAll(new InstituicaoExecutable(estudante.getInstituicao()));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class EstudanteExecutable implements Executable {
             assertEquals(this.estudanteEnum.getNome(), this.estudante.getNome(), "Nomes dos estudantes nao sao iguais");
             assertEquals(this.estudanteEnum.getTelefone(), this.estudante.getTelefone(), "Telefones dos estudantes nao sao iguais");
 
-            Assertions.assertAll(new InstituicaoExecutable(this.estudante.getInstituicao(), this.estudanteEnum.getInstituicao()));
+            assertAll(new InstituicaoExecutable(this.estudante.getInstituicao(), this.estudanteEnum.getInstituicao()));
             return;
         }
     }
