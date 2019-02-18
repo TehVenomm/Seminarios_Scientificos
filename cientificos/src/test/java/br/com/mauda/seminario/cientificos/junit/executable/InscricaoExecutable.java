@@ -1,11 +1,11 @@
 package br.com.mauda.seminario.cientificos.junit.executable;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricao;
@@ -42,14 +42,14 @@ public class InscricaoExecutable implements Executable {
             assertNotNull(inscricao.getDireitoMaterial(), "O direito ao material de uma Inscricao nao pode ser nulo");
 
             // Verifica se o estudante dentro do inscricao esta preenchido corretamente
-            Assertions.assertAll(new EstudanteExecutable(inscricao.getEstudante()));
+            assertAll(new EstudanteExecutable(inscricao.getEstudante()));
 
             // Verifica a associacao bidirecional com estudante
             assertTrue(inscricao.getEstudante().getInscricoes().contains(inscricao), "A Lista de inscricoes do Estudante "
                 + inscricao.getEstudante().getNome() + " nao contem a inscricao em questao - associacao bidirecional nao foi realizada");
         }
 
-        Assertions.assertAll(new SeminarioExecutable(inscricao.getSeminario()));
+        assertAll(new SeminarioExecutable(inscricao.getSeminario()));
     }
 
     @Override
@@ -63,9 +63,9 @@ public class InscricaoExecutable implements Executable {
 
             // SENAO for a situacao disponivel
             if (!SituacaoInscricaoEnum.DISPONIVEL.equals(this.inscricao.getSituacao())) {
-                Assertions.assertAll(new EstudanteExecutable(this.inscricao.getEstudante(), this.inscricaoEnum.getEstudante()));
+                assertAll(new EstudanteExecutable(this.inscricao.getEstudante(), this.inscricaoEnum.getEstudante()));
             }
-            Assertions.assertAll(new SeminarioExecutable(this.inscricao.getSeminario(), this.inscricaoEnum.getSeminario()));
+            assertAll(new SeminarioExecutable(this.inscricao.getSeminario(), this.inscricaoEnum.getSeminario()));
             return;
         }
 
@@ -78,9 +78,9 @@ public class InscricaoExecutable implements Executable {
 
             // SENAO for a situacao disponivel
             if (!SituacaoInscricaoEnum.DISPONIVEL.equals(this.inscricao.getSituacao())) {
-                Assertions.assertAll(new EstudanteExecutable(this.inscricao.getEstudante(), this.inscricaoBD.getEstudante()));
+                assertAll(new EstudanteExecutable(this.inscricao.getEstudante(), this.inscricaoBD.getEstudante()));
             }
-            Assertions.assertAll(new SeminarioExecutable(this.inscricao.getSeminario(), this.inscricaoBD.getSeminario()));
+            assertAll(new SeminarioExecutable(this.inscricao.getSeminario(), this.inscricaoBD.getSeminario()));
         }
     }
 }

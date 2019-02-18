@@ -1,12 +1,15 @@
 package br.com.mauda.seminario.cientificos.junit.executable;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertIsNotBlank;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.fail;
+
+import java.util.List;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
 import br.com.mauda.seminario.cientificos.junit.massa.MassaSeminario;
@@ -47,15 +50,15 @@ public class SeminarioExecutable implements Executable {
         assertIsNotBlank(seminario.getTitulo(), "O titulo de um Seminario nao pode ser nulo ou em branco");
 
         for (Professor professor : seminario.getProfessores()) {
-            Assertions.assertAll(new ProfessorExecutable(professor));
+            assertAll(new ProfessorExecutable(professor));
 
             // Verifica a associacao bidirecional com professor
             assertTrue(professor.getSeminarios().contains(seminario), "A lista de Seminarios do Professor "
-                + professor.getNome() + " nao contem o seminario em questao - associacao bidirecional nao foi realizada");
+                + professor.getNome() + " nao contem o seminario em questao - associacao bidirecional no construtor de Seminarios nao foi realizada");
         }
 
         for (AreaCientifica area : seminario.getAreasCientificas()) {
-            Assertions.assertAll(new AreaCientificaExecutable(area));
+            assertAll(new AreaCientificaExecutable(area));
         }
 
         // Verifica se a lista de inscricoes contem a quantidade gerada
@@ -65,7 +68,7 @@ public class SeminarioExecutable implements Executable {
         for (Inscricao inscricao : seminario.getInscricoes()) {
             // Verifica a associacao bidirecional com inscricao
             assertEquals(inscricao.getSeminario(), seminario,
-                "A inscricao nao contem o seminario em questao - associacao bidirecional nao foi realizada");
+                "A inscricao nao contem o seminario em questao - associacao bidirecional no construtor de Seminarios nao foi realizada");
         }
     }
 
@@ -79,29 +82,13 @@ public class SeminarioExecutable implements Executable {
             assertEquals(this.seminarioEnum.getQtdInscricoes(), this.seminario.getQtdInscricoes(), "Quantidade de inscricoes nao sao iguais");
             assertEquals(this.seminarioEnum.getTitulo(), this.seminario.getTitulo(), "Titulo dos seminarios nao sao iguais");
 
-            boolean naoAchou = true;
-            for (Professor professor : this.seminario.getProfessores()) {
-                if (professor.getNome().equals(this.seminarioEnum.getProfessor().getNome())) {
-                    Assertions.assertAll(new ProfessorExecutable(professor, this.seminarioEnum.getProfessor()));
-                    naoAchou = false;
-                    break;
-                }
-            }
-            if (naoAchou) {
-                Assertions.fail("Nao encontrou professor correspondente");
-            }
+            AreaCientifica areaCientifica = this.obtemAreaCientificaPeloNome(this.seminario.getAreasCientificas(),
+                this.seminarioEnum.getAreaCientifica().getNome());
+            assertAll(new AreaCientificaExecutable(areaCientifica, this.seminarioEnum.getAreaCientifica()));
 
-            naoAchou = true;
-            for (AreaCientifica area : this.seminario.getAreasCientificas()) {
-                if (area.getNome().equals(this.seminarioEnum.getAreaCientifica().getNome())) {
-                    Assertions.assertAll(new AreaCientificaExecutable(area, this.seminarioEnum.getAreaCientifica()));
-                    naoAchou = false;
-                    break;
-                }
-            }
-            if (naoAchou) {
-                Assertions.fail("Nao encontrou area cientifica correspondente");
-            }
+            Professor professor = this.obtemProfessorPeloNome(this.seminario.getProfessores(), this.seminarioEnum.getProfessor().getNome());
+            assertAll(new ProfessorExecutable(professor, this.seminarioEnum.getProfessor()));
+
             return;
         }
 
@@ -114,32 +101,38 @@ public class SeminarioExecutable implements Executable {
             assertEquals(this.seminarioBD.getTitulo(), this.seminario.getTitulo(), "Titulo dos seminarios nao sao iguais");
 
             for (Professor professor : this.seminario.getProfessores()) {
-                boolean naoAchou = true;
-                for (Professor professorBD : this.seminarioBD.getProfessores()) {
-                    if (professor.getNome().equals(professorBD.getNome())) {
-                        Assertions.assertAll(new ProfessorExecutable(professor, professorBD));
-                        naoAchou = false;
-                        break;
-                    }
-                }
-                if (naoAchou) {
-                    Assertions.fail("Nao encontrou professor correspondente");
-                }
+                Professor professorBD = this.obtemProfessorPeloNome(this.seminarioBD.getProfessores(), professor.getNome());
+                assertAll(new ProfessorExecutable(professor, professorBD));
             }
 
             for (AreaCientifica area : this.seminario.getAreasCientificas()) {
-                boolean naoAchou = true;
-                for (AreaCientifica areaBD : this.seminarioBD.getAreasCientificas()) {
-                    if (area.getNome().equals(areaBD.getNome())) {
-                        Assertions.assertAll(new AreaCientificaExecutable(area, areaBD));
-                        naoAchou = false;
-                        break;
-                    }
-                }
-                if (naoAchou) {
-                    Assertions.fail("Nao encontrou area cientifica correspondente");
-                }
+                AreaCientifica areaBD = this.obtemAreaCientificaPeloNome(this.seminarioBD.getAreasCientificas(), area.getNome());
+                assertAll(new AreaCientificaExecutable(area, areaBD));
             }
         }
+    }
+
+    private AreaCientifica obtemAreaCientificaPeloNome(List<AreaCientifica> instancias, String nome) {
+        AreaCientifica areaCientifica = instancias.stream()
+            .filter(a -> nome.equals(a.getNome()))
+            .findAny()
+            .orElse(null);
+
+        if (areaCientifica == null) {
+            fail("Nao encontrou Area Cientifica correspondente");
+        }
+        return areaCientifica;
+    }
+
+    private Professor obtemProfessorPeloNome(List<Professor> instancias, String nome) {
+        Professor professor = instancias.stream()
+            .filter(p -> nome.equals(p.getNome()))
+            .findAny()
+            .orElse(null);
+
+        if (professor == null) {
+            fail("Nao encontrou professor correspondente");
+        }
+        return professor;
     }
 }

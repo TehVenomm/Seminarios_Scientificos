@@ -1,10 +1,11 @@
 package br.com.mauda.seminario.cientificos.junit.tests.queries;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
 import java.util.Collection;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.CursoBC;
 import br.com.mauda.seminario.cientificos.dto.CursoDTO;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.executable.AreaCientificaExecutable;
 import br.com.mauda.seminario.cientificos.junit.executable.CursoExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaCurso;
@@ -33,7 +33,7 @@ public class TesteCursoQueries {
         Curso objetoFindId = this.bc.findById(objetoFindAll.getId());
 
         // Realiza as verificacoes entre o objeto obtido pelo metodo findAll e o objeto obtido pelo findById
-        Assertions.assertAll(new CursoExecutable(objetoFindAll, objetoFindId));
+        assertAll(new CursoExecutable(objetoFindAll, objetoFindId));
 
         CursoDTO filter = new CursoDTO();
         // Seta a informacao do filtro
@@ -45,7 +45,7 @@ public class TesteCursoQueries {
         assertEquals(objetosFindByFilter.size(), 1, "O metodo findByFilter deveria ter retornado apenas 1 resultado, ao buscar pelo ID.");
 
         // Verifica se os objetos sao iguais
-        Assertions.assertAll(new CursoExecutable(objetoFindAll, objetosFindByFilter.iterator().next()));
+        assertAll(new CursoExecutable(objetoFindAll, objetosFindByFilter.iterator().next()));
     }
 
     /**
@@ -55,17 +55,14 @@ public class TesteCursoQueries {
     @Test
     @DisplayName("FindByFilter utilizando um filtro nulo")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.findByFilter(null));
-        Assertions.assertEquals("ER0001", exception.getMessage());
+        assertThrows(() -> this.bc.findByFilter(null), "ER0001");
     }
 
     @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro vazio")
     public void validarFiltroVazio() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-            () -> this.bc.findByFilter(new CursoDTO()));
-        Assertions.assertEquals("ER0001", exception.getMessage());
+        assertThrows(() -> this.bc.findByFilter(new CursoDTO()), "ER0001");
     }
 
     @Tag("queriesDaoTest")
@@ -80,7 +77,7 @@ public class TesteCursoQueries {
         Collection<Curso> results = this.bc.findByFilter(filter);
         assertEquals(1, results.size(), "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
 
-        Assertions.assertAll(new CursoExecutable(results.iterator().next(), massa));
+        assertAll(new CursoExecutable(results.iterator().next(), massa));
     }
 
     @Tag("queriesDaoTest")
@@ -95,6 +92,6 @@ public class TesteCursoQueries {
         Collection<Curso> results = this.bc.findByFilter(filter);
         assertEquals(3, results.size(), "O metodo findByFilter deveria ter retornado 3 resultados, favor deletar os itens duplicados");
 
-        Assertions.assertAll(new AreaCientificaExecutable(results.iterator().next().getAreaCientifica(), massa.getAreaCientifica()));
+        assertAll(new AreaCientificaExecutable(results.iterator().next().getAreaCientifica(), massa.getAreaCientifica()));
     }
 }

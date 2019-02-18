@@ -1,11 +1,12 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
-import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNull;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
 import java.util.Date;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -16,7 +17,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.SeminarioBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsDateFutureField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsGenericField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsIntegerPositiveField;
@@ -45,7 +45,7 @@ public class TesteSeminario {
     @EnumSource(MassaSeminario.class)
     public void criar(@ConvertWith(SeminarioDAOConverter.class) Seminario object) {
         // Verifica se os atributos estao preenchidos corretamente
-        Assertions.assertAll(new SeminarioExecutable(object));
+        assertAll(new SeminarioExecutable(object));
 
         // Realiza o insert no banco de dados atraves da Business Controller
         this.bc.insert(object);
@@ -57,7 +57,7 @@ public class TesteSeminario {
         Seminario objectBD = this.bc.findById(object.getId());
 
         // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        Assertions.assertAll(new SeminarioExecutable(object, objectBD));
+        assertAll(new SeminarioExecutable(object, objectBD));
     }
 
     @Tag("queriesDaoTest")
@@ -78,7 +78,7 @@ public class TesteSeminario {
         Seminario objectBD = this.bc.findById(object.getId());
 
         // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        Assertions.assertAll(new SeminarioExecutable(object, objectBD));
+        assertAll(new SeminarioExecutable(object, objectBD));
 
         // Realiza o delete no banco de dados atraves da Business Controller para nao deixar o registro
         this.bc.delete(object);
@@ -99,15 +99,14 @@ public class TesteSeminario {
         Seminario objectBD = this.bc.findById(object.getId());
 
         // Verifica se o objeto deixou de existir no BD
-        Assertions.assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
+        assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
     }
 
     @Tag("queriesDaoTest")
     @Test
     @DisplayName("Criacao de um seminario nulo")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
     @Tag("queriesDaoTest")
@@ -232,9 +231,7 @@ public class TesteSeminario {
         @DisplayName("Criacao de um seminario sem areas cientificas")
         public void validarBranco() {
             TesteSeminario.this.seminario.getAreasCientificas().clear();
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            assertEquals("ER0076", exception.getMessage(), "O campo professores contem um valor nulo");
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0076");
         }
 
         @Tag("queriesDaoTest")
@@ -243,9 +240,7 @@ public class TesteSeminario {
         public void validarNulo() {
             TesteSeminario.this.seminario.getAreasCientificas().clear();
             TesteSeminario.this.seminario.getAreasCientificas().add(null);
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            assertEquals("ER0003", exception.getMessage(), "O campo areasCientificas contem um valor nulo");
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0003");
         }
 
         @Tag("queriesDaoTest")
@@ -280,9 +275,7 @@ public class TesteSeminario {
         @DisplayName("Criacao de um seminario sem professores")
         public void validarBranco() {
             TesteSeminario.this.seminario.getProfessores().clear();
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            assertEquals("ER0075", exception.getMessage(), "O campo professores contem um valor nulo");
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0075");
         }
 
         @Tag("queriesDaoTest")
@@ -291,9 +284,7 @@ public class TesteSeminario {
         public void validarNulo() {
             TesteSeminario.this.seminario.getProfessores().clear();
             TesteSeminario.this.seminario.getProfessores().add(null);
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            assertEquals("ER0003", exception.getMessage(), "O campo professores contem um valor nulo");
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0003");
         }
 
         @Tag("queriesDaoTest")

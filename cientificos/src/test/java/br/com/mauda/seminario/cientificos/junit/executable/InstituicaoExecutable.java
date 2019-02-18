@@ -4,7 +4,6 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertIsNotBlank;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.function.Executable;
 
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInstituicao;
@@ -58,7 +57,7 @@ public class InstituicaoExecutable implements Executable {
             assertEquals(this.instituicaoBD.getId(), this.instituicao.getId(), "Ids das instituicoes nao sao iguais");
             assertEquals(this.instituicaoBD.getNome(), this.instituicao.getNome(), "Nomes das instituicoes nao sao iguais");
             assertEquals(this.instituicaoBD.getPais(), this.instituicao.getPais(), "Paises das instituicoes nao sao iguais");
-            Assertions.assertEquals(this.instituicaoBD.getSigla(), this.instituicao.getSigla(), "Siglas das instituicoes nao sao iguais");
+            assertEquals(this.instituicaoBD.getSigla(), this.instituicao.getSigla(), "Siglas das instituicoes nao sao iguais");
         }
     }
 }
