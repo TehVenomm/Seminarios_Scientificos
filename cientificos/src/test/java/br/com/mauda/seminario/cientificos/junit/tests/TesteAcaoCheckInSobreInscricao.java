@@ -66,13 +66,13 @@ public class TesteAcaoCheckInSobreInscricao {
     }
 
     @Test
-    @DisplayName("Compra com inscricao nula")
+    @DisplayName("CheckIn de uma inscricao nula")
     public void validarCompraComInscricaoNula() {
-        assertThrows(() -> this.bc.realizarCheckIn(null), "ER0040");
+        assertThrows(() -> this.bc.realizarCheckIn(null), "ER0003");
     }
 
     @Test
-    @DisplayName("Compra com situacao da inscricao diferente de Disponivel")
+    @DisplayName("CheckIn de uma inscricao com a situacao diferente de COMPRADO")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() {
         this.acaoInscricaoDTO.getInscricao().setSituacao(SituacaoInscricaoEnum.DISPONIVEL);
         assertThrows(() -> this.bc.realizarCheckIn(this.acaoInscricaoDTO.getInscricao()), "ER0043");

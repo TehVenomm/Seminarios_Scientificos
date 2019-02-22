@@ -58,7 +58,7 @@ public class TesteAcaoComprarSobreInscricao {
     @Test
     @DisplayName("Compra com inscricao nula")
     public void validarCompraComInscricaoNula() {
-        assertThrows(() -> this.bc.comprar(null, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial()), "ER0040");
+        assertThrows(() -> this.bc.comprar(null, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial()), "ER0003");
     }
 
     @Tag("businessTest")
