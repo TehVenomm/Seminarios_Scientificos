@@ -3,6 +3,7 @@ package br.com.mauda.seminario.cientificos.junit.tests;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -147,8 +148,10 @@ public class TesteProfessor {
         @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um professor com Instituicao nula")
-        public void validarNulo() {
-            TesteProfessor.this.professor.setInstituicao(null);
+        public void validarNulo() throws IllegalAccessException {
+            // Metodo que seta a instituicao como null usando reflections
+            FieldUtils.writeDeclaredField(TesteProfessor.this.professor, "instituicao", null, true);
+
             assertThrows(() -> TesteProfessor.this.bc.insert(TesteProfessor.this.professor), "ER0003");
         }
 

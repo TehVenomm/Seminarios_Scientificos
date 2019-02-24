@@ -4,6 +4,7 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -73,11 +74,15 @@ public class TesteAcaoCheckInSobreInscricao {
 
     @Test
     @DisplayName("CheckIn de uma inscricao com a situacao diferente de COMPRADO")
-    public void validarCompraComSituacaoInscricaoNaoDisponivel() {
-        this.acaoInscricaoDTO.getInscricao().setSituacao(SituacaoInscricaoEnum.DISPONIVEL);
-        assertThrows(() -> this.bc.realizarCheckIn(this.acaoInscricaoDTO.getInscricao()), "ER0043");
+    public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
+        Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
 
-        this.acaoInscricaoDTO.getInscricao().setSituacao(SituacaoInscricaoEnum.CHECKIN);
-        assertThrows(() -> this.bc.realizarCheckIn(this.acaoInscricaoDTO.getInscricao()), "ER0043");
+        // Metodo que seta a situacao da inscricao como DISPONIVEL usando reflections
+        FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.DISPONIVEL, true);
+        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0043");
+
+        // Metodo que seta a situacao da inscricao como CHECKIN usando reflections
+        FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.CHECKIN, true);
+        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0043");
     }
 }
