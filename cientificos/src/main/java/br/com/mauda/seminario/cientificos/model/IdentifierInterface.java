@@ -4,5 +4,4 @@ public interface IdentifierInterface {
 
     public Long getId();
 
-    public void setId(Long id);
 }
