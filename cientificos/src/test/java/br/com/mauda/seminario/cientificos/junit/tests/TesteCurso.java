@@ -4,6 +4,7 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -89,8 +90,10 @@ public class TesteCurso {
 
         @Test
         @DisplayName("Criacao de um curso com area cientifica nula")
-        public void validarNulo() {
-            TesteCurso.this.curso.setAreaCientifica(null);
+        public void validarNulo() throws IllegalAccessException {
+            // Metodo que seta a area cientifica como null usando reflections
+            FieldUtils.writeDeclaredField(TesteCurso.this.curso, "areaCientifica", null, true);
+
             assertThrows(() -> TesteCurso.this.bc.insert(TesteCurso.this.curso), "ER0003");
         }
 

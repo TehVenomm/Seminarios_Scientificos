@@ -4,6 +4,7 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -138,8 +139,10 @@ public class TesteEstudante {
         @Tag("MapeamentoDAOTest")
         @Test
         @DisplayName("Criacao de um estudante com Instituicao nula")
-        public void validarNulo() {
-            TesteEstudante.this.estudante.setInstituicao(null);
+        public void validarNulo() throws IllegalAccessException {
+            // Metodo que seta a instituicao como null usando reflections
+            FieldUtils.writeDeclaredField(TesteEstudante.this.estudante, "instituicao", null, true);
+
             assertThrows(() -> TesteEstudante.this.bc.insert(TesteEstudante.this.estudante), "ER0003");
         }
 

@@ -4,6 +4,7 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -58,7 +59,7 @@ public class TesteAcaoComprarSobreInscricao {
     @Test
     @DisplayName("Compra com inscricao nula")
     public void validarCompraComInscricaoNula() {
-        assertThrows(() -> this.bc.comprar(null, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial()), "ER0040");
+        assertThrows(() -> this.bc.comprar(null, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial()), "ER0003");
     }
 
     @Tag("MapeamentoDAOTest")
@@ -78,13 +79,17 @@ public class TesteAcaoComprarSobreInscricao {
     @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Compra com situacao da inscricao diferente de Disponivel")
-    public void validarCompraComSituacaoInscricaoNaoDisponivel() {
-        this.acaoInscricaoDTO.getInscricao().setSituacao(SituacaoInscricaoEnum.COMPRADO);
-        assertThrows(() -> this.bc.comprar(this.acaoInscricaoDTO.getInscricao(), this.acaoInscricaoDTO.getEstudante(),
+    public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
+        Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
+
+        // Metodo que seta a situacao da inscricao como COMPRADO usando reflections
+        FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.COMPRADO, true);
+        assertThrows(() -> this.bc.comprar(inscricao, this.acaoInscricaoDTO.getEstudante(),
             this.acaoInscricaoDTO.getDireitoMaterial()), "ER0042");
 
-        this.acaoInscricaoDTO.getInscricao().setSituacao(SituacaoInscricaoEnum.CHECKIN);
-        assertThrows(() -> this.bc.comprar(this.acaoInscricaoDTO.getInscricao(), this.acaoInscricaoDTO.getEstudante(),
+        // Metodo que seta a situacao da inscricao como CHECKIN usando reflections
+        FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.CHECKIN, true);
+        assertThrows(() -> this.bc.comprar(inscricao, this.acaoInscricaoDTO.getEstudante(),
             this.acaoInscricaoDTO.getDireitoMaterial()), "ER0042");
     }
 }
