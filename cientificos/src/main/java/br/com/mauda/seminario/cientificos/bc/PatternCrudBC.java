@@ -1,9 +1,10 @@
 package br.com.mauda.seminario.cientificos.bc;
 
 import br.com.mauda.seminario.cientificos.dao.PatternCrudDAO;
-import br.com.mauda.seminario.cientificos.model.IdentifierInterface;
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+import br.com.mauda.seminario.cientificos.model.DataValidation;
 
-public abstract class PatternCrudBC<T extends IdentifierInterface, DAO extends PatternCrudDAO<T>> {
+public abstract class PatternCrudBC<T extends DataValidation, DAO extends PatternCrudDAO<T>> {
 
     ///////////////////////////////////////////////////////////////////
     // METODOS UTILITARIOS
@@ -28,7 +29,10 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DAO extends P
      * @param object
      */
     public void insert(T object) {
-        this.validateForDataModification(object);
+        if (object == null) {
+            throw new SeminariosCientificosException("ER0003");
+        }
+        object.validateForDataModification();
         this.dao.insert(object);
     }
 
@@ -51,16 +55,4 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DAO extends P
         return this.dao.findById(id);
     }
 
-    ///////////////////////////////////////////////////////////////////
-    // METODOS DE VALIDACAO
-    ///////////////////////////////////////////////////////////////////
-
-    /**
-     * Realiza a validacao de um objeto para a insercao ou atualizacao correspondente da classe DAO
-     *
-     * As validacoes de regras de negocio deverao ser realizadas nesse metodo
-     *
-     * @param object
-     */
-    protected abstract void validateForDataModification(T object);
 }
