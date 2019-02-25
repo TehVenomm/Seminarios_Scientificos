@@ -4,9 +4,9 @@ import java.util.Collection;
 
 import br.com.mauda.seminario.cientificos.dao.PatternCrudDAO;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
-import br.com.mauda.seminario.cientificos.model.IdentifierInterface;
+import br.com.mauda.seminario.cientificos.model.DataValidation;
 
-public abstract class PatternCrudBC<T extends IdentifierInterface, DTO, DAO extends PatternCrudDAO<T, DTO>> {
+public abstract class PatternCrudBC<T extends DataValidation, DTO, DAO extends PatternCrudDAO<T, DTO>> {
 
     ///////////////////////////////////////////////////////////////////
     // METODOS UTILITARIOS
@@ -31,7 +31,10 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DTO, DAO exte
      * @param object
      */
     public void insert(T object) {
-        this.validateForDataModification(object);
+        if (object == null) {
+            throw new SeminariosCientificosException("ER0003");
+        }
+        object.validateForDataModification();
         this.dao.insert(object);
     }
 
@@ -44,7 +47,10 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DTO, DAO exte
      * @return
      */
     public void update(T object) {
-        this.validateForDataModification(object);
+        if (object == null) {
+            throw new SeminariosCientificosException("ER0003");
+        }
+        object.validateForDataModification();
         this.dao.update(object);
     }
 
@@ -107,14 +113,6 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DTO, DAO exte
     // METODOS DE VALIDACAO
     ///////////////////////////////////////////////////////////////////
 
-    /**
-     * Realiza a validacao de um objeto para a insercao ou atualizacao correspondente da classe DAO
-     *
-     * As validacoes de regras de negocio deverao ser realizadas nesse metodo
-     *
-     * @param object
-     */
-    protected abstract void validateForDataModification(T object);
 
     /**
      * Realiza a validacao de um objeto para a busca de informacoes quando este eh um filtro da tela

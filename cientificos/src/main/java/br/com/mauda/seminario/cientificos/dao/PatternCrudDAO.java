@@ -11,9 +11,9 @@ import org.hibernate.Transaction;
 
 import br.com.mauda.seminario.cientificos.dao.util.HibernateUtil;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
-import br.com.mauda.seminario.cientificos.model.IdentifierInterface;
+import br.com.mauda.seminario.cientificos.model.DataValidation;
 
-public abstract class PatternCrudDAO<T extends IdentifierInterface, DTO> implements Serializable {
+public abstract class PatternCrudDAO<T extends DataValidation, DTO> implements Serializable {
 
     private static final long serialVersionUID = 3723942253378506052L;
     protected String entityClassName;

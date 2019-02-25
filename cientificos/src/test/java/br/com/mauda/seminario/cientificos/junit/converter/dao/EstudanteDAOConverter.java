@@ -43,9 +43,8 @@ public class EstudanteDAOConverter implements ArgumentConverter {
             // Atualiza as informacoes de acordo com o enum
             this.converter.update(estudante, massaEstudante);
 
-            // Retorna o curso
             return estudante;
         }
-        throw new ArgumentConversionException(input + " nao eh uma massa de instituicao valida");
+        throw new ArgumentConversionException(input + " nao eh uma massa de estudante valida");
     }
 }

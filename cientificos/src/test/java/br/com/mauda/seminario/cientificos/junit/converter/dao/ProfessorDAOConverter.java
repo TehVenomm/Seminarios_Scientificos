@@ -43,7 +43,6 @@ public class ProfessorDAOConverter implements ArgumentConverter {
             // Atualiza as informacoes de acordo com o enum
             this.converter.update(professor, massaProfessor);
 
-            // Retorna o curso
             return professor;
         }
         throw new ArgumentConversionException(input + " nao eh uma massa de professor valida");

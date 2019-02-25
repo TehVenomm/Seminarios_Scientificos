@@ -66,7 +66,6 @@ public class SeminarioDAOConverter implements ArgumentConverter {
             // Atualiza as informacoes de acordo com o enum
             this.converter.update(seminario, massaSeminario);
 
-            // Retorna o curso
             return seminario;
         }
         throw new ArgumentConversionException(input + " nao eh uma massa de seminario valida");

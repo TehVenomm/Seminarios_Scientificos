@@ -4,6 +4,7 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -54,19 +55,23 @@ public class TesteAcaoCheckInSobreInscricao {
 
     @Tag("queriesDaoTest")
     @Test
-    @DisplayName("CheckIn com inscricao nula")
+    @DisplayName("CheckIn de uma inscricao nula")
     public void validarCheckInComInscricaoNula() {
-        assertThrows(() -> this.bc.realizarCheckIn(null), "ER0040");
+        assertThrows(() -> this.bc.realizarCheckIn(null), "ER0003");
     }
 
     @Tag("queriesDaoTest")
     @Test
-    @DisplayName("CheckIn com situacao da inscricao diferente de Disponivel")
-    public void validarCheckInComSituacaoInscricaoNaoDisponivel() {
-        this.acaoInscricaoDTO.getInscricao().setSituacao(SituacaoInscricaoEnum.DISPONIVEL);
-        assertThrows(() -> this.bc.realizarCheckIn(this.acaoInscricaoDTO.getInscricao()), "ER0043");
+    @DisplayName("CheckIn de uma inscricao com a situacao diferente de COMPRADO")
+    public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
+        Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
 
-        this.acaoInscricaoDTO.getInscricao().setSituacao(SituacaoInscricaoEnum.CHECKIN);
-        assertThrows(() -> this.bc.realizarCheckIn(this.acaoInscricaoDTO.getInscricao()), "ER0043");
+        // Metodo que seta a situacao da inscricao como DISPONIVEL usando reflections
+        FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.DISPONIVEL, true);
+        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0043");
+
+        // Metodo que seta a situacao da inscricao como CHECKIN usando reflections
+        FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.CHECKIN, true);
+        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0043");
     }
 }
