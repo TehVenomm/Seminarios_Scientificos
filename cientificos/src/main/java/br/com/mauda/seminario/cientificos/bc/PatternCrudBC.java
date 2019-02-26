@@ -3,10 +3,11 @@ package br.com.mauda.seminario.cientificos.bc;
 import java.util.Collection;
 
 import br.com.mauda.seminario.cientificos.dao.PatternCrudDAO;
+import br.com.mauda.seminario.cientificos.dto.FilterValidation;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.DataValidation;
 
-public abstract class PatternCrudBC<T extends DataValidation, DTO, DAO extends PatternCrudDAO<T, DTO>> {
+public abstract class PatternCrudBC<T extends DataValidation, DTO extends FilterValidation, DAO extends PatternCrudDAO<T, DTO>> {
 
     ///////////////////////////////////////////////////////////////////
     // METODOS UTILITARIOS
@@ -94,7 +95,7 @@ public abstract class PatternCrudBC<T extends DataValidation, DTO, DAO extends P
      * @return
      */
     public Collection<T> findByFilter(DTO filter) {
-        if (!this.validateForFindData(filter)) {
+        if (filter == null || !filter.validateForFindData()) {
             throw new SeminariosCientificosException("ER0001");
         }
         return this.dao.findByFilter(filter);
@@ -108,19 +109,4 @@ public abstract class PatternCrudBC<T extends DataValidation, DTO, DAO extends P
     public Collection<T> findAll() {
         return this.dao.findAll();
     }
-
-    ///////////////////////////////////////////////////////////////////
-    // METODOS DE VALIDACAO
-    ///////////////////////////////////////////////////////////////////
-
-
-    /**
-     * Realiza a validacao de um objeto para a busca de informacoes quando este eh um filtro da tela
-     *
-     * As validacoes de regras de negocio deverao ser realizadas nesse metodo
-     *
-     * @param object
-     * @return
-     */
-    protected abstract boolean validateForFindData(DTO object);
 }
