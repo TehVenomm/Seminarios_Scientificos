@@ -45,6 +45,12 @@ public class TesteAcaoComprarSobreInscricao {
         this.bc.comprar(inscricao, dto.getEstudante(), dto.getDireitoMaterial());
 
         this.validarCompra(inscricao);
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        Inscricao objectBD = this.bc.findById(inscricao.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        assertAll(new InscricaoExecutable(inscricao, objectBD));
     }
 
     private void validarCompra(Inscricao inscricao) {

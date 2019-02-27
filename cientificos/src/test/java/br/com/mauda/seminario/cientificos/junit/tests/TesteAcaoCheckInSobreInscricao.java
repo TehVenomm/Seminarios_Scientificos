@@ -51,6 +51,12 @@ public class TesteAcaoCheckInSobreInscricao {
         // Verifica se a situacao da inscricao ficou como checkin
         assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.CHECKIN,
             "Situacao da inscricao nao eh checkIn - trocar a situacao no metodo realizarCheckIn()");
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        Inscricao objectBD = this.bc.findById(inscricao.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        assertAll(new InscricaoExecutable(inscricao, objectBD));
     }
 
     @Tag("queriesDaoTest")
