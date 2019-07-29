@@ -1,6 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
-import org.junit.jupiter.api.Assertions;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -36,7 +37,7 @@ public class TesteCurso {
     @EnumSource(MassaCurso.class)
     public void criar(@ConvertWith(CursoConverter.class) Curso object) {
         // Verifica se os atributos estao preenchidos corretamente
-        Assertions.assertAll(new CursoExecutable(object));
+        assertAll(new CursoExecutable(object));
         this.bc.insert(object);
     }
 

@@ -1,5 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.converter.dto;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.ArgumentConverter;
@@ -7,7 +9,11 @@ import org.junit.jupiter.params.converter.ArgumentConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.EstudanteConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.SeminarioConverter;
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
+import br.com.mauda.seminario.cientificos.junit.executable.EstudanteExecutable;
+import br.com.mauda.seminario.cientificos.junit.executable.InscricaoExecutable;
+import br.com.mauda.seminario.cientificos.junit.executable.SeminarioExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricao;
+import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoCancelarCompra;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoCheckIn;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoComprar;
 import br.com.mauda.seminario.cientificos.model.Estudante;
@@ -25,6 +31,9 @@ public class AcaoInscricaoDTOConverter implements ArgumentConverter {
         if (input instanceof MassaInscricaoComprar) {
             return this.create((MassaInscricaoComprar) input);
         }
+        if (input instanceof MassaInscricaoCancelarCompra) {
+            return this.create((MassaInscricaoCancelarCompra) input);
+        }
         if (input instanceof MassaInscricaoCheckIn) {
             return this.create((MassaInscricaoCheckIn) input);
         }
@@ -32,6 +41,10 @@ public class AcaoInscricaoDTOConverter implements ArgumentConverter {
     }
 
     public AcaoInscricaoDTO create(MassaInscricaoComprar enumm) {
+        return this.create(enumm.getInscricao());
+    }
+
+    public AcaoInscricaoDTO create(MassaInscricaoCancelarCompra enumm) {
         return this.create(enumm.getInscricao());
     }
 
@@ -52,6 +65,17 @@ public class AcaoInscricaoDTOConverter implements ArgumentConverter {
         // Obtem o direito ao material
         Boolean direitoMaterial = enumm.isDireitoMaterial();
 
-        return new AcaoInscricaoDTO(seminario, estudante, inscricao, direitoMaterial);
+        AcaoInscricaoDTO dto = new AcaoInscricaoDTO(seminario, estudante, inscricao, direitoMaterial);
+
+        // Verifica se os atributos estao preenchidos
+        assertAll(new SeminarioExecutable(dto.getSeminario()));
+
+        // Verifica se os atributos estao preenchidos
+        assertAll(new EstudanteExecutable(dto.getEstudante()));
+
+        // Verifica se os atributos estao preenchidos
+        assertAll(new InscricaoExecutable(dto.getInscricao()));
+
+        return dto;
     }
 }
