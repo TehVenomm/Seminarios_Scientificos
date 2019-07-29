@@ -1,9 +1,8 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
-import java.util.Date;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 
-import org.apache.commons.lang3.time.DateUtils;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +13,6 @@ import br.com.mauda.seminario.cientificos.junit.converter.dto.AcaoInscricaoDTOCo
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
 import br.com.mauda.seminario.cientificos.junit.executable.InscricaoExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoCheckIn;
-import br.com.mauda.seminario.cientificos.junit.util.MensagensUtils;
 import br.com.mauda.seminario.cientificos.model.Inscricao;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 
@@ -35,32 +33,20 @@ public class TesteAcaoCheckInSobreInscricao {
         // Realiza o check in da inscricao pro seminario
         inscricao.realizarCheckIn();
 
-        // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new InscricaoExecutable(inscricao));
-
-        Assertions.assertNotNull(inscricao.getDataCheckIn(),
-            MensagensUtils.getErrorMessage("A data de checkin deve estar preenchida em uma inscricao com situacao checkin"));
-
-        Assertions.assertTrue(DateUtils.isSameDay(inscricao.getDataCheckIn(), new Date()),
-            MensagensUtils.getErrorMessage("Data do checkin nao eh igual a hoje"));
-
         // Verifica se a situacao da inscricao ficou como comprado
-        Assertions.assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.CHECKIN,
-            MensagensUtils.getErrorMessage("Situacao da inscricao nao eh checkIn - trocar a situacao no metodo realizarCheckIn()"));
+        assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.CHECKIN,
+            "Situacao da inscricao nao eh checkIn - trocar a situacao no metodo realizarCheckIn()");
+
+        // Verifica se os atributos estao preenchidos
+        assertAll(new InscricaoExecutable(inscricao));
     }
 
     private void validarCompra(Inscricao inscricao) {
         // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new InscricaoExecutable(inscricao));
-
-        Assertions.assertNotNull(inscricao.getDataCompra(),
-            MensagensUtils.getErrorMessage("A data de compra deve estar preenchida em uma inscricao com situacao comprado"));
-
-        Assertions.assertTrue(DateUtils.isSameDay(inscricao.getDataCompra(), new Date()),
-            MensagensUtils.getErrorMessage("Data da compra nao eh igual a hoje"));
+        assertAll(new InscricaoExecutable(inscricao));
 
         // Verifica se a situacao da inscricao ficou como comprado
-        Assertions.assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
-            MensagensUtils.getErrorMessage("Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()"));
+        assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
+            "Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()");
     }
 }

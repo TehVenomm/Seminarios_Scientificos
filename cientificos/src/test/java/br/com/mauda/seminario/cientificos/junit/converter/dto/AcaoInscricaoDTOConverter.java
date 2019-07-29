@@ -1,6 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.converter.dto;
 
-import org.junit.jupiter.api.Assertions;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.ArgumentConverter;
@@ -67,13 +68,13 @@ public class AcaoInscricaoDTOConverter implements ArgumentConverter {
         AcaoInscricaoDTO dto = new AcaoInscricaoDTO(seminario, estudante, inscricao, direitoMaterial);
 
         // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new SeminarioExecutable(dto.getSeminario()));
+        assertAll(new SeminarioExecutable(dto.getSeminario()));
 
         // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new EstudanteExecutable(dto.getEstudante()));
+        assertAll(new EstudanteExecutable(dto.getEstudante()));
 
         // Verifica se os atributos estao preenchidos
-        Assertions.assertAll(new InscricaoExecutable(dto.getInscricao()));
+        assertAll(new InscricaoExecutable(dto.getInscricao()));
 
         return dto;
     }
