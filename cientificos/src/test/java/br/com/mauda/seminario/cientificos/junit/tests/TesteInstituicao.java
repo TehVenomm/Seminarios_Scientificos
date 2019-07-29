@@ -1,6 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
-import org.junit.jupiter.api.Assertions;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,6 +21,6 @@ public class TesteInstituicao {
     @EnumSource(MassaInstituicao.class)
     public void criar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
         // Verifica se os atributos estao preenchidos corretamente
-        Assertions.assertAll(new InstituicaoExecutable(object));
+        assertAll(new InstituicaoExecutable(object));
     }
 }
