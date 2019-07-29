@@ -33,20 +33,20 @@ public class TesteAcaoCheckInSobreInscricao {
         // Realiza o check in da inscricao pro seminario
         inscricao.realizarCheckIn();
 
+        // Verifica se os atributos estao preenchidos
+        assertAll(new InscricaoExecutable(inscricao));
+
         // Verifica se a situacao da inscricao ficou como comprado
         assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.CHECKIN,
             "Situacao da inscricao nao eh checkIn - trocar a situacao no metodo realizarCheckIn()");
-
-        // Verifica se os atributos estao preenchidos
-        assertAll(new InscricaoExecutable(inscricao));
     }
 
     private void validarCompra(Inscricao inscricao) {
+        // Verifica se os atributos estao preenchidos
+        assertAll(new InscricaoExecutable(inscricao));
+
         // Verifica se a situacao da inscricao ficou como comprado
         assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
             "Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()");
-
-        // Verifica se os atributos estao preenchidos
-        assertAll(new InscricaoExecutable(inscricao));
     }
 }
