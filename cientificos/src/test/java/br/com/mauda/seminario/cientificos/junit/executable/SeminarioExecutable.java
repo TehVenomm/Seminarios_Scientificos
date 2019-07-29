@@ -7,6 +7,8 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.fail;
 
+import java.util.List;
+
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.function.Executable;
 
