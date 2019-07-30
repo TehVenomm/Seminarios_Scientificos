@@ -1,8 +1,11 @@
 package br.com.mauda.seminario.cientificos.junit.tests.queries;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
+
 import java.util.Collection;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -11,7 +14,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.EstudanteBC;
 import br.com.mauda.seminario.cientificos.dto.EstudanteDTO;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.executable.EstudanteExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaEstudante;
 import br.com.mauda.seminario.cientificos.junit.provider.FindAllSource;
@@ -30,7 +32,7 @@ public class TesteEstudanteQueries {
         Estudante objetoFindId = this.bc.findById(objetoFindAll.getId());
 
         // Realiza as verificacoes entre o objeto obtido pelo metodo findAll e o objeto obtido pelo findById
-        Assertions.assertAll(new EstudanteExecutable(objetoFindAll, objetoFindId));
+        assertAll(new EstudanteExecutable(objetoFindAll, objetoFindId));
 
         EstudanteDTO filter = new EstudanteDTO();
         // Seta a informacao do filtro
@@ -39,10 +41,10 @@ public class TesteEstudanteQueries {
         // Obtem as informacoes do banco de dados
         Collection<Estudante> objetosFindByFilter = this.bc.findByFilter(filter);
 
-        Assertions.assertEquals(objetosFindByFilter.size(), 1);
+        assertEquals(objetosFindByFilter.size(), 1, "O metodo findByFilter deveria ter retornado apenas 1 resultado, ao buscar pelo ID.");
 
         // Verifica se os objetos sao iguais
-        Assertions.assertAll(new EstudanteExecutable(objetoFindAll, objetosFindByFilter.iterator().next()));
+        assertAll(new EstudanteExecutable(objetoFindAll, objetosFindByFilter.iterator().next()));
     }
 
     /**
@@ -52,17 +54,14 @@ public class TesteEstudanteQueries {
     @Test
     @DisplayName("FindByFilter utilizando um filtro nulo")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.findByFilter(null));
-        Assertions.assertEquals("ER0001", exception.getMessage());
+        assertThrows(() -> this.bc.findByFilter(null), "ER0001");
     }
 
     @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro vazio")
     public void validarFiltroVazio() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-            () -> this.bc.findByFilter(new EstudanteDTO()));
-        Assertions.assertEquals("ER0001", exception.getMessage());
+        assertThrows(() -> this.bc.findByFilter(new EstudanteDTO()), "ER0001");
     }
 
     @Tag("queriesDaoTest")
@@ -75,10 +74,9 @@ public class TesteEstudanteQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Estudante> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(1, results.size(),
-            "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
+        assertEquals(1, results.size(), "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
 
-        Assertions.assertAll(new EstudanteExecutable(results.iterator().next(), massa));
+        assertAll(new EstudanteExecutable(results.iterator().next(), massa));
     }
 
     @Tag("queriesDaoTest")
@@ -91,10 +89,9 @@ public class TesteEstudanteQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Estudante> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(1, results.size(),
-            "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
+        assertEquals(1, results.size(), "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
 
-        Assertions.assertAll(new EstudanteExecutable(results.iterator().next(), massa));
+        assertAll(new EstudanteExecutable(results.iterator().next(), massa));
     }
 
     @Tag("queriesDaoTest")
@@ -107,10 +104,9 @@ public class TesteEstudanteQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Estudante> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(1, results.size(),
-            "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
+        assertEquals(1, results.size(), "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
 
-        Assertions.assertAll(new EstudanteExecutable(results.iterator().next(), massa));
+        assertAll(new EstudanteExecutable(results.iterator().next(), massa));
     }
 
     @Tag("queriesDaoTest")
@@ -123,10 +119,9 @@ public class TesteEstudanteQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Estudante> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(1, results.size(),
-            "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
+        assertEquals(1, results.size(), "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
 
-        Assertions.assertAll(new EstudanteExecutable(results.iterator().next(), massa));
+        assertAll(new EstudanteExecutable(results.iterator().next(), massa));
     }
 
     @Tag("queriesDaoTest")
@@ -139,8 +134,7 @@ public class TesteEstudanteQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Estudante> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(6, results.size(),
-            "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
+        assertEquals(6, results.size(), "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
     }
 
     @Tag("queriesDaoTest")
@@ -153,10 +147,9 @@ public class TesteEstudanteQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Estudante> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(1, results.size(),
-            "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
+        assertEquals(1, results.size(), "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
 
-        Assertions.assertAll(new EstudanteExecutable(results.iterator().next(), massa));
+        assertAll(new EstudanteExecutable(results.iterator().next(), massa));
     }
 
     @Tag("queriesDaoTest")
@@ -169,7 +162,6 @@ public class TesteEstudanteQueries {
 
         // Obtem as informacoes do banco de dados
         Collection<Estudante> results = this.bc.findByFilter(filter);
-        Assertions.assertEquals(6, results.size(),
-            "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
+        assertEquals(6, results.size(), "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
     }
 }
