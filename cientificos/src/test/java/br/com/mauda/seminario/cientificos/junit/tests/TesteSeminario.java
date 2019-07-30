@@ -1,9 +1,11 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
+
 import java.util.Date;
 
-import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
-
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,7 +16,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.SeminarioBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsDateFutureField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsGenericField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsIntegerPositiveField;
@@ -50,8 +51,7 @@ public class TesteSeminario {
     @Test
     @DisplayName("Criacao de um seminario nulo")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
     @Tag("businessTest")
@@ -173,23 +173,29 @@ public class TesteSeminario {
 
         @Tag("businessTest")
         @Test
+        @DisplayName("Criacao de um seminario com area cientifica nula")
+        public void validarNulo() throws IllegalAccessException {
+            // Metodo que seta as areas cientificas como null usando reflections
+            FieldUtils.writeDeclaredField(TesteSeminario.this.seminario, "areasCientificas", null, true);
+
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0076");
+        }
+
+        @Tag("businessTest")
+        @Test
         @DisplayName("Criacao de um seminario sem areas cientificas")
         public void validarBranco() {
             TesteSeminario.this.seminario.getAreasCientificas().clear();
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            Assertions.assertEquals("ER0076", exception.getMessage(), "O campo professores contem um valor nulo");
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0076");
         }
 
         @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um seminario com area cientifica nula")
-        public void validarNulo() {
+        public void validarAreaNula() {
             TesteSeminario.this.seminario.getAreasCientificas().clear();
             TesteSeminario.this.seminario.getAreasCientificas().add(null);
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            Assertions.assertEquals("ER0003", exception.getMessage(), "O campo areasCientificas contem um valor nulo");
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0003");
         }
 
         @Tag("businessTest")
@@ -221,23 +227,29 @@ public class TesteSeminario {
 
         @Tag("businessTest")
         @Test
+        @DisplayName("Criacao de um seminario com professor nulo")
+        public void validarNulo() throws IllegalAccessException {
+            // Metodo que seta os professores como null usando reflections
+            FieldUtils.writeDeclaredField(TesteSeminario.this.seminario, "professores", null, true);
+
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0075");
+        }
+
+        @Tag("businessTest")
+        @Test
         @DisplayName("Criacao de um seminario sem professores")
         public void validarBranco() {
             TesteSeminario.this.seminario.getProfessores().clear();
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            Assertions.assertEquals("ER0075", exception.getMessage(), "O campo professores contem um valor nulo");
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0075");
         }
 
         @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um seminario com professor nulo")
-        public void validarNulo() {
+        public void validarProfessorNulo() {
             TesteSeminario.this.seminario.getProfessores().clear();
             TesteSeminario.this.seminario.getProfessores().add(null);
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario));
-            Assertions.assertEquals("ER0003", exception.getMessage(), "O campo professores contem um valor nulo");
+            assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0003");
         }
 
         @Tag("businessTest")

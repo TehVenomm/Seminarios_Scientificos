@@ -1,7 +1,9 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,7 +14,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.CursoBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
 import br.com.mauda.seminario.cientificos.junit.converter.CursoConverter;
 import br.com.mauda.seminario.cientificos.junit.executable.CursoExecutable;
@@ -45,8 +46,7 @@ public class TesteCurso {
     @Test
     @DisplayName("Criacao de um curso nulo")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
     @Tag("businessTest")
@@ -77,11 +77,11 @@ public class TesteCurso {
 
         @Test
         @DisplayName("Criacao de um curso com area cientifica nula")
-        public void validarNulo() {
-            TesteCurso.this.curso.setAreaCientifica(null);
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteCurso.this.bc.insert(TesteCurso.this.curso));
-            Assertions.assertEquals("ER0003", exception.getMessage());
+        public void validarNulo() throws IllegalAccessException {
+            // Metodo que seta a area cientifica como null usando reflections
+            FieldUtils.writeDeclaredField(TesteCurso.this.curso, "areaCientifica", null, true);
+
+            assertThrows(() -> TesteCurso.this.bc.insert(TesteCurso.this.curso), "ER0003");
         }
 
         @Tag("businessTest")

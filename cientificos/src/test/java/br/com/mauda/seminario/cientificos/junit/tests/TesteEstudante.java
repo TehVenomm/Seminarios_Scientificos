@@ -1,7 +1,9 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,7 +14,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.EstudanteBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsEmailField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
 import br.com.mauda.seminario.cientificos.junit.converter.EstudanteConverter;
@@ -46,8 +47,7 @@ public class TesteEstudante {
     @Test
     @DisplayName("Criacao de um estudante nulo")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
     @Tag("businessTest")
@@ -126,11 +126,11 @@ public class TesteEstudante {
         @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um estudante com Instituicao nula")
-        public void validarNulo() {
-            TesteEstudante.this.estudante.setInstituicao(null);
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteEstudante.this.bc.insert(TesteEstudante.this.estudante));
-            Assertions.assertEquals("ER0003", exception.getMessage());
+        public void validarNulo() throws IllegalAccessException {
+            // Metodo que seta a instituicao como null usando reflections
+            FieldUtils.writeDeclaredField(TesteEstudante.this.estudante, "instituicao", null, true);
+
+            assertThrows(() -> TesteEstudante.this.bc.insert(TesteEstudante.this.estudante), "ER0003");
         }
 
         @Tag("businessTest")
