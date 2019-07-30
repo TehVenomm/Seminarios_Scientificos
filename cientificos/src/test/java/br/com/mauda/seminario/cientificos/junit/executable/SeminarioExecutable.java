@@ -20,7 +20,7 @@ import br.com.mauda.seminario.cientificos.model.Seminario;
 
 public class SeminarioExecutable implements Executable {
 
-    private Seminario seminario;
+    private Seminario seminario, seminarioBD;
     private MassaSeminario seminarioEnum;
 
     public SeminarioExecutable(Seminario seminario) {
@@ -30,6 +30,11 @@ public class SeminarioExecutable implements Executable {
     public SeminarioExecutable(Seminario seminario, MassaSeminario enumm) {
         this(seminario);
         this.seminarioEnum = enumm;
+    }
+
+    public SeminarioExecutable(Seminario seminario, Seminario seminarioBD) {
+        this(seminario);
+        this.seminarioBD = seminarioBD;
     }
 
     public void basicVerification(Seminario seminario) throws Throwable {
@@ -85,6 +90,25 @@ public class SeminarioExecutable implements Executable {
             assertAll(new ProfessorExecutable(professor, this.seminarioEnum.getProfessor()));
 
             return;
+        }
+
+        if (this.seminarioBD != null) {
+            this.basicVerification(this.seminarioBD);
+            assertTrue(DateUtils.isSameDay(this.seminarioBD.getData(), this.seminario.getData()), "Datas dos seminarios nao sao iguais");
+            assertEquals(this.seminarioBD.getDescricao(), this.seminario.getDescricao(), "Descricao dos seminarios nao sao iguais");
+            assertEquals(this.seminarioBD.getId(), this.seminario.getId(), "Ids dos seminarios nao sao iguais");
+            assertEquals(this.seminarioBD.getQtdInscricoes(), this.seminario.getQtdInscricoes(), "Quantidade de inscricoes nao sao iguais");
+            assertEquals(this.seminarioBD.getTitulo(), this.seminario.getTitulo(), "Titulo dos seminarios nao sao iguais");
+
+            for (Professor professor : this.seminario.getProfessores()) {
+                Professor professorBD = this.obtemProfessorPeloNome(this.seminarioBD.getProfessores(), professor.getNome());
+                assertAll(new ProfessorExecutable(professor, professorBD));
+            }
+
+            for (AreaCientifica area : this.seminario.getAreasCientificas()) {
+                AreaCientifica areaBD = this.obtemAreaCientificaPeloNome(this.seminarioBD.getAreasCientificas(), area.getNome());
+                assertAll(new AreaCientificaExecutable(area, areaBD));
+            }
         }
     }
 
