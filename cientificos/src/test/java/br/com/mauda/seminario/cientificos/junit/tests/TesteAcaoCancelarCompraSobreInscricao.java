@@ -33,17 +33,12 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoCancelarCompra.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @DisplayName("Cancelar uma inscricao para o Seminario")
     @ParameterizedTest(name = "Cancelar inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCancelarCompra.class)
     public void checkInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO object) {
         Inscricao inscricao = object.getInscricao();
-
-        // Compra a inscricao pro seminario
-        this.bc.comprar(inscricao, object.getEstudante(), object.getDireitoMaterial());
-
-        this.validarCompra(inscricao);
 
         // Realiza o cancelamento da inscricao pro seminario
         this.bc.cancelarCompra(inscricao);
@@ -57,15 +52,6 @@ public class TesteAcaoCancelarCompraSobreInscricao {
 
         assertTrue(!object.getEstudante().possuiInscricao(inscricao),
             "Estudante nao deveria possuir a inscricao - remover no metodo cancelarCompra()");
-    }
-
-    private void validarCompra(Inscricao inscricao) {
-        // Verifica se os atributos estao preenchidos
-        assertAll(new InscricaoExecutable(inscricao));
-
-        // Verifica se a situacao da inscricao ficou como comprado
-        assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
-            "Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()");
     }
 
     @Test
