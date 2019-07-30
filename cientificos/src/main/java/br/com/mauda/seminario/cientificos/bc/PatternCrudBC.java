@@ -1,12 +1,10 @@
 package br.com.mauda.seminario.cientificos.bc;
 
-import java.util.Collection;
-
 import br.com.mauda.seminario.cientificos.dao.PatternCrudDAO;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
-import br.com.mauda.seminario.cientificos.model.IdentifierInterface;
+import br.com.mauda.seminario.cientificos.model.DataValidation;
 
-public abstract class PatternCrudBC<T extends IdentifierInterface, DTO, DAO extends PatternCrudDAO<T, DTO>> {
+public abstract class PatternCrudBC<T extends DataValidation, DAO extends PatternCrudDAO<T>> {
 
     ///////////////////////////////////////////////////////////////////
     // METODOS UTILITARIOS
@@ -31,35 +29,11 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DTO, DAO exte
      * @param object
      */
     public void insert(T object) {
-        this.validateForDataModification(object);
-        this.dao.insert(object);
-    }
-
-    /**
-     * Utilizado para realizar a validacao do object e a chamada do metodo de atualizacao correspondente na classe DAO.
-     *
-     * Devera verificar se o objeto esta de acordo com as regras de negocio para ser atualizado na base de dados.
-     *
-     * @param object
-     * @return
-     */
-    public void update(T object) {
-        this.validateForDataModification(object);
-        this.dao.update(object);
-    }
-
-    /**
-     * Utilizado para chamar um metodo de delecao correspondente na classe DAO.
-     *
-     * Devera verificar se o objeto passado nao eh null
-     *
-     * @param object
-     * @return
-     */
-    public void delete(T object) {
-        if (object != null) {
-            this.dao.delete(object);
+        if (object == null) {
+            throw new SeminariosCientificosException("ER0003");
         }
+        object.validateForDataModification();
+        this.dao.insert(object);
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -81,48 +55,4 @@ public abstract class PatternCrudBC<T extends IdentifierInterface, DTO, DAO exte
         return this.dao.findById(id);
     }
 
-    /**
-     * Utilizado para buscas com o filtro da entidade, onde este conterah as informacoes relacionadas com a filtragem de dados
-     *
-     * @param filter
-     * @return
-     */
-    public Collection<T> findByFilter(DTO filter) {
-        if (!this.validateForFindData(filter)) {
-            throw new SeminariosCientificosException("ER0001");
-        }
-        return this.dao.findByFilter(filter);
-    }
-
-    /**
-     * Utilizado para retornar todas as instancias de uma determinada classe, atraves do metodo de busca correspondente da classe DAO
-     *
-     * @return
-     */
-    public Collection<T> findAll() {
-        return this.dao.findAll();
-    }
-
-    ///////////////////////////////////////////////////////////////////
-    // METODOS DE VALIDACAO
-    ///////////////////////////////////////////////////////////////////
-
-    /**
-     * Realiza a validacao de um objeto para a insercao ou atualizacao correspondente da classe DAO
-     *
-     * As validacoes de regras de negocio deverao ser realizadas nesse metodo
-     *
-     * @param object
-     */
-    protected abstract void validateForDataModification(T object);
-
-    /**
-     * Realiza a validacao de um objeto para a busca de informacoes quando este eh um filtro da tela
-     *
-     * As validacoes de regras de negocio deverao ser realizadas nesse metodo
-     *
-     * @param object
-     * @return
-     */
-    protected abstract boolean validateForFindData(DTO object);
 }

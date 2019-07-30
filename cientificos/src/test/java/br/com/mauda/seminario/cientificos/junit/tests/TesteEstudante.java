@@ -1,6 +1,10 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
-import org.junit.jupiter.api.Assertions;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,7 +15,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.EstudanteBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsEmailField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
 import br.com.mauda.seminario.cientificos.junit.converter.EstudanteConverter;
@@ -32,78 +35,35 @@ public class TesteEstudante {
         this.estudante = this.converter.create(EnumUtils.getInstanceRandomly(MassaEstudante.class));
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("Criacao de um Estudante")
     @ParameterizedTest(name = "Criacao do Estudante [{arguments}]")
     @EnumSource(MassaEstudante.class)
     public void criar(@ConvertWith(EstudanteDAOConverter.class) Estudante object) {
         // Verifica se os atributos estao preenchidos corretamente
-        Assertions.assertAll(new EstudanteExecutable(object));
+        assertAll(new EstudanteExecutable(object));
 
         // Realiza o insert no banco de dados atraves da Business Controller
         this.bc.insert(object);
 
         // Verifica se o id eh maior que zero, indicando que foi inserido no banco
-        Assertions.assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
+        assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
 
         // Obtem uma nova instancia do BD a partir do ID gerado
         Estudante objectBD = this.bc.findById(object.getId());
 
         // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        Assertions.assertAll(new EstudanteExecutable(object, objectBD));
+        assertAll(new EstudanteExecutable(object, objectBD));
     }
 
-    @Tag("queriesDaoTest")
-    @DisplayName("Atualizacao dos atributos de um Estudante")
-    @ParameterizedTest(name = "Atualizacao do Estudante [{arguments}]")
-    @EnumSource(MassaEstudante.class)
-    public void atualizar(@ConvertWith(EstudanteDAOConverter.class) Estudante object) {
-        // Cria o objeto
-        this.criar(object);
-
-        // Atualiza as informacoes de um objeto
-        this.converter.update(object, EnumUtils.getInstanceRandomly(MassaEstudante.class));
-
-        // Realiza o update no banco de dados atraves da Business Controller
-        this.bc.update(object);
-
-        // Obtem uma nova instancia do BD a partir do ID gerado
-        Estudante objectBD = this.bc.findById(object.getId());
-
-        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        Assertions.assertAll(new EstudanteExecutable(object, objectBD));
-
-        // Realiza o delete no banco de dados atraves da Business Controller para nao deixar o registro
-        this.bc.delete(object);
-    }
-
-    @Tag("queriesDaoTest")
-    @DisplayName("Delecao de um Estudante")
-    @ParameterizedTest(name = "Delecao do Estudante [{arguments}]")
-    @EnumSource(MassaEstudante.class)
-    public void deletar(@ConvertWith(EstudanteDAOConverter.class) Estudante object) {
-        // Realiza a insercao do objeto no banco de dados
-        this.criar(object);
-
-        // Remove o objeto do BD
-        this.bc.delete(object);
-
-        // Obtem o objeto do BD a partir do ID do objeto
-        Estudante objectBD = this.bc.findById(object.getId());
-
-        // Verifica se o objeto deixou de existir no BD
-        Assertions.assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
-    }
-
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Criacao de um estudante nulo")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o email do Estudante")
     class EmailEstudante implements TestsEmailField {
@@ -124,7 +84,7 @@ public class TesteEstudante {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o nome do Estudante")
     class NomeEstudante implements TestsStringField {
@@ -145,7 +105,7 @@ public class TesteEstudante {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o telefone do Estudante")
     class TelefoneEstudante implements TestsStringField {
@@ -171,22 +131,22 @@ public class TesteEstudante {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para a Instituicao dentro do Estudante")
     class InstituicaoDoEstudante {
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Test
         @DisplayName("Criacao de um estudante com Instituicao nula")
-        public void validarNulo() {
-            TesteEstudante.this.estudante.setInstituicao(null);
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteEstudante.this.bc.insert(TesteEstudante.this.estudante));
-            Assertions.assertEquals("ER0003", exception.getMessage());
+        public void validarNulo() throws IllegalAccessException {
+            // Metodo que seta a instituicao como null usando reflections
+            FieldUtils.writeDeclaredField(TesteEstudante.this.estudante, "instituicao", null, true);
+
+            assertThrows(() -> TesteEstudante.this.bc.insert(TesteEstudante.this.estudante), "ER0003");
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para a cidade da Instituicao")
         class CidadeInstituicao implements TestsStringField {
@@ -207,7 +167,7 @@ public class TesteEstudante {
             }
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o estado da Instituicao")
         class EstadoInstituicao implements TestsStringField {
@@ -228,7 +188,7 @@ public class TesteEstudante {
             }
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o nome da Instituicao")
         class NomeInstituicao implements TestsStringField {
@@ -254,7 +214,7 @@ public class TesteEstudante {
             }
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o pais da Instituicao")
         class PaisInstituicao implements TestsStringField {
@@ -275,7 +235,7 @@ public class TesteEstudante {
             }
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para a sigla da Instituicao")
         class SiglaInstituicao implements TestsStringField {

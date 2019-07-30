@@ -1,6 +1,10 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
-import org.junit.jupiter.api.Assertions;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,7 +15,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.ProfessorBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsDoublePositiveField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsEmailField;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
@@ -33,78 +36,35 @@ public class TesteProfessor {
         this.professor = this.converter.create(EnumUtils.getInstanceRandomly(MassaProfessor.class));
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("Criacao de um Professor")
     @ParameterizedTest(name = "Criacao do Professor [{arguments}]")
     @EnumSource(MassaProfessor.class)
     public void criar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
         // Verifica se os atributos estao preenchidos corretamente
-        Assertions.assertAll(new ProfessorExecutable(object));
+        assertAll(new ProfessorExecutable(object));
 
         // Realiza o insert no banco de dados atraves da Business Controller
         this.bc.insert(object);
 
         // Verifica se o id eh maior que zero, indicando que foi inserido no banco
-        Assertions.assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
+        assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
 
         // Obtem uma nova instancia do BD a partir do ID gerado
         Professor objectBD = this.bc.findById(object.getId());
 
         // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        Assertions.assertAll(new ProfessorExecutable(object, objectBD));
+        assertAll(new ProfessorExecutable(object, objectBD));
     }
 
-    @Tag("queriesDaoTest")
-    @DisplayName("Atualizacao dos atributos de um Professor")
-    @ParameterizedTest(name = "Atualizacao do Professor [{arguments}]")
-    @EnumSource(MassaProfessor.class)
-    public void atualizar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
-        // Cria o objeto
-        this.criar(object);
-
-        // Atualiza as informacoes de um objeto
-        this.converter.update(object, EnumUtils.getInstanceRandomly(MassaProfessor.class));
-
-        // Realiza o update no banco de dados atraves da Business Controller
-        this.bc.update(object);
-
-        // Obtem uma nova instancia do BD a partir do ID gerado
-        Professor objectBD = this.bc.findById(object.getId());
-
-        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        Assertions.assertAll(new ProfessorExecutable(object, objectBD));
-
-        // Realiza o delete no banco de dados atraves da Business Controller para nao deixar o registro
-        this.bc.delete(object);
-    }
-
-    @Tag("queriesDaoTest")
-    @DisplayName("Delecao de um Professor")
-    @ParameterizedTest(name = "Delecao do Professor [{arguments}]")
-    @EnumSource(MassaProfessor.class)
-    public void deletar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
-        // Realiza a insercao do objeto no banco de dados
-        this.criar(object);
-
-        // Remove o objeto do BD
-        this.bc.delete(object);
-
-        // Obtem o objeto do BD a partir do ID do objeto
-        Professor objectBD = this.bc.findById(object.getId());
-
-        // Verifica se o objeto deixou de existir no BD
-        Assertions.assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
-    }
-
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Criacao de um professor nulo")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o email do Professor")
     class EmailProfessor implements TestsEmailField {
@@ -125,7 +85,7 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o nome do Professor")
     class NomeProfessor implements TestsStringField {
@@ -146,7 +106,7 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o telefone do Professor")
     class TelefoneProfessor implements TestsStringField {
@@ -172,7 +132,7 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o salario do Professor")
     class SalarioProfessor implements TestsDoublePositiveField {
@@ -193,22 +153,22 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para a Instituicao dentro do Professor")
     class InstituicaoDoProfessor {
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Test
         @DisplayName("Criacao de um professor com Instituicao nula")
-        public void validarNulo() {
-            TesteProfessor.this.professor.setInstituicao(null);
-            SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class,
-                () -> TesteProfessor.this.bc.insert(TesteProfessor.this.professor));
-            Assertions.assertEquals("ER0003", exception.getMessage());
+        public void validarNulo() throws IllegalAccessException {
+            // Metodo que seta a instituicao como null usando reflections
+            FieldUtils.writeDeclaredField(TesteProfessor.this.professor, "instituicao", null, true);
+
+            assertThrows(() -> TesteProfessor.this.bc.insert(TesteProfessor.this.professor), "ER0003");
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para a cidade da Instituicao")
         class CidadeInstituicao implements TestsStringField {
@@ -229,7 +189,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o estado da Instituicao")
         class EstadoInstituicao implements TestsStringField {
@@ -250,7 +210,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o nome da Instituicao")
         class NomeInstituicao implements TestsStringField {
@@ -276,7 +236,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o pais da Instituicao")
         class PaisInstituicao implements TestsStringField {
@@ -297,7 +257,7 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("queriesDaoTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para a sigla da Instituicao")
         class SiglaInstituicao implements TestsStringField {

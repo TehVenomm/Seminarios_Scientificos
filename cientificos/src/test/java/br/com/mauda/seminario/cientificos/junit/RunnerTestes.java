@@ -1,5 +1,9 @@
 package br.com.mauda.seminario.cientificos.junit;
 
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.fail;
+
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.launcher.Launcher;
@@ -9,6 +13,7 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary.Failure;
 
+import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoCancelarCompraSobreInscricao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoCheckInSobreInscricao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoComprarSobreInscricao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteAreaCientifica;
@@ -17,13 +22,7 @@ import br.com.mauda.seminario.cientificos.junit.tests.TesteEstudante;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteInstituicao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteProfessor;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteSeminario;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteAreaCientificaQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteCursoQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteEstudanteQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteInscricaoQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteInstituicaoQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteProfessorQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteSeminarioQueries;
+import br.com.mauda.seminario.cientificos.junit.util.ErrorTestManager;
 
 /**
  * Essa classe realizara os testes de uma so vez, em uma determinada ordem.<br/>
@@ -32,7 +31,6 @@ import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteSeminarioQuer
  * Para limpar a base basta deletar os arquivos que se encontram na pasta banco e executar novamente o script do banco de dados.
  *
  * @author Mauda
- *
  */
 
 public class RunnerTestes {
@@ -48,30 +46,21 @@ public class RunnerTestes {
                 DiscoverySelectors.selectClass(TesteProfessor.class),
                 DiscoverySelectors.selectClass(TesteSeminario.class),
                 DiscoverySelectors.selectClass(TesteAcaoComprarSobreInscricao.class),
-                DiscoverySelectors.selectClass(TesteAcaoCheckInSobreInscricao.class),
-                DiscoverySelectors.selectClass(TesteAreaCientificaQueries.class),
-                DiscoverySelectors.selectClass(TesteCursoQueries.class),
-                DiscoverySelectors.selectClass(TesteInstituicaoQueries.class),
-                DiscoverySelectors.selectClass(TesteEstudanteQueries.class),
-                DiscoverySelectors.selectClass(TesteProfessorQueries.class),
-                DiscoverySelectors.selectClass(TesteSeminarioQueries.class),
-                DiscoverySelectors.selectClass(TesteInscricaoQueries.class))
+                DiscoverySelectors.selectClass(TesteAcaoCancelarCompraSobreInscricao.class),
+                DiscoverySelectors.selectClass(TesteAcaoCheckInSobreInscricao.class))
             .build();
-        Launcher launcher = LauncherFactory.create();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
+        Launcher launcher = LauncherFactory.create();
         launcher.registerTestExecutionListeners(listener);
         launcher.execute(request, listener);
-        for (Failure fail : listener.getSummary().getFailures()) {
-            System.out.println("#######################################");
-            System.out.println("Falha no Teste: " + fail.getTestIdentifier().getDisplayName());
-            System.out.println("Informacoes detalhadas: " + fail.getTestIdentifier().getSource().toString());
-            System.out.println("Mensagem de Erro: " + fail.getException().getMessage());
-            System.out.println("stackTrace: \n" + fail.getException().getCause());
+
+        List<Failure> falhas = listener.getSummary().getFailures();
+        ErrorTestManager errorTestManager = new ErrorTestManager(falhas);
+        errorTestManager.printErrors();
+        errorTestManager.finalReport(listener);
+
+        if (!falhas.isEmpty()) {
+            fail("Falha no teste! Existem erros, por favor verifique no console!");
         }
-        System.out.println("###################################################");
-        System.out.println("Quantidade de Testes executados: \t\t" + listener.getSummary().getTestsStartedCount());
-        System.out.println("Quantidade de Testes executados com falha: \t" + listener.getSummary().getTestsFailedCount());
-        System.out.println("Quantidade de Testes executados com sucesso: \t" + listener.getSummary().getTestsSucceededCount());
-        System.out.println("###################################################");
     }
 }

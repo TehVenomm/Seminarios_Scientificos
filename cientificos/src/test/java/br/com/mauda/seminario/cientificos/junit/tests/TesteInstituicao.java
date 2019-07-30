@@ -1,6 +1,9 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
-import org.junit.jupiter.api.Assertions;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,7 +14,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.InstituicaoBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
 import br.com.mauda.seminario.cientificos.junit.converter.InstituicaoConverter;
 import br.com.mauda.seminario.cientificos.junit.executable.InstituicaoExecutable;
@@ -30,78 +32,35 @@ public class TesteInstituicao {
         this.instituicao = this.converter.create(EnumUtils.getInstanceRandomly(MassaInstituicao.class));
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("Criacao de uma Instituicao")
     @ParameterizedTest(name = "Criacao da Instituicao [{arguments}]")
     @EnumSource(MassaInstituicao.class)
     public void criar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
         // Cria o objeto
-        Assertions.assertAll(new InstituicaoExecutable(object));
+        assertAll(new InstituicaoExecutable(object));
 
         // Realiza o insert no banco de dados atraves da Business Controller
         this.bc.insert(object);
 
         // Verifica se o id eh maior que zero, indicando que foi inserido no banco
-        Assertions.assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
+        assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
 
         // Obtem uma nova instancia do BD a partir do ID gerado
         Instituicao objectBD = this.bc.findById(object.getId());
 
         // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        Assertions.assertAll(new InstituicaoExecutable(object, objectBD));
+        assertAll(new InstituicaoExecutable(object, objectBD));
     }
 
-    @Tag("queriesDaoTest")
-    @DisplayName("Atualizacao dos atributos de uma Instituicao")
-    @ParameterizedTest(name = "Atualizacao da Instituicao [{arguments}]")
-    @EnumSource(MassaInstituicao.class)
-    public void atualizar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
-        // Cria o objeto
-        this.criar(object);
-
-        // Atualiza as informacoes de um objeto
-        this.converter.update(object, EnumUtils.getInstanceRandomly(MassaInstituicao.class));
-
-        // Realiza o update no banco de dados atraves da Business Controller
-        this.bc.update(object);
-
-        // Obtem uma nova instancia do BD a partir do ID gerado
-        Instituicao objectBD = this.bc.findById(object.getId());
-
-        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        Assertions.assertAll(new InstituicaoExecutable(object, objectBD));
-
-        // Realiza o delete no banco de dados atraves da Business Controller para nao deixar o registro
-        this.bc.delete(object);
-    }
-
-    @Tag("queriesDaoTest")
-    @DisplayName("Delecao de uma Instituicao")
-    @ParameterizedTest(name = "Delecao da Instituicao [{arguments}]")
-    @EnumSource(MassaInstituicao.class)
-    public void deletar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
-        // Realiza a insercao do objeto no banco de dados
-        this.criar(object);
-
-        // Remove o objeto do BD
-        this.bc.delete(object);
-
-        // Obtem o objeto do BD a partir do ID do objeto
-        Instituicao objectBD = this.bc.findById(object.getId());
-
-        // Verifica se o objeto deixou de existir no BD
-        Assertions.assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
-    }
-
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Criacao de uma Instituicao nula")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para a cidade da Instituicao")
     class CidadeInstituicao implements TestsStringField {
@@ -122,7 +81,7 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o estado da Instituicao")
     class EstadoInstituicao implements TestsStringField {
@@ -143,7 +102,7 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o nome da Instituicao")
     class NomeInstituicao implements TestsStringField {
@@ -169,7 +128,7 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o pais da Instituicao")
     class PaisInstituicao implements TestsStringField {
@@ -190,7 +149,7 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("queriesDaoTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para a sigla da Instituicao")
     class SiglaInstituicao implements TestsStringField {

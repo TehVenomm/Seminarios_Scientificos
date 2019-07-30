@@ -1,64 +1,62 @@
 package br.com.mauda.seminario.cientificos.junit.converter.dao;
 
-import java.util.Collection;
-
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.ArgumentConverter;
-import org.junit.platform.commons.util.Preconditions;
 
-import br.com.mauda.seminario.cientificos.bc.AreaCientificaBC;
-import br.com.mauda.seminario.cientificos.bc.ProfessorBC;
-import br.com.mauda.seminario.cientificos.dto.AreaCientificaDTO;
-import br.com.mauda.seminario.cientificos.dto.ProfessorDTO;
+import br.com.mauda.seminario.cientificos.junit.converter.AreaCientificaConverter;
+import br.com.mauda.seminario.cientificos.junit.converter.InstituicaoConverter;
+import br.com.mauda.seminario.cientificos.junit.converter.ProfessorConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.SeminarioConverter;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaSeminario;
+import br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda;
 import br.com.mauda.seminario.cientificos.model.AreaCientifica;
+import br.com.mauda.seminario.cientificos.model.Instituicao;
 import br.com.mauda.seminario.cientificos.model.Professor;
 import br.com.mauda.seminario.cientificos.model.Seminario;
 
 public class SeminarioDAOConverter implements ArgumentConverter {
 
-    protected AreaCientificaBC areaCientificaBC = AreaCientificaBC.getInstance();
-    protected ProfessorBC professorBC = ProfessorBC.getInstance();
     protected SeminarioConverter converter = new SeminarioConverter();
+    protected AreaCientificaConverter areaConverter = new AreaCientificaConverter();
+    protected ProfessorConverter professorConverter = new ProfessorConverter();
+    protected InstituicaoConverter instituicaoConverter = new InstituicaoConverter();
 
     @Override
     public Object convert(Object input, ParameterContext parameterContext) throws ArgumentConversionException {
         if (input instanceof MassaSeminario) {
             MassaSeminario massaSeminario = (MassaSeminario) input;
 
-            // Inicializa o filtro com o nome da area cientifica para pesquisar no banco de dados
-            AreaCientificaDTO filtroAC = new AreaCientificaDTO();
-            filtroAC.setNome(massaSeminario.getAreaCientifica().getNome());
+            // Cria uma Area Cientifica temporaria com ID para facilitar o mapeamento
+            AreaCientifica areaCientifica = this.areaConverter.create(massaSeminario.getAreaCientifica());
 
-            // Obtem a area cientifica do banco de dados
-            Collection<AreaCientifica> areas = this.areaCientificaBC.findByFilter(filtroAC);
+            // Metodo que seta o id da area Cientifica usando reflections
+            try {
+                FieldUtils.writeDeclaredField(areaCientifica, "id", massaSeminario.getAreaCientifica().getId(), true);
+            } catch (IllegalAccessException e) {
+                AssertionsMauda.fail("Erro na hora de atribuir o ID a area Cientifica");
+            }
 
-            // Verifica se a lista contem elementos
-            Preconditions.notNull(areas, "O retorno do metodo findByFilter nao pode ser nulo");
-            Preconditions.notEmpty(areas, "O retorno do metodo findByFilter deve conter algum elemento");
-            Preconditions.condition(areas.size() == 1,
-                "Lista contem mais de uma area cientifica. Favor deletar as instituicoes duplicadas do banco de dados");
+            // Cria uma Instituicao temporaria com ID para facilitar o mapeamento
+            Instituicao instituicao = this.instituicaoConverter.create(massaSeminario.getProfessor().getInstituicao());
 
-            // Obtem a primeira posicao da Collection
-            AreaCientifica areaCientifica = areas.iterator().next();
+            // Metodo que seta o id da instituicao usando reflections
+            try {
+                FieldUtils.writeDeclaredField(instituicao, "id", massaSeminario.getProfessor().getInstituicao().getId(), true);
+            } catch (IllegalAccessException e) {
+                AssertionsMauda.fail("Erro na hora de atribuir o ID a instituicao");
+            }
 
-            // Inicializa o filtro com o nome da area cientifica para pesquisar no banco de dados
-            ProfessorDTO filtroProfessor = new ProfessorDTO();
-            filtroProfessor.setNome(massaSeminario.getProfessor().getNome());
+            Professor professor = new Professor(instituicao);
+            this.professorConverter.update(professor, massaSeminario.getProfessor());
 
-            // Obtem os professores do banco de dados
-            Collection<Professor> professores = this.professorBC.findByFilter(filtroProfessor);
-
-            // Verifica se a lista contem elementos
-            Preconditions.notNull(professores, "O retorno do metodo findByFilter nao pode ser nulo");
-            Preconditions.notEmpty(professores, "O retorno do metodo findByFilter deve conter algum elemento");
-            Preconditions.condition(professores.size() == 1,
-                "Lista contem mais de um professor. Favor deletar as instituicoes duplicadas do banco de dados");
-
-            // Obtem a primeira posicao da Collection
-            Professor professor = professores.iterator().next();
+            // Metodo que seta o id do professor usando reflections
+            try {
+                FieldUtils.writeDeclaredField(professor, "id", massaSeminario.getProfessor().getId(), true);
+            } catch (IllegalAccessException e) {
+                AssertionsMauda.fail("Erro na hora de atribuir o ID ao professor");
+            }
 
             // Obtem a primeira posicao da Collection
             Seminario seminario = new Seminario(areaCientifica, professor, massaSeminario.getQtdInscricoes());
@@ -66,7 +64,6 @@ public class SeminarioDAOConverter implements ArgumentConverter {
             // Atualiza as informacoes de acordo com o enum
             this.converter.update(seminario, massaSeminario);
 
-            // Retorna o curso
             return seminario;
         }
         throw new ArgumentConversionException(input + " nao eh uma massa de seminario valida");
