@@ -60,15 +60,6 @@ public class AssertionsMauda extends Assertions {
     }
 
     /**
-     * <em>Asserts</em> that the boolean condition supplied by {@code booleanSupplier} is not {@code true}.
-     * <p>
-     * Fails with the supplied failure {@code message}.
-     */
-    public static void assertFalse(BooleanSupplier booleanSupplier, String message) {
-        Assertions.assertFalse(booleanSupplier, message);
-    }
-
-    /**
      * <em>Asserts</em> that the information{@code information} is not blank {@code true}.
      * <p>
      * If necessary, the failure message will be retrieved lazily from the supplied {@code messageSupplier}.
@@ -106,19 +97,6 @@ public class AssertionsMauda extends Assertions {
      */
     public static SeminariosCientificosException assertThrows(Executable executable, String errorMessage) {
         return assertThrows(SeminariosCientificosException.class, executable, errorMessage);
-    }
-
-    /**
-     * <em>Asserts</em> that execution of the supplied {@code executable} throws an exception of the {@code expectedType} and returns the exception.
-     *
-     * <p>
-     * If no exception is thrown, or if an exception of a different type is thrown, this method will fail.
-     *
-     * <p>
-     * If you do not want to perform additional checks on the exception instance, simply ignore the return value.
-     */
-    public static <T extends Throwable> T assertThrows(Class<T> expectedType, Executable executable) {
-        return Assertions.assertThrows(expectedType, executable);
     }
 
     /**

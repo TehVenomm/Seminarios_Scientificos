@@ -1,6 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
@@ -39,7 +40,7 @@ public class TesteSeminario {
         this.seminario = this.converter.create(EnumUtils.getInstanceRandomly(MassaSeminario.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @DisplayName("Criacao de um Seminario")
     @ParameterizedTest(name = "Criacao do Seminario [{arguments}]")
     @EnumSource(MassaSeminario.class)
@@ -60,14 +61,56 @@ public class TesteSeminario {
         assertAll(new SeminarioExecutable(object, objectBD));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
+    @DisplayName("Atualizacao dos atributos de um Seminario")
+    @ParameterizedTest(name = "Atualizacao do Seminario [{arguments}]")
+    @EnumSource(MassaSeminario.class)
+    public void atualizar(@ConvertWith(SeminarioDAOConverter.class) Seminario object) {
+        // Cria o objeto
+        this.criar(object);
+
+        // Atualiza as informacoes de um objeto
+        this.converter.update(object, EnumUtils.getInstanceRandomly(MassaSeminario.class));
+
+        // Realiza o update no banco de dados atraves da Business Controller
+        this.bc.update(object);
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        Seminario objectBD = this.bc.findById(object.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        assertAll(new SeminarioExecutable(object, objectBD));
+
+        // Realiza o delete no banco de dados atraves da Business Controller para nao deixar o registro
+        this.bc.delete(object);
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("Delecao de um Seminario")
+    @ParameterizedTest(name = "Delecao do Seminario [{arguments}]")
+    @EnumSource(MassaSeminario.class)
+    public void deletar(@ConvertWith(SeminarioDAOConverter.class) Seminario object) {
+        // Realiza a insercao do objeto no banco de dados
+        this.criar(object);
+
+        // Remove o objeto do BD
+        this.bc.delete(object);
+
+        // Obtem o objeto do BD a partir do ID do objeto
+        Seminario objectBD = this.bc.findById(object.getId());
+
+        // Verifica se o objeto deixou de existir no BD
+        assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
+    }
+
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Criacao de um seminario nulo")
     public void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o titulo do Seminario")
     class TituloSeminario implements TestsStringField {
@@ -88,7 +131,7 @@ public class TesteSeminario {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a descricao do Seminario")
     class DescricaoSeminario implements TestsStringField {
@@ -114,7 +157,7 @@ public class TesteSeminario {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a data do Seminario")
     class DataSeminario implements TestsDateFutureField {
@@ -136,7 +179,7 @@ public class TesteSeminario {
 
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a mesa redonda do Seminario")
     class MesaRedondaSeminario implements TestsGenericField<Boolean> {
@@ -158,7 +201,7 @@ public class TesteSeminario {
 
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a quantidade de inscricoes do Seminario")
     class QuantidadeInscricoesSeminario implements TestsIntegerPositiveField {
@@ -179,12 +222,12 @@ public class TesteSeminario {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para as Areas Cientificas dentro do Seminario")
     class AreasCientificasDoSeminario {
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Test
         @DisplayName("Criacao de um seminario com area cientifica nula")
         public void validarNulo() throws IllegalAccessException {
@@ -202,7 +245,7 @@ public class TesteSeminario {
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0076");
         }
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Test
         @DisplayName("Criacao de um seminario com area cientifica nula")
         public void validarAreaNula() {
@@ -211,7 +254,7 @@ public class TesteSeminario {
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0003");
         }
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para o nome da Area Cientifica")
         class NomeAreaCientifica implements TestsStringField {
@@ -233,12 +276,12 @@ public class TesteSeminario {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para os professores dentro do Seminario")
     class ProfessoresDoSeminario {
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Test
         @DisplayName("Criacao de um seminario com professor nulo")
         public void validarNulo() throws IllegalAccessException {
@@ -256,7 +299,7 @@ public class TesteSeminario {
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0075");
         }
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Test
         @DisplayName("Criacao de um seminario com professor nulo")
         public void validarProfessorNulo() {
@@ -265,7 +308,7 @@ public class TesteSeminario {
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0003");
         }
 
-        @Tag("MapeamentoDAOTest")
+        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para o nome do Professor")
         class NomeProfessore implements TestsStringField {

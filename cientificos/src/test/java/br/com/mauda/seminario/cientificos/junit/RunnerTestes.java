@@ -13,7 +13,6 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary.Failure;
 
-import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoCancelarCompraSobreInscricao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoCheckInSobreInscricao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoComprarSobreInscricao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteAreaCientifica;
@@ -22,6 +21,13 @@ import br.com.mauda.seminario.cientificos.junit.tests.TesteEstudante;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteInstituicao;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteProfessor;
 import br.com.mauda.seminario.cientificos.junit.tests.TesteSeminario;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteAreaCientificaQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteCursoQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteEstudanteQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteInscricaoQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteInstituicaoQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteProfessorQueries;
+import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteSeminarioQueries;
 import br.com.mauda.seminario.cientificos.junit.util.ErrorTestManager;
 
 /**
@@ -46,8 +52,14 @@ public class RunnerTestes {
                 DiscoverySelectors.selectClass(TesteProfessor.class),
                 DiscoverySelectors.selectClass(TesteSeminario.class),
                 DiscoverySelectors.selectClass(TesteAcaoComprarSobreInscricao.class),
-                DiscoverySelectors.selectClass(TesteAcaoCancelarCompraSobreInscricao.class),
-                DiscoverySelectors.selectClass(TesteAcaoCheckInSobreInscricao.class))
+                DiscoverySelectors.selectClass(TesteAcaoCheckInSobreInscricao.class),
+                DiscoverySelectors.selectClass(TesteAreaCientificaQueries.class),
+                DiscoverySelectors.selectClass(TesteCursoQueries.class),
+                DiscoverySelectors.selectClass(TesteInstituicaoQueries.class),
+                DiscoverySelectors.selectClass(TesteEstudanteQueries.class),
+                DiscoverySelectors.selectClass(TesteProfessorQueries.class),
+                DiscoverySelectors.selectClass(TesteSeminarioQueries.class),
+                DiscoverySelectors.selectClass(TesteInscricaoQueries.class))
             .build();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
         Launcher launcher = LauncherFactory.create();

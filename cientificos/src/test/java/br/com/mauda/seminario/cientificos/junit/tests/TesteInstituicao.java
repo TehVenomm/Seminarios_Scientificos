@@ -1,6 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
@@ -32,7 +33,7 @@ public class TesteInstituicao {
         this.instituicao = this.converter.create(EnumUtils.getInstanceRandomly(MassaInstituicao.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @DisplayName("Criacao de uma Instituicao")
     @ParameterizedTest(name = "Criacao da Instituicao [{arguments}]")
     @EnumSource(MassaInstituicao.class)
@@ -53,14 +54,56 @@ public class TesteInstituicao {
         assertAll(new InstituicaoExecutable(object, objectBD));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
+    @DisplayName("Atualizacao dos atributos de uma Instituicao")
+    @ParameterizedTest(name = "Atualizacao da Instituicao [{arguments}]")
+    @EnumSource(MassaInstituicao.class)
+    public void atualizar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
+        // Cria o objeto
+        this.criar(object);
+
+        // Atualiza as informacoes de um objeto
+        this.converter.update(object, EnumUtils.getInstanceRandomly(MassaInstituicao.class));
+
+        // Realiza o update no banco de dados atraves da Business Controller
+        this.bc.update(object);
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        Instituicao objectBD = this.bc.findById(object.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        assertAll(new InstituicaoExecutable(object, objectBD));
+
+        // Realiza o delete no banco de dados atraves da Business Controller para nao deixar o registro
+        this.bc.delete(object);
+    }
+
+    @Tag("queriesDaoTest")
+    @DisplayName("Delecao de uma Instituicao")
+    @ParameterizedTest(name = "Delecao da Instituicao [{arguments}]")
+    @EnumSource(MassaInstituicao.class)
+    public void deletar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
+        // Realiza a insercao do objeto no banco de dados
+        this.criar(object);
+
+        // Remove o objeto do BD
+        this.bc.delete(object);
+
+        // Obtem o objeto do BD a partir do ID do objeto
+        Instituicao objectBD = this.bc.findById(object.getId());
+
+        // Verifica se o objeto deixou de existir no BD
+        assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
+    }
+
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Criacao de uma Instituicao nula")
     public void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a cidade da Instituicao")
     class CidadeInstituicao implements TestsStringField {
@@ -81,7 +124,7 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o estado da Instituicao")
     class EstadoInstituicao implements TestsStringField {
@@ -102,7 +145,7 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o nome da Instituicao")
     class NomeInstituicao implements TestsStringField {
@@ -128,7 +171,7 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o pais da Instituicao")
     class PaisInstituicao implements TestsStringField {
@@ -149,7 +192,7 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a sigla da Instituicao")
     class SiglaInstituicao implements TestsStringField {
