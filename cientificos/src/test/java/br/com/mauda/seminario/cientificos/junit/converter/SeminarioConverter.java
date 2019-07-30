@@ -40,7 +40,7 @@ public class SeminarioConverter implements ArgumentConverter {
         Professor professor = this.professorConverter.create(enumm.getProfessor());
 
         // Cria o Seminario
-        Seminario seminario = new Seminario(areaCientifica, professor, 1);
+        Seminario seminario = new Seminario(areaCientifica, professor, enumm.getQtdInscricoes());
 
         // Atualiza as informacoes de acordo com o enum
         this.update(seminario, enumm);
