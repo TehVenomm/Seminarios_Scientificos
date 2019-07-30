@@ -34,7 +34,7 @@ public class TesteAcaoCheckInSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoComprar.class));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("CheckIn de uma inscricao para o Seminario")
     @ParameterizedTest(name = "CheckIn da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCheckIn.class)
@@ -68,7 +68,7 @@ public class TesteAcaoCheckInSobreInscricao {
 
     @Test
     @DisplayName("CheckIn de uma inscricao nula")
-    public void validarCompraComInscricaoNula() {
+    public void validarCheckInComInscricaoNula() {
         assertThrows(() -> this.bc.realizarCheckIn(null), "ER0003");
     }
 

@@ -2,6 +2,7 @@ package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import br.com.mauda.seminario.cientificos.bc.CursoBC;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
 import br.com.mauda.seminario.cientificos.junit.converter.CursoConverter;
+import br.com.mauda.seminario.cientificos.junit.converter.dao.CursoDAOConverter;
 import br.com.mauda.seminario.cientificos.junit.executable.CursoExecutable;
 import br.com.mauda.seminario.cientificos.junit.massa.MassaCurso;
 import br.com.mauda.seminario.cientificos.model.Curso;
@@ -32,24 +34,35 @@ public class TesteCurso {
         this.curso = this.converter.create(EnumUtils.getInstanceRandomly(MassaCurso.class));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("Criacao de um Curso")
     @ParameterizedTest(name = "Criacao do Curso [{arguments}]")
     @EnumSource(MassaCurso.class)
-    public void criar(@ConvertWith(CursoConverter.class) Curso object) {
+    public void criar(@ConvertWith(CursoDAOConverter.class) Curso object) {
         // Verifica se os atributos estao preenchidos corretamente
         assertAll(new CursoExecutable(object));
+
+        // Realiza o insert no banco de dados atraves da Business Controller
         this.bc.insert(object);
+
+        // Verifica se o id eh maior que zero, indicando que foi inserido no banco
+        assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        Curso objectBD = this.bc.findById(object.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        assertAll(new CursoExecutable(object, objectBD));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Criacao de um curso nulo")
     public void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o nome do Curso")
     class NomeCurso implements TestsStringField {
@@ -70,7 +83,7 @@ public class TesteCurso {
         }
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para a Area Cientifica dentro do Curso")
     class AreaCientificaDoCurso {
@@ -84,7 +97,7 @@ public class TesteCurso {
             assertThrows(() -> TesteCurso.this.bc.insert(TesteCurso.this.curso), "ER0003");
         }
 
-        @Tag("businessTest")
+        @Tag("MapeamentoDAOTest")
         @Nested
         @DisplayName("Testes para o nome da Area Cientifica")
         class NomeAreaCientifica implements TestsStringField {

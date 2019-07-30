@@ -2,6 +2,7 @@ package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -31,24 +32,35 @@ public class TesteAreaCientifica {
         this.areaCientifica = this.converter.create(EnumUtils.getInstanceRandomly(MassaAreaCientifica.class));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("Criacao de uma Area Cientifica")
     @ParameterizedTest(name = "Criacao da Area Cientifica [{arguments}]")
     @EnumSource(MassaAreaCientifica.class)
     public void criar(@ConvertWith(AreaCientificaConverter.class) AreaCientifica object) {
         // Verifica se os atributos estao preenchidos corretamente
         assertAll(new AreaCientificaExecutable(object));
+
+        // Realiza o insert no banco de dados atraves da Business Controller
         this.bc.insert(object);
+
+        // Verifica se o id eh maior que zero, indicando que foi inserido no banco
+        assertTrue(object.getId() > 0, "Insert nao foi realizado corretamente pois o ID do objeto nao foi gerado");
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        AreaCientifica objectBD = this.bc.findById(object.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        assertAll(new AreaCientificaExecutable(object, objectBD));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Criacao de uma Area Cientifica nula")
     public void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Nested
     @DisplayName("Testes para o nome de uma Area Cientifica")
     class NomeAreaCientifica implements TestsStringField {
