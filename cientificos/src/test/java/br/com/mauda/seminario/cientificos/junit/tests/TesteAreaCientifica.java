@@ -1,6 +1,7 @@
 package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,6 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.AreaCientificaBC;
-import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.junit.contract.TestsStringField;
 import br.com.mauda.seminario.cientificos.junit.converter.AreaCientificaConverter;
 import br.com.mauda.seminario.cientificos.junit.executable.AreaCientificaExecutable;
@@ -45,8 +45,7 @@ public class TesteAreaCientifica {
     @Test
     @DisplayName("Criacao de uma Area Cientifica nula")
     public void validarNulo() {
-        SeminariosCientificosException exception = Assertions.assertThrows(SeminariosCientificosException.class, () -> this.bc.insert(null));
-        Assertions.assertEquals("ER0003", exception.getMessage());
+        assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
     @Tag("businessTest")
