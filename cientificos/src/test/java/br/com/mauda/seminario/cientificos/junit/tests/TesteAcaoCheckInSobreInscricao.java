@@ -4,7 +4,10 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -66,12 +69,14 @@ public class TesteAcaoCheckInSobreInscricao {
             "Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()");
     }
 
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("CheckIn de uma inscricao nula")
     public void validarCheckInComInscricaoNula() {
         assertThrows(() -> this.bc.realizarCheckIn(null), "ER0003");
     }
 
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("CheckIn de uma inscricao com a situacao diferente de COMPRADO")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
@@ -79,10 +84,23 @@ public class TesteAcaoCheckInSobreInscricao {
 
         // Metodo que seta a situacao da inscricao como DISPONIVEL usando reflections
         FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.DISPONIVEL, true);
-        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0043");
+        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0046");
 
         // Metodo que seta a situacao da inscricao como CHECKIN usando reflections
         FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.CHECKIN, true);
-        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0043");
+        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0046");
+    }
+
+    @Tag("MapeamentoDAOTest")
+    @Test
+    @DisplayName("CheckIn de uma inscricao após a data do Seminario")
+    public void validarCheckInAposDataSeminario() {
+        Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
+
+        this.bc.comprar(inscricao, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial());
+
+        // Diminui a data do seminario em 30 dias
+        this.acaoInscricaoDTO.getSeminario().setData(DateUtils.addDays(new Date(), -30));
+        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0047");
     }
 }
