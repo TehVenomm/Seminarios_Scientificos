@@ -60,12 +60,12 @@ public class TesteAcaoCancelarCompraSobreInscricao {
     }
 
     private void validarCompra(Inscricao inscricao) {
-        // Verifica se os atributos estao preenchidos
-        assertAll(new InscricaoExecutable(inscricao));
-
         // Verifica se a situacao da inscricao ficou como comprado
         assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
             "Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()");
+
+        // Verifica se os atributos estao preenchidos
+        assertAll(new InscricaoExecutable(inscricao));
     }
 
     @Test
