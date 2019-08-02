@@ -5,7 +5,10 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -34,7 +37,7 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoCancelarCompra.class));
     }
 
-    @Tag("modelTest")
+    @Tag("businessTest")
     @DisplayName("Cancelar uma inscricao para o Seminario")
     @ParameterizedTest(name = "Cancelar inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCancelarCompra.class)
@@ -75,6 +78,7 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         assertThrows(() -> this.bc.cancelarCompra(null), "ER0003");
     }
 
+    @Tag("businessTest")
     @Test
     @DisplayName("Cancelar inscricao com a situacao diferente de COMPRADO")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
@@ -82,10 +86,23 @@ public class TesteAcaoCancelarCompraSobreInscricao {
 
         // Metodo que seta a situacao da inscricao como DISPONIVEL usando reflections
         FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.DISPONIVEL, true);
-        assertThrows(() -> this.bc.cancelarCompra(inscricao), "ER0043");
+        assertThrows(() -> this.bc.cancelarCompra(inscricao), "ER0044");
 
         // Metodo que seta a situacao da inscricao como CHECKIN usando reflections
         FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.CHECKIN, true);
-        assertThrows(() -> this.bc.cancelarCompra(inscricao), "ER0043");
+        assertThrows(() -> this.bc.cancelarCompra(inscricao), "ER0044");
+    }
+
+    @Tag("businessTest")
+    @Test
+    @DisplayName("Cancelar compra após a data do Seminario")
+    public void validarCancelamentoAposDataSeminario() {
+        Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
+
+        this.bc.comprar(inscricao, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial());
+
+        // Diminui a data do seminario em 30 dias
+        this.acaoInscricaoDTO.getSeminario().setData(DateUtils.addDays(new Date(), -30));
+        assertThrows(() -> this.bc.cancelarCompra(inscricao), "ER0045");
     }
 }

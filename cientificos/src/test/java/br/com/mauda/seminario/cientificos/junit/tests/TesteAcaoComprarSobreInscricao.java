@@ -4,7 +4,10 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -91,5 +94,17 @@ public class TesteAcaoComprarSobreInscricao {
         FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.CHECKIN, true);
         assertThrows(() -> this.bc.comprar(inscricao, this.acaoInscricaoDTO.getEstudante(),
             this.acaoInscricaoDTO.getDireitoMaterial()), "ER0042");
+    }
+
+    @Tag("businessTest")
+    @Test
+    @DisplayName("Compra de uma inscricao após a data do Seminario")
+    public void validarCompraAposDataSeminario() {
+        Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
+
+        // Diminui a data do seminario em 30 dias
+        this.acaoInscricaoDTO.getSeminario().setData(DateUtils.addDays(new Date(), -30));
+
+        assertThrows(() -> this.bc.comprar(inscricao, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial()), "ER0043");
     }
 }
