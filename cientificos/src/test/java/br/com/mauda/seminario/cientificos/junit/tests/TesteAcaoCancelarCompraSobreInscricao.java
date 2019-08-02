@@ -37,7 +37,7 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoCancelarCompra.class));
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @DisplayName("Cancelar uma inscricao para o Seminario")
     @ParameterizedTest(name = "Cancelar inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCancelarCompra.class)
@@ -72,13 +72,14 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         assertAll(new InscricaoExecutable(inscricao));
     }
 
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Cancelar inscricao nula")
     public void validarCompraComInscricaoNula() {
         assertThrows(() -> this.bc.cancelarCompra(null), "ER0003");
     }
 
-    @Tag("businessTest")
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Cancelar inscricao com a situacao diferente de COMPRADO")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
@@ -92,8 +93,8 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.CHECKIN, true);
         assertThrows(() -> this.bc.cancelarCompra(inscricao), "ER0044");
     }
-
-    @Tag("businessTest")
+    
+    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("Cancelar compra após a data do Seminario")
     public void validarCancelamentoAposDataSeminario() {
