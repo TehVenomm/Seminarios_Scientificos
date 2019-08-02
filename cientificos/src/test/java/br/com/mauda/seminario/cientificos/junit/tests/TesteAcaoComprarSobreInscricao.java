@@ -36,7 +36,7 @@ public class TesteAcaoComprarSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoComprar.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("businessTest")
     @DisplayName("Compra de uma inscricao para o Seminario")
     @ParameterizedTest(name = "Compra da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoComprar.class)
@@ -58,28 +58,28 @@ public class TesteAcaoComprarSobreInscricao {
         assertAll(new InscricaoExecutable(inscricao));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("businessTest")
     @Test
     @DisplayName("Compra com inscricao nula")
     public void validarCompraComInscricaoNula() {
         assertThrows(() -> this.bc.comprar(null, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial()), "ER0003");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("businessTest")
     @Test
     @DisplayName("Compra com estudante nulo")
     public void validarCompraComEstudanteNulo() {
         assertThrows(() -> this.bc.comprar(this.acaoInscricaoDTO.getInscricao(), null, this.acaoInscricaoDTO.getDireitoMaterial()), "ER0003");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("businessTest")
     @Test
     @DisplayName("Compra com direito material nulo")
     public void validarCompraComDireitoMaterialNulo() {
         assertThrows(() -> this.bc.comprar(this.acaoInscricaoDTO.getInscricao(), this.acaoInscricaoDTO.getEstudante(), null), "ER0041");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("businessTest")
     @Test
     @DisplayName("Compra com situacao da inscricao diferente de Disponivel")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
@@ -96,7 +96,7 @@ public class TesteAcaoComprarSobreInscricao {
             this.acaoInscricaoDTO.getDireitoMaterial()), "ER0042");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("businessTest")
     @Test
     @DisplayName("Compra de uma inscricao após a data do Seminario")
     public void validarCompraAposDataSeminario() {

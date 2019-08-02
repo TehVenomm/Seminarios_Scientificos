@@ -37,7 +37,7 @@ public class TesteAcaoCheckInSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoComprar.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("businessTest")
     @DisplayName("CheckIn de uma inscricao para o Seminario")
     @ParameterizedTest(name = "CheckIn da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCheckIn.class)
@@ -69,14 +69,12 @@ public class TesteAcaoCheckInSobreInscricao {
             "Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()");
     }
 
-    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("CheckIn de uma inscricao nula")
-    public void validarCheckInComInscricaoNula() {
+    public void validarCompraComInscricaoNula() {
         assertThrows(() -> this.bc.realizarCheckIn(null), "ER0003");
     }
 
-    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("CheckIn de uma inscricao com a situacao diferente de COMPRADO")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
@@ -91,7 +89,7 @@ public class TesteAcaoCheckInSobreInscricao {
         assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0046");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("businessTest")
     @Test
     @DisplayName("CheckIn de uma inscricao após a data do Seminario")
     public void validarCheckInAposDataSeminario() {
@@ -103,4 +101,5 @@ public class TesteAcaoCheckInSobreInscricao {
         this.acaoInscricaoDTO.getSeminario().setData(DateUtils.addDays(new Date(), -30));
         assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0047");
     }
+
 }
