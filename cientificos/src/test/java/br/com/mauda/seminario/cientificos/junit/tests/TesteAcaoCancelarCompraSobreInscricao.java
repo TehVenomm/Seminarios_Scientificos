@@ -18,6 +18,7 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.InscricaoBC;
+import br.com.mauda.seminario.cientificos.junit.converter.dao.AcaoInscricaoDTODAOConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.dto.AcaoInscricaoDTOConverter;
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
 import br.com.mauda.seminario.cientificos.junit.executable.InscricaoExecutable;
@@ -37,17 +38,12 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoCancelarCompra.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @DisplayName("Cancelar uma inscricao para o Seminario")
     @ParameterizedTest(name = "Cancelar inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCancelarCompra.class)
-    public void cancelarCompra(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO object) {
+    public void cancelarCompra(@ConvertWith(AcaoInscricaoDTODAOConverter.class) AcaoInscricaoDTO object) {
         Inscricao inscricao = object.getInscricao();
-
-        // Compra a inscricao pro seminario
-        this.bc.comprar(inscricao, object.getEstudante(), object.getDireitoMaterial());
-
-        this.validarCompra(inscricao);
 
         // Realiza o cancelamento da inscricao pro seminario
         this.bc.cancelarCompra(inscricao);
@@ -61,25 +57,22 @@ public class TesteAcaoCancelarCompraSobreInscricao {
 
         assertTrue(!object.getEstudante().possuiInscricao(inscricao),
             "Estudante nao deveria possuir a inscricao - remover no metodo cancelarCompra()");
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        Inscricao objectBD = this.bc.findById(inscricao.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        assertAll(new InscricaoExecutable(inscricao, objectBD));
     }
 
-    private void validarCompra(Inscricao inscricao) {
-        // Verifica se a situacao da inscricao ficou como comprado
-        assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
-            "Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()");
-
-        // Verifica se os atributos estao preenchidos
-        assertAll(new InscricaoExecutable(inscricao));
-    }
-
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Cancelar inscricao nula")
     public void validarCompraComInscricaoNula() {
         assertThrows(() -> this.bc.cancelarCompra(null), "ER0003");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Cancelar inscricao com a situacao diferente de COMPRADO")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
@@ -93,14 +86,15 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.CHECKIN, true);
         assertThrows(() -> this.bc.cancelarCompra(inscricao), "ER0044");
     }
-    
-    @Tag("MapeamentoDAOTest")
+
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Cancelar compra após a data do Seminario")
     public void validarCancelamentoAposDataSeminario() {
         Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
 
-        this.bc.comprar(inscricao, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial());
+        // Metodo que seta a situacao da inscricao como COMPRADO usando reflections
+        FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.COMPRADO, true);
 
         // Diminui a data do seminario em 30 dias
         this.acaoInscricaoDTO.getSeminario().setData(DateUtils.addDays(new Date(), -30));

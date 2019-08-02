@@ -17,6 +17,7 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.InscricaoBC;
+import br.com.mauda.seminario.cientificos.junit.converter.dao.AcaoInscricaoDTODAOConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.dto.AcaoInscricaoDTOConverter;
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
 import br.com.mauda.seminario.cientificos.junit.executable.InscricaoExecutable;
@@ -36,17 +37,23 @@ public class TesteAcaoComprarSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoComprar.class));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @DisplayName("Compra de uma inscricao para o Seminario")
     @ParameterizedTest(name = "Compra da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoComprar.class)
-    public void comprarInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO dto) {
+    public void comprarInscricao(@ConvertWith(AcaoInscricaoDTODAOConverter.class) AcaoInscricaoDTO dto) {
         Inscricao inscricao = dto.getInscricao();
 
         // Compra a inscricao pro seminario
         this.bc.comprar(inscricao, dto.getEstudante(), dto.getDireitoMaterial());
 
         this.validarCompra(inscricao);
+
+        // Obtem uma nova instancia do BD a partir do ID gerado
+        Inscricao objectBD = this.bc.findById(inscricao.getId());
+
+        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
+        assertAll(new InscricaoExecutable(inscricao, objectBD));
     }
 
     private void validarCompra(Inscricao inscricao) {
@@ -58,28 +65,28 @@ public class TesteAcaoComprarSobreInscricao {
         assertAll(new InscricaoExecutable(inscricao));
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Compra com inscricao nula")
     public void validarCompraComInscricaoNula() {
         assertThrows(() -> this.bc.comprar(null, this.acaoInscricaoDTO.getEstudante(), this.acaoInscricaoDTO.getDireitoMaterial()), "ER0003");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Compra com estudante nulo")
     public void validarCompraComEstudanteNulo() {
         assertThrows(() -> this.bc.comprar(this.acaoInscricaoDTO.getInscricao(), null, this.acaoInscricaoDTO.getDireitoMaterial()), "ER0003");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Compra com direito material nulo")
     public void validarCompraComDireitoMaterialNulo() {
         assertThrows(() -> this.bc.comprar(this.acaoInscricaoDTO.getInscricao(), this.acaoInscricaoDTO.getEstudante(), null), "ER0041");
     }
 
-    @Tag("MapeamentoDAOTest")
+    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Compra com situacao da inscricao diferente de Disponivel")
     public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
