@@ -79,10 +79,10 @@ public class TesteAcaoCheckInSobreInscricao {
 
         // Metodo que seta a situacao da inscricao como DISPONIVEL usando reflections
         FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.DISPONIVEL, true);
-        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0043");
+        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0044");
 
         // Metodo que seta a situacao da inscricao como CHECKIN usando reflections
         FieldUtils.writeDeclaredField(inscricao, "situacao", SituacaoInscricaoEnum.CHECKIN, true);
-        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0043");
+        assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0044");
     }
 }
