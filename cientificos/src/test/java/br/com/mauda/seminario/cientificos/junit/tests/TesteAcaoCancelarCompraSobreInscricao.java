@@ -23,7 +23,7 @@ public class TesteAcaoCancelarCompraSobreInscricao {
     @DisplayName("Cancelar uma inscricao para o Seminario")
     @ParameterizedTest(name = "Cancelar inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCancelarCompra.class)
-    public void checkInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO object) {
+    public void cancelarCompra(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO object) {
         Inscricao inscricao = object.getInscricao();
 
         // Compra a inscricao pro seminario
