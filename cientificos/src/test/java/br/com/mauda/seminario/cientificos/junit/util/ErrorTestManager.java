@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary.Failure;
 
 public class ErrorTestManager {
@@ -34,6 +35,14 @@ public class ErrorTestManager {
             System.out.println("stackTrace: \n" + errorTest.getCause());
             System.out.println("#######################################");
         }
+    }
+
+    public void finalReport(SummaryGeneratingListener listener) {
+        System.out.println("###################################################");
+        System.out.println("Quantidade de Testes executados: \t\t" + listener.getSummary().getTestsStartedCount() / 2);
+        System.out.println("Quantidade de Testes executados com falha: \t" + listener.getSummary().getTestsFailedCount() / 2);
+        System.out.println("Quantidade de Testes executados com sucesso: \t" + listener.getSummary().getTestsSucceededCount() / 2);
+        System.out.println("###################################################");
     }
 }
 
