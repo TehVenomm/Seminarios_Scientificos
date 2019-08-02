@@ -37,6 +37,7 @@ public class InscricaoExecutable implements Executable {
 
         if (SituacaoInscricaoEnum.DISPONIVEL.equals(inscricao.getSituacao())) {
             assertNull(inscricao.getEstudante(), "Um estudante nao deve estar atribuido a uma inscricao disponivel");
+            assertNull(inscricao.getDireitoMaterial(), "O direito ao material de uma Inscricao disponivel deve ser nulo");
 
         } else {
             assertNotNull(inscricao.getDireitoMaterial(), "O direito ao material de uma Inscricao nao pode ser nulo");
