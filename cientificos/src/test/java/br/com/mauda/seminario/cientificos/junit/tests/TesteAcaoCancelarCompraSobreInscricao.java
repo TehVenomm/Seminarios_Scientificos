@@ -90,7 +90,7 @@ public class TesteAcaoCancelarCompraSobreInscricao {
     @Tag("queriesDaoTest")
     @Test
     @DisplayName("Cancelar compra após a data do Seminario")
-    public void validarCancelamentoAposDataSeminario() {
+    public void validarCancelamentoAposDataSeminario() throws IllegalAccessException {
         Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
 
         // Metodo que seta a situacao da inscricao como COMPRADO usando reflections

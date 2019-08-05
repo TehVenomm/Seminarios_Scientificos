@@ -87,7 +87,7 @@ public class TesteAcaoCheckInSobreInscricao {
     @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("CheckIn de uma inscricao após a data do Seminario")
-    public void validarCheckInAposDataSeminario() {
+    public void validarCheckInAposDataSeminario() throws IllegalAccessException {
         Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
 
         // Metodo que seta a situacao da inscricao como COMPRADO usando reflections
