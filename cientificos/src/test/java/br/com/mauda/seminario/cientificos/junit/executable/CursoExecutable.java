@@ -38,7 +38,7 @@ public class CursoExecutable implements Executable {
         assertAll(new AreaCientificaExecutable(curso.getAreaCientifica()));
 
         // Verifica a associacao bidirecional com area cientifica
-        assertTrue(curso.getAreaCientifica().getCursos().contains(curso),
+        assertTrue(curso.getAreaCientifica().possuiCurso(curso),
             "A lista de Cursos nao contem o curso em questao - associacao bidirecional no construtor nao foi realizada");
     }
 
