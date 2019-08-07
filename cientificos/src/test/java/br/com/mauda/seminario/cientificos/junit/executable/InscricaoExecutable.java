@@ -46,7 +46,7 @@ public class InscricaoExecutable implements Executable {
             assertAll(new EstudanteExecutable(inscricao.getEstudante()));
 
             // Verifica a associacao bidirecional com estudante
-            assertTrue(inscricao.getEstudante().getInscricoes().contains(inscricao), "A Lista de inscricoes do Estudante "
+            assertTrue(inscricao.getEstudante().possuiInscricao(inscricao), "A Lista de inscricoes do Estudante "
                 + inscricao.getEstudante().getNome() + " nao contem a inscricao em questao - associacao bidirecional nao foi realizada");
         }
 
