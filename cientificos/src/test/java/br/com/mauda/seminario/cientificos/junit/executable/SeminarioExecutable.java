@@ -6,7 +6,6 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.fail;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
