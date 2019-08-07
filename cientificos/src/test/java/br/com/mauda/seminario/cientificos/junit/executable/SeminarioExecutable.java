@@ -6,6 +6,7 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class SeminarioExecutable implements Executable {
             assertAll(new ProfessorExecutable(professor));
 
             // Verifica a associacao bidirecional com professor
-            assertTrue(professor.getSeminarios().contains(seminario), "A lista de Seminarios do Professor "
+            assertTrue(professor.possuiSeminario(seminario), "A lista de Seminarios do Professor "
                 + professor.getNome() + " nao contem o seminario em questao - associacao bidirecional no construtor de Seminarios nao foi realizada");
         }
 
