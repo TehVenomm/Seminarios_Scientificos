@@ -28,10 +28,6 @@ public class TesteAcaoComprarSobreInscricao {
         // Compra a inscricao pro seminario
         inscricao.comprar(dto.getEstudante(), dto.getDireitoMaterial());
 
-        this.validarCompra(inscricao);
-    }
-
-    private void validarCompra(Inscricao inscricao) {
         // Verifica se a situacao da inscricao ficou como comprado
         assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
             "Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()");
