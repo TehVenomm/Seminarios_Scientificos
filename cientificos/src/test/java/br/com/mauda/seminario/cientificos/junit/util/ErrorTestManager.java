@@ -14,7 +14,10 @@ public class ErrorTestManager {
     public ErrorTestManager(List<Failure> failure) {
         for (Failure fail : failure) {
             String messageError = fail.getException().getMessage();
-            this.errors.putIfAbsent(messageError, new ErrorUnit()).addFailure(fail);
+            ErrorUnit errorUnit = this.errors.putIfAbsent(messageError, new ErrorUnit());
+            if (errorUnit != null) {
+                errorUnit.addFailure(fail);
+            }
         }
     }
 
