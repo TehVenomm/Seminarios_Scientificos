@@ -3,7 +3,6 @@ package br.com.mauda.seminario.cientificos.junit.tests;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
-import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
 import java.util.Date;
 
@@ -55,11 +54,11 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         // Verifica se os atributos estao preenchidos
         assertAll(new InscricaoExecutable(inscricao));
 
-        assertTrue(!object.getEstudante().possuiInscricao(inscricao),
-            "Estudante nao deveria possuir a inscricao - remover no metodo cancelarCompra()");
-
         // Obtem uma nova instancia do BD a partir do ID gerado
         Inscricao objectBD = this.bc.findById(inscricao.getId());
+
+        assertFalse(objectBD.getEstudante().possuiInscricao(inscricao),
+            "Estudante nao deveria possuir a inscricao - remover no metodo cancelarCompra()");
 
         // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
         assertAll(new InscricaoExecutable(inscricao, objectBD));
