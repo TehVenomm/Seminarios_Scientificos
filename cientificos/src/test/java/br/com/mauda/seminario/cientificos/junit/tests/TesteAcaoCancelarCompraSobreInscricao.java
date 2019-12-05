@@ -2,6 +2,7 @@ package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertFalse;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
 
 import java.util.Date;
