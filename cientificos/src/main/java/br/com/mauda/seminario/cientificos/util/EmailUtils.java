@@ -9,6 +9,10 @@ package br.com.mauda.seminario.cientificos.util;
 
 public class EmailUtils {
 
+    private EmailUtils() {
+        // nada a fazer
+    }
+
     /**
      * Pattern para a validacao de emails
      */

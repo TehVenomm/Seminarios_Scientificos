@@ -1,6 +1,6 @@
 package br.com.mauda.seminario.cientificos.util;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 public interface EnumUtils {
 
@@ -12,7 +12,7 @@ public interface EnumUtils {
      */
     static <E extends Enum<E>> E getInstanceRandomly(Class<E> enumm) {
         E[] array = enumm.getEnumConstants();
-        return array[new Random().nextInt(array.length)];
+        return array[new SecureRandom().nextInt(array.length)];
     }
 
 }

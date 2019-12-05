@@ -2,8 +2,8 @@ package br.com.mauda.seminario.cientificos.junit.tests;
 
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertAll;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
+import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertFalse;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertThrows;
-import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 
 import java.util.Date;
 
@@ -59,7 +59,7 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         // Verifica se os atributos estao preenchidos
         assertAll(new InscricaoExecutable(inscricao));
 
-        assertTrue(!object.getEstudante().possuiInscricao(inscricao),
+        assertFalse(object.getEstudante().possuiInscricao(inscricao),
             "Estudante nao deveria possuir a inscricao - remover no metodo cancelarCompra()");
     }
 
