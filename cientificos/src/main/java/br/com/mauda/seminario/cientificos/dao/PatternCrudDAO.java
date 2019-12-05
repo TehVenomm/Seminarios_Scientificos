@@ -3,8 +3,6 @@ package br.com.mauda.seminario.cientificos.dao;
 import java.io.Serializable;
 import java.util.Collection;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,15 +12,13 @@ import br.com.mauda.seminario.cientificos.dto.FilterValidation;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.DataValidation;
 
-public abstract class PatternCrudDAO<T extends DataValidation, DTO extends FilterValidation> implements Serializable {
+public abstract class PatternCrudDAO<T extends DataValidation, F extends FilterValidation> implements Serializable {
 
     private static final long serialVersionUID = 3723942253378506052L;
-    protected String entityClassName;
-    protected static Logger LOGGER;
+    private final String findAllHQL = "FROM " + this.getClass().getName() + " as c ";
+    private final String findByIdHQL = "FROM " + this.getClass().getName() + " as c WHERE c.id = :id ";
 
-    public PatternCrudDAO(Class<T> entityClass) {
-        PatternCrudDAO.LOGGER = LogManager.getLogger(entityClass);
-        this.entityClassName = entityClass.getName();
+    protected PatternCrudDAO() {
     }
 
     ////////////////////////////////////////////////////////////
@@ -49,7 +45,7 @@ public abstract class PatternCrudDAO<T extends DataValidation, DTO extends Filte
     public T findById(Long id) {
         Session session = HibernateUtil.getSession();
         try {
-            Query byIdQuery = session.createQuery("FROM " + this.entityClassName + " as c WHERE c.id = :id");
+            Query byIdQuery = session.createQuery(this.findByIdHQL);
             byIdQuery.setParameter("id", id);
             T object = (T) byIdQuery.uniqueResult();
             this.inicializaLazyObjects(object);
@@ -68,7 +64,7 @@ public abstract class PatternCrudDAO<T extends DataValidation, DTO extends Filte
      * @param filter
      * @return
      */
-    public abstract Collection<T> findByFilter(DTO filter);
+    public abstract Collection<T> findByFilter(F filter);
 
     /**
      * Metodo que realiza a busca de todas as entidades da tabela da entidade T
@@ -79,7 +75,7 @@ public abstract class PatternCrudDAO<T extends DataValidation, DTO extends Filte
     public Collection<T> findAll() {
         Session session = HibernateUtil.getSession();
         try {
-            Query listQuery = session.createQuery("FROM " + this.entityClassName + " as c");
+            Query listQuery = session.createQuery(this.findAllHQL);
             Collection<T> collection = listQuery.list();
             for (T object : collection) {
                 this.inicializaLazyObjects(object);
@@ -109,7 +105,6 @@ public abstract class PatternCrudDAO<T extends DataValidation, DTO extends Filte
             tx = session.beginTransaction();
             session.persist(obj);
             tx.commit();
-            PatternCrudDAO.LOGGER.debug("Nova Linha: " + obj + ", foi comitada. ");
         } catch (Exception ex) {
             if (tx != null) {
                 tx.rollback();
@@ -134,7 +129,6 @@ public abstract class PatternCrudDAO<T extends DataValidation, DTO extends Filte
             tx = session.beginTransaction();
             obj = (T) session.merge(obj);
             tx.commit();
-            PatternCrudDAO.LOGGER.debug("Linha: " + obj + ", foi atualizada. ");
         } catch (Exception ex) {
             if (tx != null) {
                 tx.rollback();
@@ -161,7 +155,6 @@ public abstract class PatternCrudDAO<T extends DataValidation, DTO extends Filte
             obj = (T) session.merge(obj);
             session.delete(obj);
             tx.commit();
-            PatternCrudDAO.LOGGER.debug("Linha: " + obj + ", foi deletada. ");
         } catch (Exception ex) {
             if (tx != null) {
                 tx.rollback();

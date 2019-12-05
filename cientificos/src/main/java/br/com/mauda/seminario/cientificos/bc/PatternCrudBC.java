@@ -7,7 +7,7 @@ import br.com.mauda.seminario.cientificos.dto.FilterValidation;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.DataValidation;
 
-public abstract class PatternCrudBC<T extends DataValidation, DTO extends FilterValidation, DAO extends PatternCrudDAO<T, DTO>> {
+public abstract class PatternCrudBC<T extends DataValidation, F extends FilterValidation, D extends PatternCrudDAO<T, F>> {
 
     ///////////////////////////////////////////////////////////////////
     // METODOS UTILITARIOS
@@ -18,7 +18,7 @@ public abstract class PatternCrudBC<T extends DataValidation, DTO extends Filter
      *
      * @return
      */
-    protected DAO dao;
+    protected D dao;
 
     ///////////////////////////////////////////////////////////////////
     // METODOS DE MODIFICACAO
@@ -94,7 +94,7 @@ public abstract class PatternCrudBC<T extends DataValidation, DTO extends Filter
      * @param filter
      * @return
      */
-    public Collection<T> findByFilter(DTO filter) {
+    public Collection<T> findByFilter(F filter) {
         if (filter == null || !filter.validateForFindData()) {
             throw new SeminariosCientificosException("ER0001");
         }
