@@ -4,7 +4,7 @@ import br.com.mauda.seminario.cientificos.dao.PatternCrudDAO;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.DataValidation;
 
-public abstract class PatternCrudBC<T extends DataValidation, DAO extends PatternCrudDAO<T>> {
+public abstract class PatternCrudBC<T extends DataValidation, D extends PatternCrudDAO<T>> {
 
     ///////////////////////////////////////////////////////////////////
     // METODOS UTILITARIOS
@@ -15,7 +15,7 @@ public abstract class PatternCrudBC<T extends DataValidation, DAO extends Patter
      *
      * @return
      */
-    protected DAO dao;
+    protected D dao;
 
     ///////////////////////////////////////////////////////////////////
     // METODOS DE MODIFICACAO

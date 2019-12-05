@@ -2,8 +2,6 @@ package br.com.mauda.seminario.cientificos.dao;
 
 import java.io.Serializable;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,12 +13,9 @@ import br.com.mauda.seminario.cientificos.model.DataValidation;
 public abstract class PatternCrudDAO<T extends DataValidation> implements Serializable {
 
     private static final long serialVersionUID = 3723942253378506052L;
-    protected String entityClassName;
-    protected static Logger LOGGER;
+    private final String findByIdHQL = "FROM " + this.getClass().getName() + " as c WHERE c.id = :id";
 
-    public PatternCrudDAO(Class<T> entityClass) {
-        PatternCrudDAO.LOGGER = LogManager.getLogger(entityClass);
-        this.entityClassName = entityClass.getName();
+    protected PatternCrudDAO() {
     }
 
     ////////////////////////////////////////////////////////////
@@ -47,7 +42,7 @@ public abstract class PatternCrudDAO<T extends DataValidation> implements Serial
     public T findById(Long id) {
         Session session = HibernateUtil.getSession();
         try {
-            Query byIdQuery = session.createQuery("FROM " + this.entityClassName + " as c WHERE c.id = :id");
+            Query byIdQuery = session.createQuery(this.findByIdHQL);
             byIdQuery.setParameter("id", id);
             T object = (T) byIdQuery.uniqueResult();
             this.inicializaLazyObjects(object);
@@ -77,7 +72,6 @@ public abstract class PatternCrudDAO<T extends DataValidation> implements Serial
             tx = session.beginTransaction();
             session.persist(obj);
             tx.commit();
-            PatternCrudDAO.LOGGER.debug("Nova Linha: " + obj + ", foi comitada. ");
         } catch (Exception ex) {
             if (tx != null) {
                 tx.rollback();

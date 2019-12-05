@@ -12,6 +12,9 @@ import org.hibernate.service.ServiceRegistryBuilder;
  */
 public class HibernateUtil {
 
+    private HibernateUtil() {
+    }
+
     private static SessionFactory sessionFactory;
 
     private static SessionFactory getSessionFactory() {
