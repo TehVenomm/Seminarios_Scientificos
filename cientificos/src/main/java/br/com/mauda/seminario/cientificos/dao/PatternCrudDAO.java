@@ -15,10 +15,11 @@ import br.com.mauda.seminario.cientificos.model.DataValidation;
 public abstract class PatternCrudDAO<T extends DataValidation, F extends FilterValidation> implements Serializable {
 
     private static final long serialVersionUID = 3723942253378506052L;
-    private final String findAllHQL = "FROM " + this.getClass().getName() + " as c ";
-    private final String findByIdHQL = "FROM " + this.getClass().getName() + " as c WHERE c.id = :id ";
+    private final String findAllHQL, findByIdHQL;
 
-    protected PatternCrudDAO() {
+    public PatternCrudDAO(Class<T> entityClass) {
+        this.findByIdHQL = "FROM " + entityClass.getName() + " as c WHERE c.id = :id";
+        this.findAllHQL = "FROM " + entityClass.getName() + " as c ";
     }
 
     ////////////////////////////////////////////////////////////
