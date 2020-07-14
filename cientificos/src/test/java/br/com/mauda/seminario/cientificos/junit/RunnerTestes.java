@@ -13,7 +13,6 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary.Failure;
 
-import br.com.mauda.seminario.cientificos.junit.tests.TesteInstituicao;
 import br.com.mauda.seminario.cientificos.junit.util.ErrorTestManager;
 
 /**
@@ -25,12 +24,14 @@ import br.com.mauda.seminario.cientificos.junit.util.ErrorTestManager;
  * @author Mauda
  */
 
-public class RunnerTestes {
+class RunnerTestes {
+
+    static final String TESTE_PACKAGE = "br.com.mauda.seminario.cientificos.junit.tests.";
 
     @Test
-    public void execucao() {
+    void execucao() {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
-            .selectors(DiscoverySelectors.selectClass(TesteInstituicao.class))
+            .selectors(DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteInstituicao"))
             .build();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
         Launcher launcher = LauncherFactory.create();
