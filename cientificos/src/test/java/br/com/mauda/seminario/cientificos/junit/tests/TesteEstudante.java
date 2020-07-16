@@ -7,7 +7,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -22,7 +21,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaEstudante;
 import br.com.mauda.seminario.cientificos.model.Estudante;
 import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
-public class TesteEstudante {
+class TesteEstudante {
 
     protected EstudanteBC bc = EstudanteBC.getInstance();
     protected EstudanteConverter converter = new EstudanteConverter();
@@ -33,24 +32,21 @@ public class TesteEstudante {
         this.estudante = this.converter.create(EnumUtils.getInstanceRandomly(MassaEstudante.class));
     }
 
-    @Tag("businessTest")
     @DisplayName("Criacao de um Estudante")
     @ParameterizedTest(name = "Criacao do Estudante [{arguments}]")
     @EnumSource(MassaEstudante.class)
-    public void criar(@ConvertWith(EstudanteConverter.class) Estudante object) {
+    void criar(@ConvertWith(EstudanteConverter.class) Estudante object) {
         // Verifica se os atributos estao preenchidos corretamente
         assertAll(new EstudanteExecutable(object));
         this.bc.insert(object);
     }
 
-    @Tag("businessTest")
     @Test
     @DisplayName("Criacao de um estudante nulo")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para o email do Estudante")
     class EmailEstudante implements TestsEmailField {
@@ -71,7 +67,6 @@ public class TesteEstudante {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para o nome do Estudante")
     class NomeEstudante implements TestsStringField {
@@ -92,7 +87,6 @@ public class TesteEstudante {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para o telefone do Estudante")
     class TelefoneEstudante implements TestsStringField {
@@ -118,22 +112,19 @@ public class TesteEstudante {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para a Instituicao dentro do Estudante")
     class InstituicaoDoEstudante {
 
-        @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um estudante com Instituicao nula")
-        public void validarNulo() throws IllegalAccessException {
+        void validarNulo() throws IllegalAccessException {
             // Metodo que seta a instituicao como null usando reflections
             FieldUtils.writeDeclaredField(TesteEstudante.this.estudante, "instituicao", null, true);
 
             assertThrows(() -> TesteEstudante.this.bc.insert(TesteEstudante.this.estudante), "ER0003");
         }
 
-        @Tag("businessTest")
         @Nested
         @DisplayName("Testes para a cidade da Instituicao")
         class CidadeInstituicao implements TestsStringField {
@@ -154,7 +145,6 @@ public class TesteEstudante {
             }
         }
 
-        @Tag("businessTest")
         @Nested
         @DisplayName("Testes para o estado da Instituicao")
         class EstadoInstituicao implements TestsStringField {
@@ -175,7 +165,6 @@ public class TesteEstudante {
             }
         }
 
-        @Tag("businessTest")
         @Nested
         @DisplayName("Testes para o nome da Instituicao")
         class NomeInstituicao implements TestsStringField {
@@ -201,7 +190,6 @@ public class TesteEstudante {
             }
         }
 
-        @Tag("businessTest")
         @Nested
         @DisplayName("Testes para o pais da Instituicao")
         class PaisInstituicao implements TestsStringField {
@@ -222,7 +210,6 @@ public class TesteEstudante {
             }
         }
 
-        @Tag("businessTest")
         @Nested
         @DisplayName("Testes para a sigla da Instituicao")
         class SiglaInstituicao implements TestsStringField {

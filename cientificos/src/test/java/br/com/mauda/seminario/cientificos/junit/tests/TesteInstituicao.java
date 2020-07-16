@@ -6,7 +6,6 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -20,7 +19,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaInstituicao;
 import br.com.mauda.seminario.cientificos.model.Instituicao;
 import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
-public class TesteInstituicao {
+class TesteInstituicao {
 
     protected InstituicaoBC bc = InstituicaoBC.getInstance();
     protected InstituicaoConverter converter = new InstituicaoConverter();
@@ -31,24 +30,21 @@ public class TesteInstituicao {
         this.instituicao = this.converter.create(EnumUtils.getInstanceRandomly(MassaInstituicao.class));
     }
 
-    @Tag("businessTest")
     @DisplayName("Criacao de uma Instituicao")
     @ParameterizedTest(name = "Criacao da Instituicao [{arguments}]")
     @EnumSource(MassaInstituicao.class)
-    public void criar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
+    void criar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
         // Verifica se os atributos estao preenchidos corretamente
         assertAll(new InstituicaoExecutable(object));
         this.bc.insert(object);
     }
 
-    @Tag("businessTest")
     @Test
     @DisplayName("Criacao de uma Instituicao nula")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para a cidade da Instituicao")
     class CidadeInstituicao implements TestsStringField {
@@ -69,7 +65,6 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para o estado da Instituicao")
     class EstadoInstituicao implements TestsStringField {
@@ -90,7 +85,6 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para o nome da Instituicao")
     class NomeInstituicao implements TestsStringField {
@@ -116,7 +110,6 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para o pais da Instituicao")
     class PaisInstituicao implements TestsStringField {
@@ -137,7 +130,6 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para a sigla da Instituicao")
     class SiglaInstituicao implements TestsStringField {

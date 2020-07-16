@@ -9,7 +9,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -37,24 +36,21 @@ public class TesteSeminario {
         this.seminario = this.converter.create(EnumUtils.getInstanceRandomly(MassaSeminario.class));
     }
 
-    @Tag("businessTest")
     @DisplayName("Criacao de um Seminario")
     @ParameterizedTest(name = "Criacao do Seminario [{arguments}]")
     @EnumSource(MassaSeminario.class)
-    public void criar(@ConvertWith(SeminarioConverter.class) Seminario object) {
+    void criar(@ConvertWith(SeminarioConverter.class) Seminario object) {
         // Verifica se os atributos estao preenchidos corretamente
         assertAll(new SeminarioExecutable(object));
         this.bc.insert(object);
     }
 
-    @Tag("businessTest")
     @Test
     @DisplayName("Criacao de um seminario nulo")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para o titulo do Seminario")
     class TituloSeminario implements TestsStringField {
@@ -75,7 +71,6 @@ public class TesteSeminario {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para a descricao do Seminario")
     class DescricaoSeminario implements TestsStringField {
@@ -101,7 +96,6 @@ public class TesteSeminario {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para a data do Seminario")
     class DataSeminario implements TestsDateFutureField {
@@ -123,7 +117,6 @@ public class TesteSeminario {
 
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para a mesa redonda do Seminario")
     class MesaRedondaSeminario implements TestsGenericField<Boolean> {
@@ -145,7 +138,6 @@ public class TesteSeminario {
 
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para a quantidade de inscricoes do Seminario")
     class QuantidadeInscricoesSeminario implements TestsIntegerPositiveField {
@@ -166,39 +158,34 @@ public class TesteSeminario {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para as Areas Cientificas dentro do Seminario")
     class AreasCientificasDoSeminario {
 
-        @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um seminario com area cientifica nula")
-        public void validarNulo() throws IllegalAccessException {
+        void validarNulo() throws IllegalAccessException {
             // Metodo que seta as areas cientificas como null usando reflections
             FieldUtils.writeDeclaredField(TesteSeminario.this.seminario, "areasCientificas", null, true);
 
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0076");
         }
 
-        @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um seminario sem areas cientificas")
-        public void validarBranco() {
+        void validarBranco() {
             TesteSeminario.this.seminario.getAreasCientificas().clear();
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0076");
         }
 
-        @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um seminario com area cientifica nula")
-        public void validarAreaNula() {
+        void validarAreaNula() {
             TesteSeminario.this.seminario.getAreasCientificas().clear();
             TesteSeminario.this.seminario.getAreasCientificas().add(null);
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0003");
         }
 
-        @Tag("businessTest")
         @Nested
         @DisplayName("Testes para o nome da Area Cientifica")
         class NomeAreaCientifica implements TestsStringField {
@@ -220,39 +207,34 @@ public class TesteSeminario {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para os professores dentro do Seminario")
     class ProfessoresDoSeminario {
 
-        @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um seminario com professor nulo")
-        public void validarNulo() throws IllegalAccessException {
+        void validarNulo() throws IllegalAccessException {
             // Metodo que seta os professores como null usando reflections
             FieldUtils.writeDeclaredField(TesteSeminario.this.seminario, "professores", null, true);
 
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0075");
         }
 
-        @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um seminario sem professores")
-        public void validarBranco() {
+        void validarBranco() {
             TesteSeminario.this.seminario.getProfessores().clear();
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0075");
         }
 
-        @Tag("businessTest")
         @Test
         @DisplayName("Criacao de um seminario com professor nulo")
-        public void validarProfessorNulo() {
+        void validarProfessorNulo() {
             TesteSeminario.this.seminario.getProfessores().clear();
             TesteSeminario.this.seminario.getProfessores().add(null);
             assertThrows(() -> TesteSeminario.this.bc.insert(TesteSeminario.this.seminario), "ER0003");
         }
 
-        @Tag("businessTest")
         @Nested
         @DisplayName("Testes para o nome do Professor")
         class NomeProfessore implements TestsStringField {

@@ -13,15 +13,6 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary.Failure;
 
-import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoCancelarCompraSobreInscricao;
-import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoCheckInSobreInscricao;
-import br.com.mauda.seminario.cientificos.junit.tests.TesteAcaoComprarSobreInscricao;
-import br.com.mauda.seminario.cientificos.junit.tests.TesteAreaCientifica;
-import br.com.mauda.seminario.cientificos.junit.tests.TesteCurso;
-import br.com.mauda.seminario.cientificos.junit.tests.TesteEstudante;
-import br.com.mauda.seminario.cientificos.junit.tests.TesteInstituicao;
-import br.com.mauda.seminario.cientificos.junit.tests.TesteProfessor;
-import br.com.mauda.seminario.cientificos.junit.tests.TesteSeminario;
 import br.com.mauda.seminario.cientificos.junit.util.ErrorTestManager;
 
 /**
@@ -33,21 +24,23 @@ import br.com.mauda.seminario.cientificos.junit.util.ErrorTestManager;
  * @author Mauda
  */
 
-public class RunnerTestes {
+class RunnerTestes {
+
+    static final String TESTE_PACKAGE = "br.com.mauda.seminario.cientificos.junit.tests.";
 
     @Test
-    public void execucao() {
+    void execucao() {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
             .selectors(
-                DiscoverySelectors.selectClass(TesteAreaCientifica.class),
-                DiscoverySelectors.selectClass(TesteCurso.class),
-                DiscoverySelectors.selectClass(TesteInstituicao.class),
-                DiscoverySelectors.selectClass(TesteEstudante.class),
-                DiscoverySelectors.selectClass(TesteProfessor.class),
-                DiscoverySelectors.selectClass(TesteSeminario.class),
-                DiscoverySelectors.selectClass(TesteAcaoComprarSobreInscricao.class),
-                DiscoverySelectors.selectClass(TesteAcaoCancelarCompraSobreInscricao.class),
-                DiscoverySelectors.selectClass(TesteAcaoCheckInSobreInscricao.class))
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAreaCientifica"),
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteCurso"),
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteInstituicao"),
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteEstudante"),
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteProfessor"),
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteSeminario"),
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoComprarSobreInscricao"),
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCancelarCompraSobreInscricao"),
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCheckInSobreInscricao"))
             .build();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
         Launcher launcher = LauncherFactory.create();

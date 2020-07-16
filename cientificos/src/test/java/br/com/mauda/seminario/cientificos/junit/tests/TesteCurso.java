@@ -7,7 +7,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -21,7 +20,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaCurso;
 import br.com.mauda.seminario.cientificos.model.Curso;
 import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
-public class TesteCurso {
+class TesteCurso {
 
     protected CursoBC bc = CursoBC.getInstance();
     protected CursoConverter converter = new CursoConverter();
@@ -32,24 +31,21 @@ public class TesteCurso {
         this.curso = this.converter.create(EnumUtils.getInstanceRandomly(MassaCurso.class));
     }
 
-    @Tag("businessTest")
     @DisplayName("Criacao de um Curso")
     @ParameterizedTest(name = "Criacao do Curso [{arguments}]")
     @EnumSource(MassaCurso.class)
-    public void criar(@ConvertWith(CursoConverter.class) Curso object) {
+    void criar(@ConvertWith(CursoConverter.class) Curso object) {
         // Verifica se os atributos estao preenchidos corretamente
         assertAll(new CursoExecutable(object));
         this.bc.insert(object);
     }
 
-    @Tag("businessTest")
     @Test
     @DisplayName("Criacao de um curso nulo")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para o nome do Curso")
     class NomeCurso implements TestsStringField {
@@ -70,21 +66,19 @@ public class TesteCurso {
         }
     }
 
-    @Tag("businessTest")
     @Nested
     @DisplayName("Testes para a Area Cientifica dentro do Curso")
     class AreaCientificaDoCurso {
 
         @Test
         @DisplayName("Criacao de um curso com area cientifica nula")
-        public void validarNulo() throws IllegalAccessException {
+        void validarNulo() throws IllegalAccessException {
             // Metodo que seta a area cientifica como null usando reflections
             FieldUtils.writeDeclaredField(TesteCurso.this.curso, "areaCientifica", null, true);
 
             assertThrows(() -> TesteCurso.this.bc.insert(TesteCurso.this.curso), "ER0003");
         }
 
-        @Tag("businessTest")
         @Nested
         @DisplayName("Testes para o nome da Area Cientifica")
         class NomeAreaCientifica implements TestsStringField {
