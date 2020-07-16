@@ -4,7 +4,6 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertEquals;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -16,13 +15,12 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricaoComprar;
 import br.com.mauda.seminario.cientificos.model.Inscricao;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 
-public class TesteAcaoComprarSobreInscricao {
+class TesteAcaoComprarSobreInscricao {
 
-    @Tag("modelTest")
     @DisplayName("Compra de uma inscricao para o Seminario")
     @ParameterizedTest(name = "Compra da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoComprar.class)
-    public void comprarInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO dto) {
+    void comprarInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO dto) {
         Inscricao inscricao = dto.getInscricao();
 
         // Compra a inscricao pro seminario
