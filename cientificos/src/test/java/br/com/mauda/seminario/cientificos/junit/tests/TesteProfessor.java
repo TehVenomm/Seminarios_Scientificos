@@ -9,7 +9,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -26,7 +25,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaProfessor;
 import br.com.mauda.seminario.cientificos.model.Professor;
 import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
-public class TesteProfessor {
+class TesteProfessor {
 
     protected ProfessorBC bc = ProfessorBC.getInstance();
     protected ProfessorConverter converter = new ProfessorConverter();
@@ -37,11 +36,10 @@ public class TesteProfessor {
         this.professor = this.converter.create(EnumUtils.getInstanceRandomly(MassaProfessor.class));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Criacao de um Professor")
     @ParameterizedTest(name = "Criacao do Professor [{arguments}]")
     @EnumSource(MassaProfessor.class)
-    public void criar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
+    void criar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
         // Verifica se os atributos estao preenchidos corretamente
         assertAll(new ProfessorExecutable(object));
 
@@ -58,11 +56,10 @@ public class TesteProfessor {
         assertAll(new ProfessorExecutable(object, objectBD));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Atualizacao dos atributos de um Professor")
     @ParameterizedTest(name = "Atualizacao do Professor [{arguments}]")
     @EnumSource(MassaProfessor.class)
-    public void atualizar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
+    void atualizar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
         // Cria o objeto
         this.criar(object);
 
@@ -82,11 +79,10 @@ public class TesteProfessor {
         this.bc.delete(object);
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Delecao de um Professor")
     @ParameterizedTest(name = "Delecao do Professor [{arguments}]")
     @EnumSource(MassaProfessor.class)
-    public void deletar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
+    void deletar(@ConvertWith(ProfessorDAOConverter.class) Professor object) {
         // Realiza a insercao do objeto no banco de dados
         this.criar(object);
 
@@ -100,14 +96,12 @@ public class TesteProfessor {
         assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Criacao de um professor nulo")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o email do Professor")
     class EmailProfessor implements TestsEmailField {
@@ -128,7 +122,6 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o nome do Professor")
     class NomeProfessor implements TestsStringField {
@@ -149,7 +142,6 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o telefone do Professor")
     class TelefoneProfessor implements TestsStringField {
@@ -175,7 +167,6 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o salario do Professor")
     class SalarioProfessor implements TestsDoublePositiveField {
@@ -196,7 +187,6 @@ public class TesteProfessor {
         }
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a Instituicao dentro do Professor")
     class InstituicaoDoProfessor {
@@ -204,14 +194,13 @@ public class TesteProfessor {
         @Tag("queriesDaoTest")
         @Test
         @DisplayName("Criacao de um professor com Instituicao nula")
-        public void validarNulo() throws IllegalAccessException {
+        void validarNulo() throws IllegalAccessException {
             // Metodo que seta a instituicao como null usando reflections
             FieldUtils.writeDeclaredField(TesteProfessor.this.professor, "instituicao", null, true);
 
             assertThrows(() -> TesteProfessor.this.bc.insert(TesteProfessor.this.professor), "ER0003");
         }
 
-        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para a cidade da Instituicao")
         class CidadeInstituicao implements TestsStringField {
@@ -232,7 +221,6 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para o estado da Instituicao")
         class EstadoInstituicao implements TestsStringField {
@@ -253,7 +241,6 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para o nome da Instituicao")
         class NomeInstituicao implements TestsStringField {
@@ -279,7 +266,6 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para o pais da Instituicao")
         class PaisInstituicao implements TestsStringField {
@@ -300,7 +286,6 @@ public class TesteProfessor {
             }
         }
 
-        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para a sigla da Instituicao")
         class SiglaInstituicao implements TestsStringField {

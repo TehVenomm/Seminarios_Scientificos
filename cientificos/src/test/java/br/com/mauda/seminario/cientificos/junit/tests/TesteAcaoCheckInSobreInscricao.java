@@ -10,7 +10,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -27,7 +26,7 @@ import br.com.mauda.seminario.cientificos.model.Inscricao;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
-public class TesteAcaoCheckInSobreInscricao {
+class TesteAcaoCheckInSobreInscricao {
 
     protected InscricaoBC bc = InscricaoBC.getInstance();
     protected AcaoInscricaoDTOConverter converter = new AcaoInscricaoDTOConverter();
@@ -38,11 +37,10 @@ public class TesteAcaoCheckInSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoComprar.class));
     }
 
-    @Tag("MapeamentoDAOTest")
     @DisplayName("CheckIn de uma inscricao para o Seminario")
     @ParameterizedTest(name = "CheckIn da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCheckIn.class)
-    public void checkInscricao(@ConvertWith(AcaoInscricaoDTODAOConverter.class) AcaoInscricaoDTO object) {
+    void checkInscricao(@ConvertWith(AcaoInscricaoDTODAOConverter.class) AcaoInscricaoDTO object) {
         Inscricao inscricao = object.getInscricao();
 
         // Realiza o check in da inscricao pro seminario
@@ -62,17 +60,15 @@ public class TesteAcaoCheckInSobreInscricao {
         assertAll(new InscricaoExecutable(inscricao, objectBD));
     }
 
-    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("CheckIn de uma inscricao nula")
-    public void validarCheckInComInscricaoNula() {
+    void validarCheckInComInscricaoNula() {
         assertThrows(() -> this.bc.realizarCheckIn(null), "ER0003");
     }
 
-    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("CheckIn de uma inscricao com a situacao diferente de COMPRADO")
-    public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
+    void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
         Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
 
         // Metodo que seta a situacao da inscricao como DISPONIVEL usando reflections
@@ -84,10 +80,9 @@ public class TesteAcaoCheckInSobreInscricao {
         assertThrows(() -> this.bc.realizarCheckIn(inscricao), "ER0046");
     }
 
-    @Tag("MapeamentoDAOTest")
     @Test
     @DisplayName("CheckIn de uma inscricao após a data do Seminario")
-    public void validarCheckInAposDataSeminario() throws IllegalAccessException {
+    void validarCheckInAposDataSeminario() throws IllegalAccessException {
         Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
 
         // Metodo que seta a situacao da inscricao como COMPRADO usando reflections

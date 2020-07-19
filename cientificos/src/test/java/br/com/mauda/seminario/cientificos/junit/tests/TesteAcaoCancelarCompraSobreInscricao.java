@@ -10,7 +10,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -26,7 +25,7 @@ import br.com.mauda.seminario.cientificos.model.Inscricao;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
-public class TesteAcaoCancelarCompraSobreInscricao {
+class TesteAcaoCancelarCompraSobreInscricao {
 
     protected InscricaoBC bc = InscricaoBC.getInstance();
     protected AcaoInscricaoDTOConverter converter = new AcaoInscricaoDTOConverter();
@@ -37,11 +36,10 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         this.acaoInscricaoDTO = this.converter.create(EnumUtils.getInstanceRandomly(MassaInscricaoCancelarCompra.class));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Cancelar uma inscricao para o Seminario")
     @ParameterizedTest(name = "Cancelar inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoCancelarCompra.class)
-    public void cancelarCompra(@ConvertWith(AcaoInscricaoDTODAOConverter.class) AcaoInscricaoDTO object) {
+    void cancelarCompra(@ConvertWith(AcaoInscricaoDTODAOConverter.class) AcaoInscricaoDTO object) {
         Inscricao inscricao = object.getInscricao();
 
         // Realiza o cancelamento da inscricao pro seminario
@@ -65,17 +63,15 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         assertAll(new InscricaoExecutable(inscricao, objectBD));
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Cancelar inscricao nula")
-    public void validarCompraComInscricaoNula() {
+    void validarCompraComInscricaoNula() {
         assertThrows(() -> this.bc.cancelarCompra(null), "ER0003");
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Cancelar inscricao com a situacao diferente de COMPRADO")
-    public void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
+    void validarCompraComSituacaoInscricaoNaoDisponivel() throws IllegalAccessException {
         Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
 
         // Metodo que seta a situacao da inscricao como DISPONIVEL usando reflections
@@ -87,10 +83,9 @@ public class TesteAcaoCancelarCompraSobreInscricao {
         assertThrows(() -> this.bc.cancelarCompra(inscricao), "ER0044");
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Cancelar compra após a data do Seminario")
-    public void validarCancelamentoAposDataSeminario() throws IllegalAccessException {
+    void validarCancelamentoAposDataSeminario() throws IllegalAccessException {
         Inscricao inscricao = this.acaoInscricaoDTO.getInscricao();
 
         // Metodo que seta a situacao da inscricao como COMPRADO usando reflections

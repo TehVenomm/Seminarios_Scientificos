@@ -9,7 +9,6 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -24,7 +23,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaCurso;
 import br.com.mauda.seminario.cientificos.model.Curso;
 import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
-public class TesteCurso {
+class TesteCurso {
 
     protected CursoBC bc = CursoBC.getInstance();
     protected CursoConverter converter = new CursoConverter();
@@ -35,11 +34,10 @@ public class TesteCurso {
         this.curso = this.converter.create(EnumUtils.getInstanceRandomly(MassaCurso.class));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Criacao de um Curso")
     @ParameterizedTest(name = "Criacao do Curso [{arguments}]")
     @EnumSource(MassaCurso.class)
-    public void criar(@ConvertWith(CursoDAOConverter.class) Curso object) {
+    void criar(@ConvertWith(CursoDAOConverter.class) Curso object) {
         // Verifica se os atributos estao preenchidos corretamente
         assertAll(new CursoExecutable(object));
 
@@ -56,11 +54,10 @@ public class TesteCurso {
         assertAll(new CursoExecutable(object, objectBD));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Atualizacao dos atributos de um Curso")
     @ParameterizedTest(name = "Atualizacao do Curso [{arguments}]")
     @EnumSource(MassaCurso.class)
-    public void atualizar(@ConvertWith(CursoDAOConverter.class) Curso object) {
+    void atualizar(@ConvertWith(CursoDAOConverter.class) Curso object) {
         // Cria o objeto
         this.criar(object);
 
@@ -80,11 +77,10 @@ public class TesteCurso {
         this.bc.delete(object);
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Delecao de um Curso")
     @ParameterizedTest(name = "Delecao do Curso [{arguments}]")
     @EnumSource(MassaCurso.class)
-    public void deletar(@ConvertWith(CursoDAOConverter.class) Curso object) {
+    void deletar(@ConvertWith(CursoDAOConverter.class) Curso object) {
         // Realiza a insercao do objeto no banco de dados
         this.criar(object);
 
@@ -98,14 +94,12 @@ public class TesteCurso {
         assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Criacao de um curso nulo")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o nome do Curso")
     class NomeCurso implements TestsStringField {
@@ -126,21 +120,19 @@ public class TesteCurso {
         }
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a Area Cientifica dentro do Curso")
     class AreaCientificaDoCurso {
 
         @Test
         @DisplayName("Criacao de um curso com area cientifica nula")
-        public void validarNulo() throws IllegalAccessException {
+        void validarNulo() throws IllegalAccessException {
             // Metodo que seta a area cientifica como null usando reflections
             FieldUtils.writeDeclaredField(TesteCurso.this.curso, "areaCientifica", null, true);
 
             assertThrows(() -> TesteCurso.this.bc.insert(TesteCurso.this.curso), "ER0003");
         }
 
-        @Tag("queriesDaoTest")
         @Nested
         @DisplayName("Testes para o nome da Area Cientifica")
         class NomeAreaCientifica implements TestsStringField {

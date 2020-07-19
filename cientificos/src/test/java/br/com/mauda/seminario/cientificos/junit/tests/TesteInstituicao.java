@@ -8,7 +8,6 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
@@ -22,7 +21,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaInstituicao;
 import br.com.mauda.seminario.cientificos.model.Instituicao;
 import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
-public class TesteInstituicao {
+class TesteInstituicao {
 
     protected InstituicaoBC bc = InstituicaoBC.getInstance();
     protected InstituicaoConverter converter = new InstituicaoConverter();
@@ -33,11 +32,10 @@ public class TesteInstituicao {
         this.instituicao = this.converter.create(EnumUtils.getInstanceRandomly(MassaInstituicao.class));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Criacao de uma Instituicao")
     @ParameterizedTest(name = "Criacao da Instituicao [{arguments}]")
     @EnumSource(MassaInstituicao.class)
-    public void criar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
+    void criar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
         // Cria o objeto
         assertAll(new InstituicaoExecutable(object));
 
@@ -54,11 +52,10 @@ public class TesteInstituicao {
         assertAll(new InstituicaoExecutable(object, objectBD));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Atualizacao dos atributos de uma Instituicao")
     @ParameterizedTest(name = "Atualizacao da Instituicao [{arguments}]")
     @EnumSource(MassaInstituicao.class)
-    public void atualizar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
+    void atualizar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
         // Cria o objeto
         this.criar(object);
 
@@ -78,11 +75,10 @@ public class TesteInstituicao {
         this.bc.delete(object);
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("Delecao de uma Instituicao")
     @ParameterizedTest(name = "Delecao da Instituicao [{arguments}]")
     @EnumSource(MassaInstituicao.class)
-    public void deletar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
+    void deletar(@ConvertWith(InstituicaoConverter.class) Instituicao object) {
         // Realiza a insercao do objeto no banco de dados
         this.criar(object);
 
@@ -96,14 +92,12 @@ public class TesteInstituicao {
         assertNull(objectBD, "O objeto deveria estar deletado do banco de dados");
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("Criacao de uma Instituicao nula")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.insert(null), "ER0003");
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a cidade da Instituicao")
     class CidadeInstituicao implements TestsStringField {
@@ -124,7 +118,6 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o estado da Instituicao")
     class EstadoInstituicao implements TestsStringField {
@@ -145,7 +138,6 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o nome da Instituicao")
     class NomeInstituicao implements TestsStringField {
@@ -171,7 +163,6 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para o pais da Instituicao")
     class PaisInstituicao implements TestsStringField {
@@ -192,7 +183,6 @@ public class TesteInstituicao {
         }
     }
 
-    @Tag("queriesDaoTest")
     @Nested
     @DisplayName("Testes para a sigla da Instituicao")
     class SiglaInstituicao implements TestsStringField {
