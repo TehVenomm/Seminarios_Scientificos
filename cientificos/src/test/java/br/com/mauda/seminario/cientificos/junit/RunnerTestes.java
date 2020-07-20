@@ -13,13 +13,6 @@ import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
 import org.junit.platform.launcher.listeners.TestExecutionSummary.Failure;
 
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteAreaCientificaQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteCursoQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteEstudanteQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteInscricaoQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteInstituicaoQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteProfessorQueries;
-import br.com.mauda.seminario.cientificos.junit.tests.queries.TesteSeminarioQueries;
 import br.com.mauda.seminario.cientificos.junit.util.ErrorTestManager;
 
 /**
@@ -47,7 +40,7 @@ class RunnerTestes {
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteSeminario"),
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoComprarSobreInscricao"),
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCancelarCompraSobreInscricao"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCheckInSobreInscricao"))
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCheckInSobreInscricao"),
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAreaCientificaQueries"),
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteCursoQueries"),
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteInstituicaoQueries"),

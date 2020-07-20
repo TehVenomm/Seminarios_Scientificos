@@ -19,7 +19,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaInscricao;
 import br.com.mauda.seminario.cientificos.model.Inscricao;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 
-public class TesteInscricaoQueries {
+class TesteInscricaoQueries {
 
     protected InscricaoBC bc = InscricaoBC.getInstance();
 

@@ -21,7 +21,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaSeminario;
 import br.com.mauda.seminario.cientificos.junit.provider.FindAllSource;
 import br.com.mauda.seminario.cientificos.model.Seminario;
 
-public class TesteSeminarioQueries {
+class TesteSeminarioQueries {
 
     protected SeminarioBC bc = SeminarioBC.getInstance();
 

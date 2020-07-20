@@ -19,7 +19,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaCurso;
 import br.com.mauda.seminario.cientificos.junit.provider.FindAllSource;
 import br.com.mauda.seminario.cientificos.model.Curso;
 
-public class TesteCursoQueries {
+class TesteCursoQueries {
 
     protected CursoBC bc = CursoBC.getInstance();
 

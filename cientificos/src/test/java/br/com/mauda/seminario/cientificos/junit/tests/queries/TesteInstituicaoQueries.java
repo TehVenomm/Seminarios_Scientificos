@@ -18,7 +18,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaInstituicao;
 import br.com.mauda.seminario.cientificos.junit.provider.FindAllSource;
 import br.com.mauda.seminario.cientificos.model.Instituicao;
 
-public class TesteInstituicaoQueries {
+class TesteInstituicaoQueries {
 
     protected InstituicaoBC bc = InstituicaoBC.getInstance();
 

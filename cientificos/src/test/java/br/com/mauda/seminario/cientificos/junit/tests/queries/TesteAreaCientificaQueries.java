@@ -18,7 +18,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaAreaCientifica;
 import br.com.mauda.seminario.cientificos.junit.provider.FindAllSource;
 import br.com.mauda.seminario.cientificos.model.AreaCientifica;
 
-public class TesteAreaCientificaQueries {
+class TesteAreaCientificaQueries {
 
     protected AreaCientificaBC bc = AreaCientificaBC.getInstance();
 

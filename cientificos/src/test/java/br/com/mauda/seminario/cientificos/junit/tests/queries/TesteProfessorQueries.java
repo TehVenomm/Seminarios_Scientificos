@@ -18,7 +18,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaProfessor;
 import br.com.mauda.seminario.cientificos.junit.provider.FindAllSource;
 import br.com.mauda.seminario.cientificos.model.Professor;
 
-public class TesteProfessorQueries {
+class TesteProfessorQueries {
 
     protected ProfessorBC bc = ProfessorBC.getInstance();
 
