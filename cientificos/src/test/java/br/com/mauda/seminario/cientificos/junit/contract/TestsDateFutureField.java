@@ -12,8 +12,8 @@ public interface TestsDateFutureField extends TestsGenericField<Date> {
 
     @Test
     @DisplayName("Campo preechido com data antes da atual")
-    public default void validarValorAnteriorDataAtual() {
-        setValue(DateUtils.addDays(new Date(), -30));
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarValorAnteriorDataAtual() {
+        this.setValue(DateUtils.addDays(new Date(), -30));
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 }

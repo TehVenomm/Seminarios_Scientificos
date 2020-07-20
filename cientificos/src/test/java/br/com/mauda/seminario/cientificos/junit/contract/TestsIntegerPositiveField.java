@@ -9,15 +9,15 @@ public interface TestsIntegerPositiveField extends TestsGenericField<Integer> {
 
     @Test
     @DisplayName("Campo preechido com valor negativo")
-    public default void validarValorNegativo() {
-        setValue(-1);
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarValorNegativo() {
+        this.setValue(-1);
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 
     @Test
     @DisplayName("Campo preechido com valor zero")
-    public default void validarValorZero() {
-        setValue(0);
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarValorZero() {
+        this.setValue(0);
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 }

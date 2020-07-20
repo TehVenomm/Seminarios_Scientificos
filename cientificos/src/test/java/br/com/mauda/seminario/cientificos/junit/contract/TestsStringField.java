@@ -15,22 +15,22 @@ public interface TestsStringField extends TestsGenericField<String> {
     @Override
     @Test
     @DisplayName("Campo com valor nulo")
-    public default void validarNulo() {
-        setValue(null);
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarNulo() {
+        this.setValue(null);
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 
     @Test
     @DisplayName("Campo preechido com somente espacos em branco")
-    public default void validarValorComEspacos() {
-        setValue("     ");
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarValorComEspacos() {
+        this.setValue("     ");
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 
     @Test
     @DisplayName("Campo com numero de caracteres maior que o permitido")
-    public default void validarValorcomTamanhoExcedido() {
-        setValue(RandomStringUtils.random(getMaxSizeField() + 1));
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarValorcomTamanhoExcedido() {
+        this.setValue(RandomStringUtils.random(this.getMaxSizeField() + 1));
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 }
