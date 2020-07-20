@@ -13,22 +13,22 @@ public interface TestsEmailField extends TestsGenericField<String> {
 
     @Test
     @DisplayName("Campo com numero de caracteres maior que o permitido")
-    public default void validarNomeExcedido() {
-        setValue("eu101010101010101010101101010101@instituicao.com.br");
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarNomeExcedido() {
+        this.setValue("eu101010101010101010101101010101@instituicao.com.br");
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 
     @Test
     @DisplayName("Email sem arroba")
-    public default void validarEmailSemArroba() {
-        setValue("estudanteinstituicao.com.br");
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarEmailSemArroba() {
+        this.setValue("estudanteinstituicao.com.br");
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 
     @Test
     @DisplayName("Email sem ponto")
-    public default void validarEmailSemPonto() {
-        setValue("estudante@instituicaocombr");
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarEmailSemPonto() {
+        this.setValue("estudante@instituicaocombr");
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 }
