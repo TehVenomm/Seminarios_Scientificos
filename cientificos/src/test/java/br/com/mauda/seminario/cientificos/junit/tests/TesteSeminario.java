@@ -27,7 +27,7 @@ import br.com.mauda.seminario.cientificos.junit.massa.MassaSeminario;
 import br.com.mauda.seminario.cientificos.model.Seminario;
 import br.com.mauda.seminario.cientificos.util.EnumUtils;
 
-public class TesteSeminario {
+class TesteSeminario {
 
     protected SeminarioBC bc = SeminarioBC.getInstance();
     protected SeminarioConverter converter = new SeminarioConverter();
