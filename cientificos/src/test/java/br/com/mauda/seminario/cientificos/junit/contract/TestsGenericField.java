@@ -15,8 +15,8 @@ public interface TestsGenericField<E extends Object> {
 
     @Test
     @DisplayName("Campo com valor nulo")
-    public default void validarNulo() {
-        setValue(null);
-        assertThrows(() -> executionMethod(), getErrorMessage());
+    default void validarNulo() {
+        this.setValue(null);
+        assertThrows(() -> this.executionMethod(), this.getErrorMessage());
     }
 }
