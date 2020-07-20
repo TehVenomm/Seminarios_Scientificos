@@ -7,7 +7,6 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import java.util.Collection;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -23,11 +22,10 @@ public class TesteInstituicaoQueries {
 
     protected InstituicaoBC bc = InstituicaoBC.getInstance();
 
-    @Tag("queriesDaoTest")
     @DisplayName("Pesquisa de uma Instituicao pelos metodos findAll e findById")
     @ParameterizedTest(name = "Pesquisa da Instituicao [{arguments}] pelos metodos findAll e findById")
     @FindAllSource(value = InstituicaoBC.class)
-    public void pesquisar(Instituicao objetoFindAll) {
+    void pesquisar(Instituicao objetoFindAll) {
         // Busca pelo FindById
         Instituicao objetoFindId = this.bc.findById(objetoFindAll.getId());
 
@@ -50,25 +48,22 @@ public class TesteInstituicaoQueries {
     /**
      * Realiza um teste com o filtro nulo, esperando que ocorram problemas
      */
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro nulo")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.findByFilter(null), "ER0001");
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro vazio")
-    public void validarFiltroVazio() {
+    void validarFiltroVazio() {
         assertThrows(() -> this.bc.findByFilter(new InstituicaoDTO()), "ER0001");
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com a cidade da instituicao")
     @ParameterizedTest(name = "Pesquisa da Instituicao a partir da cidade [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaInstituicao.class)
-    public void validarFiltroCidade(MassaInstituicao massa) {
+    void validarFiltroCidade(MassaInstituicao massa) {
         InstituicaoDTO filter = new InstituicaoDTO();
         filter.setCidade(massa.getCidade());
 
@@ -79,11 +74,10 @@ public class TesteInstituicaoQueries {
         assertAll(new InstituicaoExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o estado da instituicao")
     @ParameterizedTest(name = "Pesquisa da Instituicao a partir do estado [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaInstituicao.class)
-    public void validarFiltroEstado(MassaInstituicao massa) {
+    void validarFiltroEstado(MassaInstituicao massa) {
         InstituicaoDTO filter = new InstituicaoDTO();
         filter.setEstado(massa.getEstado());
 
@@ -92,11 +86,10 @@ public class TesteInstituicaoQueries {
         assertEquals(6, results.size(), "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o nome da instituicao")
     @ParameterizedTest(name = "Pesquisa da Instituicao a partir do nome [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaInstituicao.class)
-    public void validarFiltroNome(MassaInstituicao massa) {
+    void validarFiltroNome(MassaInstituicao massa) {
         InstituicaoDTO filter = new InstituicaoDTO();
         filter.setNome(massa.getNome());
 
@@ -107,11 +100,10 @@ public class TesteInstituicaoQueries {
         assertAll(new InstituicaoExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o pais da instituicao")
     @ParameterizedTest(name = "Pesquisa da Instituicao a partir do pais [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaInstituicao.class)
-    public void validarFiltroPais(MassaInstituicao massa) {
+    void validarFiltroPais(MassaInstituicao massa) {
         InstituicaoDTO filter = new InstituicaoDTO();
         filter.setPais(massa.getPais());
 
@@ -120,11 +112,10 @@ public class TesteInstituicaoQueries {
         assertEquals(6, results.size(), "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com a sigla da instituicao")
     @ParameterizedTest(name = "Pesquisa da Instituicao a partir da sigla [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaInstituicao.class)
-    public void validarFiltroSigla(MassaInstituicao massa) {
+    void validarFiltroSigla(MassaInstituicao massa) {
         InstituicaoDTO filter = new InstituicaoDTO();
         filter.setSigla(massa.getSigla());
 

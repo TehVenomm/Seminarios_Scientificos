@@ -7,7 +7,6 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import java.util.Collection;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -23,11 +22,10 @@ public class TesteProfessorQueries {
 
     protected ProfessorBC bc = ProfessorBC.getInstance();
 
-    @Tag("queriesDaoTest")
     @DisplayName("Pesquisa de um Professor pelos metodos findAll e findById")
     @ParameterizedTest(name = "Pesquisa do Professor [{arguments}] pelos metodos findAll e findById")
     @FindAllSource(value = ProfessorBC.class)
-    public void pesquisar(Professor objetoFindAll) {
+    void pesquisar(Professor objetoFindAll) {
         // Busca pelo FindById
         Professor objetoFindId = this.bc.findById(objetoFindAll.getId());
 
@@ -50,25 +48,22 @@ public class TesteProfessorQueries {
     /**
      * Realiza um teste com o filtro nulo, esperando que ocorram problemas
      */
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro nulo")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.findByFilter(null), "ER0001");
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro vazio")
-    public void validarFiltroVazio() {
+    void validarFiltroVazio() {
         assertThrows(() -> this.bc.findByFilter(new ProfessorDTO()), "ER0001");
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o email do Professor")
     @ParameterizedTest(name = "Pesquisa do Professor a partir do email [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaProfessor.class)
-    public void validarFiltroEmailProfessor(MassaProfessor massa) {
+    void validarFiltroEmailProfessor(MassaProfessor massa) {
         ProfessorDTO filter = new ProfessorDTO();
         filter.setEmail(massa.getEmail());
 
@@ -79,11 +74,10 @@ public class TesteProfessorQueries {
         assertAll(new ProfessorExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o nome do Professor")
     @ParameterizedTest(name = "Pesquisa do Professor a partir do nome [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaProfessor.class)
-    public void validarFiltroNomeProfessor(MassaProfessor massa) {
+    void validarFiltroNomeProfessor(MassaProfessor massa) {
         ProfessorDTO filter = new ProfessorDTO();
         filter.setNome(massa.getNome());
 
@@ -94,11 +88,10 @@ public class TesteProfessorQueries {
         assertAll(new ProfessorExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o salario do Professor")
     @ParameterizedTest(name = "Pesquisa do Professor a partir do salario [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaProfessor.class)
-    public void validarFiltroSalarioProfessor(MassaProfessor massa) {
+    void validarFiltroSalarioProfessor(MassaProfessor massa) {
         ProfessorDTO filter = new ProfessorDTO();
         filter.setSalario(massa.getSalario());
 
@@ -109,11 +102,10 @@ public class TesteProfessorQueries {
         assertAll(new ProfessorExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o telefone do Professor")
     @ParameterizedTest(name = "Pesquisa do Professor a partir do telefone [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaProfessor.class)
-    public void validarFiltroTelefoneProfessor(MassaProfessor massa) {
+    void validarFiltroTelefoneProfessor(MassaProfessor massa) {
         ProfessorDTO filter = new ProfessorDTO();
         filter.setTelefone(massa.getTelefone());
 
@@ -124,11 +116,10 @@ public class TesteProfessorQueries {
         assertAll(new ProfessorExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com a cidade da instituicao")
     @ParameterizedTest(name = "Pesquisa do Professor a partir da cidade da instituicao [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaProfessor.class)
-    public void validarFiltroCidadeInstituicao(MassaProfessor massa) {
+    void validarFiltroCidadeInstituicao(MassaProfessor massa) {
         ProfessorDTO filter = new ProfessorDTO();
         filter.setCidade(massa.getInstituicao().getCidade());
 
@@ -139,11 +130,10 @@ public class TesteProfessorQueries {
         assertAll(new ProfessorExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o estado da instituicao")
     @ParameterizedTest(name = "Pesquisa do Professor a partir do estado da instituicao [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaProfessor.class)
-    public void validarFiltroEstadoInstituicao(MassaProfessor massa) {
+    void validarFiltroEstadoInstituicao(MassaProfessor massa) {
         ProfessorDTO filter = new ProfessorDTO();
         filter.setEstado(massa.getInstituicao().getEstado());
 
@@ -152,11 +142,10 @@ public class TesteProfessorQueries {
         assertEquals(6, results.size(), "O metodo findByFilter deveria ter retornado 6 resultados, favor deletar os itens duplicados");
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o nome da instituicao")
     @ParameterizedTest(name = "Pesquisa do Professor a partir do nome da instituicao [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaProfessor.class)
-    public void validarFiltroNomeInstituicao(MassaProfessor massa) {
+    void validarFiltroNomeInstituicao(MassaProfessor massa) {
         ProfessorDTO filter = new ProfessorDTO();
         filter.setNomeInstituicao(massa.getInstituicao().getNome());
 
@@ -167,11 +156,10 @@ public class TesteProfessorQueries {
         assertAll(new ProfessorExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o pais da instituicao")
     @ParameterizedTest(name = "Pesquisa do Professor a partir do pais da instituicao [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaProfessor.class)
-    public void validarFiltroPaisInstituicao(MassaProfessor massa) {
+    void validarFiltroPaisInstituicao(MassaProfessor massa) {
         ProfessorDTO filter = new ProfessorDTO();
         filter.setPais(massa.getInstituicao().getPais());
 

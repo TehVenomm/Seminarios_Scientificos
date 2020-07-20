@@ -8,7 +8,6 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import java.util.Collection;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -26,11 +25,10 @@ public class TesteSeminarioQueries {
 
     protected SeminarioBC bc = SeminarioBC.getInstance();
 
-    @Tag("queriesDaoTest")
     @DisplayName("Pesquisa de um Seminario pelos metodos findAll e findById")
     @ParameterizedTest(name = "Pesquisa do Seminario [{arguments}] pelos metodos findAll e findById")
     @FindAllSource(value = SeminarioBC.class)
-    public void pesquisar(Seminario objetoFindAll) {
+    void pesquisar(Seminario objetoFindAll) {
         // Busca pelo FindById
         Seminario objetoFindId = this.bc.findById(objetoFindAll.getId());
 
@@ -53,25 +51,22 @@ public class TesteSeminarioQueries {
     /**
      * Realiza um teste com o filtro nulo, esperando que ocorram problemas
      */
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro nulo")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.findByFilter(null), "ER0001");
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro vazio")
-    public void validarFiltroVazio() {
+    void validarFiltroVazio() {
         assertThrows(() -> this.bc.findByFilter(new SeminarioDTO()), "ER0001");
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com a data do Seminario")
     @ParameterizedTest(name = "Pesquisa do Seminario a partir da data [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaSeminario.class)
-    public void validarFiltroDataSeminario(MassaSeminario massa) {
+    void validarFiltroDataSeminario(MassaSeminario massa) {
         SeminarioDTO filter = new SeminarioDTO();
         filter.setData(massa.getData());
 
@@ -82,11 +77,10 @@ public class TesteSeminarioQueries {
         assertAll(new SeminarioExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o titulo do Seminario")
     @ParameterizedTest(name = "Pesquisa do Seminario a partir do titulo [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaSeminario.class)
-    public void validarFiltroTituloSeminario(MassaSeminario massa) {
+    void validarFiltroTituloSeminario(MassaSeminario massa) {
         SeminarioDTO filter = new SeminarioDTO();
         filter.setTitulo(massa.getTitulo());
 
@@ -97,11 +91,10 @@ public class TesteSeminarioQueries {
         assertAll(new SeminarioExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com a descricao do Seminario")
     @ParameterizedTest(name = "Pesquisa do Seminario a partir da descricao [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaSeminario.class)
-    public void validarFiltroDescricaoSeminario(MassaSeminario massa) {
+    void validarFiltroDescricaoSeminario(MassaSeminario massa) {
         SeminarioDTO filter = new SeminarioDTO();
         filter.setDescricao(massa.getDescricao());
 
@@ -112,11 +105,10 @@ public class TesteSeminarioQueries {
         assertAll(new SeminarioExecutable(results.iterator().next(), massa));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com a mesa redonda do Seminario")
     @ParameterizedTest(name = "Pesquisa do Seminario a partir da mesa redonda [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaSeminario.class)
-    public void validarFiltroMesaRedondaSeminario(MassaSeminario massa) {
+    void validarFiltroMesaRedondaSeminario(MassaSeminario massa) {
         SeminarioDTO filter = new SeminarioDTO();
         filter.setMesaRedonda(massa.getMesaRedonda());
 
@@ -126,11 +118,10 @@ public class TesteSeminarioQueries {
             "O metodo findByFilter deveria ter retornado apenas 1 resultado, favor deletar os itens duplicados");
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o nome da area cientifica")
     @ParameterizedTest(name = "Pesquisa do Seminario a partir do nome da area cientifica [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaSeminario.class)
-    public void validarFiltroNomeAreaCientifica(MassaSeminario massa) {
+    void validarFiltroNomeAreaCientifica(MassaSeminario massa) {
         SeminarioDTO filter = new SeminarioDTO();
         filter.setNomeAreaCientifica(massa.getAreaCientifica().getNome());
 
@@ -141,11 +132,10 @@ public class TesteSeminarioQueries {
         assertAll(new AreaCientificaExecutable(results.iterator().next().getAreasCientificas().get(0), massa.getAreaCientifica()));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o nome do professor")
     @ParameterizedTest(name = "Pesquisa do Seminario a partir do nome do professor [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaSeminario.class)
-    public void validarFiltroNomeProfessor(MassaSeminario massa) {
+    void validarFiltroNomeProfessor(MassaSeminario massa) {
         SeminarioDTO filter = new SeminarioDTO();
         filter.setNomeProfessor(massa.getProfessor().getNome());
 

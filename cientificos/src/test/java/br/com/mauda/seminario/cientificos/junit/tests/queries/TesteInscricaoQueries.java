@@ -8,7 +8,6 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import java.util.Collection;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -27,24 +26,21 @@ public class TesteInscricaoQueries {
     /**
      * Realiza um teste com o filtro nulo, esperando que ocorram problemas
      */
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro nulo")
-    public void validarNulo() {
+    void validarNulo() {
         assertThrows(() -> this.bc.findByFilter(null), "ER0001");
     }
 
-    @Tag("queriesDaoTest")
     @Test
     @DisplayName("FindByFilter utilizando um filtro vazio")
-    public void validarFiltroVazio() {
+    void validarFiltroVazio() {
         assertThrows(() -> this.bc.findByFilter(new InscricaoDTO()), "ER0001");
     }
 
-    @Tag("queriesDaoTest")
-    @DisplayName("FindByFilter utilizando um filtro com a situacao como Disponivel")
     @Test
-    public void testFindByFilterDisponivel() {
+    @DisplayName("FindByFilter utilizando um filtro com a situacao como Disponivel")
+    void testFindByFilterDisponivel() {
         InscricaoDTO filter = new InscricaoDTO();
         filter.getSituacoes().add(SituacaoInscricaoEnum.DISPONIVEL);
 
@@ -57,10 +53,9 @@ public class TesteInscricaoQueries {
         results.stream().forEach(inscricao -> assertAll(new InscricaoExecutable(inscricao)));
     }
 
-    @Tag("queriesDaoTest")
-    @DisplayName("FindByFilter utilizando um filtro com a situacao como Comprado")
     @Test
-    public void testFindByFilterComprado() {
+    @DisplayName("FindByFilter utilizando um filtro com a situacao como Comprado")
+    void testFindByFilterComprado() {
         InscricaoDTO filter = new InscricaoDTO();
         filter.getSituacoes().add(SituacaoInscricaoEnum.COMPRADO);
 
@@ -73,10 +68,9 @@ public class TesteInscricaoQueries {
         results.stream().forEach(inscricao -> assertAll(new InscricaoExecutable(inscricao)));
     }
 
-    @Tag("queriesDaoTest")
-    @DisplayName("FindByFilter utilizando um filtro com a situacao como CheckIn")
     @Test
-    public void testFindByFilterCheckIn() {
+    @DisplayName("FindByFilter utilizando um filtro com a situacao como CheckIn")
+    void testFindByFilterCheckIn() {
         InscricaoDTO filter = new InscricaoDTO();
         filter.getSituacoes().add(SituacaoInscricaoEnum.CHECKIN);
 
@@ -89,11 +83,10 @@ public class TesteInscricaoQueries {
         results.stream().forEach(inscricao -> assertAll(new InscricaoExecutable(inscricao)));
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro com o direito ao material do seminario")
     @ParameterizedTest(name = "Pesquisa da Inscricao a partir do direito ao material [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaInscricao.class)
-    public void validarFiltroDireitoMaterial(MassaInscricao massa) {
+    void validarFiltroDireitoMaterial(MassaInscricao massa) {
         InscricaoDTO filter = new InscricaoDTO();
         filter.setDireitoMaterial(massa.isDireitoMaterial());
 
@@ -102,11 +95,10 @@ public class TesteInscricaoQueries {
         assertEquals(15, results.size(), "O metodo findByFilter deveria ter retornado 15 resultados, favor deletar os itens duplicados");
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro a data do seminario")
     @ParameterizedTest(name = "Pesquisa da Inscricao a partir do data do seminario [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaInscricao.class)
-    public void validarFiltroDataSeminario(MassaInscricao massa) {
+    void validarFiltroDataSeminario(MassaInscricao massa) {
         InscricaoDTO filter = new InscricaoDTO();
         filter.setDataSeminario(massa.getSeminario().getData());
 
@@ -117,11 +109,10 @@ public class TesteInscricaoQueries {
 
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro o titulo do seminario")
     @ParameterizedTest(name = "Pesquisa da Inscricao a partir do titulo do seminario [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaInscricao.class)
-    public void validarFiltroTituloSeminario(MassaInscricao massa) {
+    void validarFiltroTituloSeminario(MassaInscricao massa) {
         InscricaoDTO filter = new InscricaoDTO();
         filter.setTituloSeminario(massa.getSeminario().getTitulo());
 
@@ -132,11 +123,10 @@ public class TesteInscricaoQueries {
 
     }
 
-    @Tag("queriesDaoTest")
     @DisplayName("FindByFilter utilizando um filtro o nome do estudante")
     @ParameterizedTest(name = "Pesquisa da Inscricao a partir do nome do estudante [{arguments}] pelo metodo FindByFilter")
     @EnumSource(MassaInscricao.class)
-    public void validarFiltroNomeEstudante(MassaInscricao massa) {
+    void validarFiltroNomeEstudante(MassaInscricao massa) {
         InscricaoDTO filter = new InscricaoDTO();
         filter.setNomeEstudante(massa.getEstudante().getNome());
 

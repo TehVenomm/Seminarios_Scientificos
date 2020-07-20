@@ -191,7 +191,6 @@ class TesteProfessor {
     @DisplayName("Testes para a Instituicao dentro do Professor")
     class InstituicaoDoProfessor {
 
-        @Tag("queriesDaoTest")
         @Test
         @DisplayName("Criacao de um professor com Instituicao nula")
         void validarNulo() throws IllegalAccessException {
