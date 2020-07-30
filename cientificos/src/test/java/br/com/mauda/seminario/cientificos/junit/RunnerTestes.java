@@ -27,6 +27,7 @@ import br.com.mauda.seminario.cientificos.junit.util.ErrorTestManager;
 class RunnerTestes {
 
     static final String TESTE_PACKAGE = "br.com.mauda.seminario.cientificos.junit.tests.";
+    static final String TESTE_QUERIES_PACKAGE = "br.com.mauda.seminario.cientificos.junit.tests.queries.";
 
     @Test
     void execucao() {
@@ -40,7 +41,14 @@ class RunnerTestes {
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteSeminario"),
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoComprarSobreInscricao"),
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCancelarCompraSobreInscricao"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCheckInSobreInscricao"))
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCheckInSobreInscricao"),
+                DiscoverySelectors.selectClass(TESTE_QUERIES_PACKAGE + "TesteAreaCientificaQueries"),
+                DiscoverySelectors.selectClass(TESTE_QUERIES_PACKAGE + "TesteCursoQueries"),
+                DiscoverySelectors.selectClass(TESTE_QUERIES_PACKAGE + "TesteInstituicaoQueries"),
+                DiscoverySelectors.selectClass(TESTE_QUERIES_PACKAGE + "TesteEstudanteQueries"),
+                DiscoverySelectors.selectClass(TESTE_QUERIES_PACKAGE + "TesteProfessorQueries"),
+                DiscoverySelectors.selectClass(TESTE_QUERIES_PACKAGE + "TesteSeminarioQueries"),
+                DiscoverySelectors.selectClass(TESTE_QUERIES_PACKAGE + "TesteInscricaoQueries"))
             .build();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
         Launcher launcher = LauncherFactory.create();
