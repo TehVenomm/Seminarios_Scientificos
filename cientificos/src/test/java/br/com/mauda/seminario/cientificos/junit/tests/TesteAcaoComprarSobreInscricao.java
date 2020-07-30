@@ -10,14 +10,12 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import br.com.mauda.seminario.cientificos.bc.InscricaoBC;
-import br.com.mauda.seminario.cientificos.junit.converter.dao.AcaoInscricaoDTODAOConverter;
 import br.com.mauda.seminario.cientificos.junit.converter.dto.AcaoInscricaoDTOConverter;
 import br.com.mauda.seminario.cientificos.junit.dto.AcaoInscricaoDTO;
 import br.com.mauda.seminario.cientificos.junit.executable.InscricaoExecutable;
@@ -40,22 +38,12 @@ class TesteAcaoComprarSobreInscricao {
     @DisplayName("Compra de uma inscricao para o Seminario")
     @ParameterizedTest(name = "Compra da inscricao [{arguments}] para o Seminario")
     @EnumSource(MassaInscricaoComprar.class)
-    void comprarInscricao(@ConvertWith(AcaoInscricaoDTODAOConverter.class) AcaoInscricaoDTO dto) {
+    void comprarInscricao(@ConvertWith(AcaoInscricaoDTOConverter.class) AcaoInscricaoDTO dto) {
         Inscricao inscricao = dto.getInscricao();
 
         // Compra a inscricao pro seminario
         this.bc.comprar(inscricao, dto.getEstudante(), dto.getDireitoMaterial());
 
-        this.validarCompra(inscricao);
-
-        // Obtem uma nova instancia do BD a partir do ID gerado
-        Inscricao objectBD = this.bc.findById(inscricao.getId());
-
-        // Realiza as verificacoes entre o objeto em memoria e o obtido do banco
-        assertAll(new InscricaoExecutable(inscricao, objectBD));
-    }
-
-    private void validarCompra(Inscricao inscricao) {
         // Verifica se a situacao da inscricao ficou como comprado
         assertEquals(inscricao.getSituacao(), SituacaoInscricaoEnum.COMPRADO,
             "Situacao da inscricao nao eh comprado - trocar a situacao no metodo comprar()");

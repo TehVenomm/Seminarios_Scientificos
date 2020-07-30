@@ -40,14 +40,7 @@ class RunnerTestes {
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteSeminario"),
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoComprarSobreInscricao"),
                 DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCancelarCompraSobreInscricao"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCheckInSobreInscricao"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAreaCientificaQueries"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteCursoQueries"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteInstituicaoQueries"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteEstudanteQueries"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteProfessorQueries"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteSeminarioQueries"),
-                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteInscricaoQueries"))
+                DiscoverySelectors.selectClass(TESTE_PACKAGE + "TesteAcaoCheckInSobreInscricao"))
             .build();
         SummaryGeneratingListener listener = new SummaryGeneratingListener();
         Launcher launcher = LauncherFactory.create();
