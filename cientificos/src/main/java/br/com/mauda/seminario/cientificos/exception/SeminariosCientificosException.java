@@ -1,5 +1,5 @@
 package br.com.mauda.seminario.cientificos.exception;
-
+ 
 /**
  * Classe de Exception para o projeto de Seminarios Cientificos
  *
