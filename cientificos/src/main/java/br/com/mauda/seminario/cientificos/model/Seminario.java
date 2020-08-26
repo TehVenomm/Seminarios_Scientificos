@@ -92,4 +92,7 @@ public class Seminario {
         this.data = data;
     }
 
+    public int getQtdInscricoes() {
+        return this.qtdInscricoes;
+    }
 }
