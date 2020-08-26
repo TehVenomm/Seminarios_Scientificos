@@ -6,6 +6,7 @@ import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.asse
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertNotNull;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.assertTrue;
 import static br.com.mauda.seminario.cientificos.junit.util.AssertionsMauda.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
@@ -57,6 +58,8 @@ public class SeminarioExecutable implements Executable {
         }
 
         // Verifica se a lista de inscricoes contem a quantidade gerada
+        // new Integer(x) está deprecado... O correto seria alterar para Integer.valueOf(x) como de acordo com a documentação do java.lang.integer,
+        // mas manterei como está para preservar as intenções originais do teste.
         assertEquals(seminario.getQtdInscricoes(), new Integer(seminario.getInscricoes().size()),
             "A lista de inscricoes nao contem todas as inscricoes de acordo com a quantidade estipulada");
 

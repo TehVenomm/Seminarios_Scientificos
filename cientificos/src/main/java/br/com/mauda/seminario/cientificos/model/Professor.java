@@ -13,6 +13,16 @@ public class Professor {
     private Instituicao instituicao;
     private List<Seminario> seminarios = new ArrayList<>();
 
+    public Professor(Long id, String email, String nome, Double salario, String telefone, Instituicao instituicao, List<Seminario> seminarios) {
+        this.id = id;
+        this.email = email;
+        this.nome = nome;
+        this.salario = salario;
+        this.telefone = telefone;
+        this.instituicao = instituicao;
+        this.seminarios = seminarios;
+    }
+
     public Professor(Long id, String email, String nome, Double salario, String telefone, Instituicao instituicao) {
         this.id = id;
         this.email = email;
@@ -22,9 +32,12 @@ public class Professor {
         this.instituicao = instituicao;
     }
 
+    public Professor(Instituicao instituicao) {
+        this.instituicao = instituicao;
+    }
+
     public void adicionarSeminario(Seminario seminario) {
         this.seminarios.add(seminario);
-        // this.seminarios.get(this.seminarios.size()-1).adicionarProfessor(this);
     }
 
     public Boolean possuiSeminario(Seminario seminario) {

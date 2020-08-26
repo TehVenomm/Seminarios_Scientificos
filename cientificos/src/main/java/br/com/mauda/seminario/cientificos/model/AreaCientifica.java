@@ -10,9 +10,20 @@ public class AreaCientifica {
     private List<Curso> cursos = new ArrayList<>();
     private List<Seminario> seminarios = new ArrayList<>();
 
+    public AreaCientifica(Long id, String nome, List<Curso> cursos, List<Seminario> seminarios) {
+        this.id = id;
+        this.nome = nome;
+        this.cursos = cursos;
+        this.seminarios = seminarios;
+    }
+
     public AreaCientifica(Long id, String nome) {
         this.id = id;
         this.nome = nome;
+    }
+
+    public AreaCientifica() {
+
     }
 
     public void adicionarCurso(Curso curso) {

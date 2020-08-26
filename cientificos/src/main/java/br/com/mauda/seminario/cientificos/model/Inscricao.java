@@ -8,28 +8,48 @@ public class Inscricao {
     private Boolean direitoMaterial;
     private Estudante estudante;
     private Seminario seminario;
-    private SituacaoInscricaoEnum situacaoInscricao;
+    private SituacaoInscricaoEnum situacao;
+
+    public Inscricao(Long id, Boolean direitoMaterial, Estudante estudante, Seminario seminario, SituacaoInscricaoEnum situacao) {
+        this.id = id;
+        this.direitoMaterial = direitoMaterial;
+        this.estudante = estudante;
+        this.estudante.adicionarInscricao(this);
+        this.seminario = seminario;
+        this.situacao = situacao;
+    }
 
     public Inscricao(Long id, Boolean direitoMaterial, Seminario seminario) {
         this.id = id;
         this.direitoMaterial = direitoMaterial;
         this.seminario = seminario;
         this.seminario.adicionarInscricao(this);
-        this.situacaoInscricao = SituacaoInscricaoEnum.DISPONIVEL;
+        this.situacao = SituacaoInscricaoEnum.DISPONIVEL;
+    }
+
+    public Inscricao(Long id, Seminario seminario) {
+        this.id = id;
+        this.seminario = seminario;
+        this.seminario.adicionarInscricao(this);
+        this.situacao = SituacaoInscricaoEnum.DISPONIVEL;
     }
 
     public void comprar(Estudante estudante, Boolean direitoMaterial) {
+        this.situacao = SituacaoInscricaoEnum.COMPRADO;
         this.estudante = estudante;
+        this.estudante.adicionarInscricao(this);
         this.direitoMaterial = direitoMaterial;
-        this.situacaoInscricao = SituacaoInscricaoEnum.COMPRADO;
     }
 
     public void cancelarCompra() {
-        this.situacaoInscricao = SituacaoInscricaoEnum.DISPONIVEL;
+        this.situacao = SituacaoInscricaoEnum.DISPONIVEL;
+        this.estudante.removerInscricao(this);
+        this.estudante = null;
+        this.direitoMaterial = null;
     }
 
     public void realizarCheckIn() {
-        this.situacaoInscricao = SituacaoInscricaoEnum.CHECKIN;
+        this.situacao = SituacaoInscricaoEnum.CHECKIN;
     }
 
     public Long getId() {
@@ -56,4 +76,11 @@ public class Inscricao {
         this.estudante = estudante;
     }
 
+    public SituacaoInscricaoEnum getSituacao() {
+        return this.situacao;
+    }
+
+    public Seminario getSeminario() {
+        return this.seminario;
+    }
 }

@@ -6,6 +6,13 @@ public class Curso {
     private String nome;
     private AreaCientifica areaCientifica;
 
+    public Curso(Long id, String nome, AreaCientifica areaCientifica) {
+        this.id = id;
+        this.nome = nome;
+        this.areaCientifica = areaCientifica;
+        this.areaCientifica.adicionarCurso(this);
+    }
+
     public Curso(AreaCientifica areaCientifica) {
         this.areaCientifica = areaCientifica;
         this.areaCientifica.adicionarCurso(this);

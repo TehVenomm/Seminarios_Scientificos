@@ -12,8 +12,13 @@ public class Estudante {
     private Instituicao instituicao;
     private List<Inscricao> inscricoes = new ArrayList<>();
 
-    public Estudante() {
-
+    public Estudante(Long id, String nome, String telefone, String email, Instituicao instituicao, List<Inscricao> inscricoes) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+        this.instituicao = instituicao;
+        this.inscricoes = inscricoes;
     }
 
     public Estudante(Long id, String nome, String telefone, String email, Instituicao instituicao) {
@@ -24,9 +29,16 @@ public class Estudante {
         this.instituicao = instituicao;
     }
 
+    public Estudante(Instituicao instituicao) {
+        this.instituicao = instituicao;
+    }
+
+    public Estudante() {
+
+    }
+
     public void adicionarInscricao(Inscricao inscricao) {
         this.inscricoes.add(inscricao);
-        inscricao.setEstudante(this);
     }
 
     public Boolean possuiInscricao(Inscricao inscricao) {
@@ -35,7 +47,6 @@ public class Estudante {
 
     public void removerInscricao(Inscricao inscricao) {
         this.inscricoes.remove(inscricao);
-        inscricao.setEstudante(new Estudante());
     }
 
     public Long getId() {
@@ -76,5 +87,9 @@ public class Estudante {
 
     public void setInstituicao(Instituicao instituicao) {
         this.instituicao = instituicao;
+    }
+
+    public List<Inscricao> getInscricoes() {
+        return this.inscricoes;
     }
 }
