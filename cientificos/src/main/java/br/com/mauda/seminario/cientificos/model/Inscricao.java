@@ -10,12 +10,12 @@ public class Inscricao {
     private Seminario seminario;
     private SituacaoInscricaoEnum situacaoInscricao;
 
-    public Inscricao(Long id, Boolean direitoMaterial, Seminario seminario, SituacaoInscricaoEnum situacaoInscricao) {
+    public Inscricao(Long id, Boolean direitoMaterial, Seminario seminario) {
         this.id = id;
         this.direitoMaterial = direitoMaterial;
         this.seminario = seminario;
         this.seminario.adicionarInscricao(this);
-        this.situacaoInscricao = situacaoInscricao;
+        this.situacaoInscricao = SituacaoInscricaoEnum.DISPONIVEL;
     }
 
     public void comprar(Estudante estudante, Boolean direitoMaterial) {
