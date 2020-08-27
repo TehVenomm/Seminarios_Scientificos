@@ -16,28 +16,14 @@ public class Seminario {
     private List<AreaCientifica> areasCientificas = new ArrayList<>();
     private List<Inscricao> inscricoes = new ArrayList<>();
 
-    public Seminario(Long id, String titulo, String descricao, Boolean mesaRedonda, Date data, Professor professor, AreaCientifica areaCientifica) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.mesaRedonda = mesaRedonda;
-        this.data = data;
-        this.qtdInscricoes = 0;
-        this.professores.add(professor);
-        this.professores.get(0).adicionarSeminario(this);
-        this.areasCientificas.add(areaCientifica);
-        this.areasCientificas.get(0).adicionarSeminario(this);
-    }
-
     public Seminario(AreaCientifica areaCientifica, Professor professor, int qtdInscricoes) {
         this.areasCientificas.add(areaCientifica);
-        this.areasCientificas.get(0).adicionarSeminario(this);
         this.professores.add(professor);
-        this.professores.get(0).adicionarSeminario(this);
+        professor.adicionarSeminario(this);
         this.qtdInscricoes = qtdInscricoes;
 
         for (long i = 0; i < qtdInscricoes; i++) {
-            this.inscricoes.add(new Inscricao(i, this));
+            new Inscricao(this);
         }
     }
 
@@ -47,7 +33,6 @@ public class Seminario {
 
     public void adicionarInscricao(Inscricao inscricao) {
         this.inscricoes.add(inscricao);
-        this.qtdInscricoes += 1;
     }
 
     public void adicionarProfessor(Professor professor) {

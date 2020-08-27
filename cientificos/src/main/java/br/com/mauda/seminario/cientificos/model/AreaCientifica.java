@@ -8,30 +8,13 @@ public class AreaCientifica {
     private Long id;
     private String nome;
     private List<Curso> cursos = new ArrayList<>();
-    private List<Seminario> seminarios = new ArrayList<>();
-
-    public AreaCientifica(Long id, String nome, List<Curso> cursos, List<Seminario> seminarios) {
-        this.id = id;
-        this.nome = nome;
-        this.cursos = cursos;
-        this.seminarios = seminarios;
-    }
-
-    public AreaCientifica(Long id, String nome) {
-        this.id = id;
-        this.nome = nome;
-    }
 
     public AreaCientifica() {
-
+        super();
     }
 
     public void adicionarCurso(Curso curso) {
         this.cursos.add(curso);
-    }
-
-    public void adicionarSeminario(Seminario seminario) {
-        this.seminarios.add(seminario);
     }
 
     public Boolean possuiCurso(Curso curso) {

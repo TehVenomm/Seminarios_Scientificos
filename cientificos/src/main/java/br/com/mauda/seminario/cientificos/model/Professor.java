@@ -13,25 +13,6 @@ public class Professor {
     private Instituicao instituicao;
     private List<Seminario> seminarios = new ArrayList<>();
 
-    public Professor(Long id, String email, String nome, Double salario, String telefone, Instituicao instituicao, List<Seminario> seminarios) {
-        this.id = id;
-        this.email = email;
-        this.nome = nome;
-        this.salario = salario;
-        this.telefone = telefone;
-        this.instituicao = instituicao;
-        this.seminarios = seminarios;
-    }
-
-    public Professor(Long id, String email, String nome, Double salario, String telefone, Instituicao instituicao) {
-        this.id = id;
-        this.email = email;
-        this.nome = nome;
-        this.salario = salario;
-        this.telefone = telefone;
-        this.instituicao = instituicao;
-    }
-
     public Professor(Instituicao instituicao) {
         this.instituicao = instituicao;
     }
@@ -86,10 +67,6 @@ public class Professor {
 
     public Instituicao getInstituicao() {
         return this.instituicao;
-    }
-
-    public void setInstituicoes(Instituicao instituicao) {
-        this.instituicao = instituicao;
     }
 
     public List<Seminario> getSeminarios() {

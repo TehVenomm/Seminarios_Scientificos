@@ -13,17 +13,8 @@ public class Instituicao implements Serializable {
     private String estado;
     private String pais;
 
-    public Instituicao(Long id, String nome, String sigla, String cidade, String estado, String pais) {
-        this.id = id;
-        this.nome = nome;
-        this.sigla = sigla;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
-    }
-
     public Instituicao() {
-
+        super();
     }
 
     public Long getId() {
