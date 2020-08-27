@@ -16,19 +16,6 @@ public class Seminario {
     private List<AreaCientifica> areasCientificas = new ArrayList<>();
     private List<Inscricao> inscricoes = new ArrayList<>();
 
-    public Seminario(Long id, String titulo, String descricao, Boolean mesaRedonda, Date data, int qtdInscricoes, List<Inscricao> inscricoes,
-        List<Professor> professores, List<AreaCientifica> areasCientificas) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.mesaRedonda = mesaRedonda;
-        this.data = data;
-        this.qtdInscricoes = inscricoes.size();
-        this.inscricoes = inscricoes;
-        this.professores = professores;
-        this.areasCientificas = areasCientificas;
-    }
-
     public Seminario(Long id, String titulo, String descricao, Boolean mesaRedonda, Date data, Professor professor, AreaCientifica areaCientifica) {
         this.id = id;
         this.titulo = titulo;
