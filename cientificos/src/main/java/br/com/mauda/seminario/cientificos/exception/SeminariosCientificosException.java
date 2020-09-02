@@ -1,13 +1,13 @@
 package br.com.mauda.seminario.cientificos.exception;
- 
+
 /**
  * Classe de Exception para o projeto de Seminarios Cientificos
  *
  * @author Mauda
  *
  */
- 
-//Comentario para testes de conflito entre arquivos diferentes 
+
+// Comentario para testes de conflito entre arquivos diferentes
 
 public class SeminariosCientificosException extends RuntimeException {
 
