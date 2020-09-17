@@ -13,6 +13,10 @@ public class Instituicao implements Serializable {
     private String estado;
     private String pais;
 
+    public Instituicao() {
+        super();
+    }
+
     public Long getId() {
         return this.id;
     }
