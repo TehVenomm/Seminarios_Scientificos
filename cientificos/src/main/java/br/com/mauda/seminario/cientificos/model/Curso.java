@@ -1,6 +1,10 @@
 package br.com.mauda.seminario.cientificos.model;
 
-public class Curso {
+import org.apache.commons.lang3.StringUtils;
+
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+
+public class Curso implements DataValidation {
 
     private Long id;
     private String nome;
@@ -29,5 +33,18 @@ public class Curso {
 
     public AreaCientifica getAreaCientifica() {
         return this.areaCientifica;
+    }
+
+    @Override
+    public void validateForDataModification() {
+        if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
+            throw new SeminariosCientificosException("ER0020");
+        }
+
+        if (this.areaCientifica == null) {
+            throw new SeminariosCientificosException("ER0003");
+        }
+
+        this.areaCientifica.validateForDataModification();
     }
 }

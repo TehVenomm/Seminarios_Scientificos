@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Seminario {
+import org.apache.commons.lang3.StringUtils;
+
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+
+public class Seminario implements DataValidation {
 
     private Long id;
     private String titulo;
@@ -105,5 +109,52 @@ public class Seminario {
 
     public List<AreaCientifica> getAreasCientificas() {
         return this.areasCientificas;
+    }
+
+    @Override
+    public void validateForDataModification() {
+        if (this.data == null || this.data.before(new Date())) {
+            throw new SeminariosCientificosException("ER0070");
+        }
+
+        if (StringUtils.isBlank(this.descricao) || this.descricao.length() > 200) {
+            throw new SeminariosCientificosException("ER0071");
+        }
+
+        if (StringUtils.isBlank(this.titulo) || this.titulo.length() > 50) {
+            throw new SeminariosCientificosException("ER0072");
+        }
+
+        if (this.mesaRedonda == null) {
+            throw new SeminariosCientificosException("ER0073");
+        }
+
+        if (this.qtdInscricoes == 0 || this.qtdInscricoes < 0) {
+            throw new SeminariosCientificosException("ER0074");
+        }
+
+        if (this.professores.isEmpty() || this.professores == null) {
+            throw new SeminariosCientificosException("ER0075");
+        }
+
+        for (Professor item : this.professores) {
+            if (item == null) {
+                throw new SeminariosCientificosException("ER0003");
+            }
+
+            item.validateForDataModification();
+        }
+
+        if (this.areasCientificas.isEmpty() || this.areasCientificas == null) {
+            throw new SeminariosCientificosException("ER0076");
+        }
+
+        for (AreaCientifica item : this.areasCientificas) {
+            if (item == null) {
+                throw new SeminariosCientificosException("ER0003");
+            }
+
+            item.validateForDataModification();
+        }
     }
 }

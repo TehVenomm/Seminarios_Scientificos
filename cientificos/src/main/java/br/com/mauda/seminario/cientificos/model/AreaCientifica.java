@@ -3,7 +3,11 @@ package br.com.mauda.seminario.cientificos.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AreaCientifica {
+import org.apache.commons.lang3.StringUtils;
+
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+
+public class AreaCientifica implements DataValidation {
 
     private Long id;
     private String nome;
@@ -39,6 +43,13 @@ public class AreaCientifica {
 
     public List<Curso> getCursos() {
         return this.cursos;
+    }
+
+    @Override
+    public void validateForDataModification() {
+        if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
+            throw new SeminariosCientificosException("ER0010");
+        }
     }
 
 }

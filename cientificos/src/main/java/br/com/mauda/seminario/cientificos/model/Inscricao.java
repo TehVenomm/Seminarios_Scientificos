@@ -1,8 +1,9 @@
 package br.com.mauda.seminario.cientificos.model;
 
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 
-public class Inscricao {
+public class Inscricao implements DataValidation {
 
     private Long id;
     private Boolean direitoMaterial;
@@ -60,5 +61,30 @@ public class Inscricao {
 
     public Seminario getSeminario() {
         return this.seminario;
+    }
+
+    @Override
+    public void validateForDataModification() {
+        if (this.situacao == null) {
+            throw new SeminariosCientificosException("ER0040");
+        }
+
+        if (this.seminario == null) {
+            throw new SeminariosCientificosException("ER0003");
+        }
+
+        this.seminario.validateForDataModification();
+
+        if (this.situacao != SituacaoInscricaoEnum.DISPONIVEL) {
+            if (this.direitoMaterial == null) {
+                throw new SeminariosCientificosException("ER0041");
+            }
+
+            if (this.estudante == null) {
+                throw new SeminariosCientificosException("ER0003");
+            }
+        }
+
+        this.estudante.validateForDataModification();
     }
 }

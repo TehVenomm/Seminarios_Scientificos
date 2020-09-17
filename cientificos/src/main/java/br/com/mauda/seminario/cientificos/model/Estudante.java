@@ -3,7 +3,12 @@ package br.com.mauda.seminario.cientificos.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Estudante {
+import org.apache.commons.lang3.StringUtils;
+
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+import br.com.mauda.seminario.cientificos.util.EmailUtils;
+
+public class Estudante implements DataValidation {
 
     private Long id;
     private String nome;
@@ -66,5 +71,30 @@ public class Estudante {
 
     public List<Inscricao> getInscricoes() {
         return this.inscricoes;
+    }
+
+    @Override
+    public void validateForDataModification() {
+        if (StringUtils.isBlank(this.email) || this.email.length() > 50) {
+            throw new SeminariosCientificosException("ER0030");
+        }
+
+        if (!this.email.matches(EmailUtils.EMAIL_PATTERN)) { // Regex...
+            throw new SeminariosCientificosException("ER0030");
+        }
+
+        if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
+            throw new SeminariosCientificosException("ER0031");
+        }
+
+        if (StringUtils.isBlank(this.telefone) || this.telefone.length() > 15) {
+            throw new SeminariosCientificosException("ER0032");
+        }
+
+        if (this.instituicao == null) {
+            throw new SeminariosCientificosException("ER0003");
+        }
+
+        this.instituicao.validateForDataModification();
     }
 }

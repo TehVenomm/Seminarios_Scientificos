@@ -2,7 +2,11 @@ package br.com.mauda.seminario.cientificos.model;
 
 import java.io.Serializable;
 
-public class Instituicao implements Serializable {
+import org.apache.commons.lang3.StringUtils;
+
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+
+public class Instituicao implements Serializable, DataValidation {
 
     private static final long serialVersionUID = 997084310847650620L;
 
@@ -93,5 +97,28 @@ public class Instituicao implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void validateForDataModification() {
+        if (StringUtils.isBlank(this.cidade) || this.cidade.length() > 50) {
+            throw new SeminariosCientificosException("ER0050");
+        }
+
+        if (StringUtils.isBlank(this.estado) || this.estado.length() > 50) {
+            throw new SeminariosCientificosException("ER0051");
+        }
+
+        if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
+            throw new SeminariosCientificosException("ER0052");
+        }
+
+        if (StringUtils.isBlank(this.pais) || this.pais.length() > 50) {
+            throw new SeminariosCientificosException("ER0053");
+        }
+
+        if (StringUtils.isBlank(this.sigla) || this.sigla.length() > 50) {
+            throw new SeminariosCientificosException("ER0054");
+        }
     }
 }
