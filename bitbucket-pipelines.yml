@@ -15,7 +15,7 @@ definitions:
         script:
           - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         artifacts:
-          - target/**
+          - cientificos/**
 
 pipelines:                 # More info here: https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html
   branches:
