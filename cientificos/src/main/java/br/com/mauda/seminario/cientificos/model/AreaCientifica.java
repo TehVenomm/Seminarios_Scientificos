@@ -13,6 +13,8 @@ public class AreaCientifica implements DataValidation {
     private String nome;
     private List<Curso> cursos = new ArrayList<>();
 
+    private static String er0010 = "ER0010";
+
     public AreaCientifica() {
         super();
     }
@@ -48,7 +50,7 @@ public class AreaCientifica implements DataValidation {
     @Override
     public void validateForDataModification() {
         if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
-            throw new SeminariosCientificosException("ER0010");
+            throw new SeminariosCientificosException(er0010);
         }
     }
 

@@ -21,6 +21,13 @@ public class Seminario implements DataValidation {
     private List<Inscricao> inscricoes = new ArrayList<>();
 
     private static String er0003 = "ER0003";
+    private static String er0070 = "ER0070";
+    private static String er0071 = "ER0071";
+    private static String er0072 = "ER0072";
+    private static String er0073 = "ER0073";
+    private static String er0074 = "ER0074";
+    private static String er0075 = "ER0075";
+    private static String er0076 = "ER0076";
 
     public Seminario(AreaCientifica areaCientifica, Professor professor, Integer qtdInscricoes) {
         this.areasCientificas.add(areaCientifica);
@@ -119,34 +126,9 @@ public class Seminario implements DataValidation {
         return this.areasCientificas;
     }
 
-    @Override
-    public void validateForDataModification() {
-        if (this.data == null || this.data.before(new Date())) {
-            throw new SeminariosCientificosException("ER0070");
-        }
-
-        if (StringUtils.isBlank(this.descricao) || this.descricao.length() > 200) {
-            throw new SeminariosCientificosException("ER0071");
-        }
-
-        if (StringUtils.isBlank(this.titulo) || this.titulo.length() > 50) {
-            throw new SeminariosCientificosException("ER0072");
-        }
-
-        if (this.mesaRedonda == null) {
-            throw new SeminariosCientificosException("ER0073");
-        }
-
-        if (this.qtdInscricoes == null || this.qtdInscricoes == 0 || this.qtdInscricoes < 0) {
-            throw new SeminariosCientificosException("ER0074");
-        }
-
-        if (this.professores == null || this.professores.isEmpty()) {
-            throw new SeminariosCientificosException("ER0075");
-        }
-
+    private void validateAreaCientifica() {
         if (this.areasCientificas == null || this.areasCientificas.isEmpty()) {
-            throw new SeminariosCientificosException("ER0076");
+            throw new SeminariosCientificosException(er0076);
         }
 
         for (AreaCientifica item : this.areasCientificas) {
@@ -156,6 +138,12 @@ public class Seminario implements DataValidation {
 
             item.validateForDataModification();
         }
+    }
+
+    private void validateProfessores() {
+        if (this.professores == null || this.professores.isEmpty()) {
+            throw new SeminariosCientificosException(er0075);
+        }
 
         for (Professor item : this.professores) {
             if (item == null) {
@@ -164,5 +152,32 @@ public class Seminario implements DataValidation {
 
             item.validateForDataModification();
         }
+    }
+
+    @Override
+    public void validateForDataModification() {
+        if (this.data == null || this.data.before(new Date())) {
+            throw new SeminariosCientificosException(er0070);
+        }
+
+        if (StringUtils.isBlank(this.descricao) || this.descricao.length() > 200) {
+            throw new SeminariosCientificosException(er0071);
+        }
+
+        if (StringUtils.isBlank(this.titulo) || this.titulo.length() > 50) {
+            throw new SeminariosCientificosException(er0072);
+        }
+
+        if (this.mesaRedonda == null) {
+            throw new SeminariosCientificosException(er0073);
+        }
+
+        if (this.qtdInscricoes == null || this.qtdInscricoes == 0 || this.qtdInscricoes < 0) {
+            throw new SeminariosCientificosException(er0074);
+        }
+
+        this.validateAreaCientifica();
+
+        this.validateProfessores();
     }
 }

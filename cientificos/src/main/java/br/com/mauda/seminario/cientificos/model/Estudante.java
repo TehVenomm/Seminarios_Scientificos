@@ -17,6 +17,11 @@ public class Estudante implements DataValidation {
     private Instituicao instituicao;
     private List<Inscricao> inscricoes = new ArrayList<>();
 
+    private static String er0003 = "ER0003";
+    private static String er0030 = "ER0030";
+    private static String er0031 = "ER0031";
+    private static String er0032 = "ER0032";
+
     public Estudante(Instituicao instituicao) {
         this.instituicao = instituicao;
     }
@@ -75,27 +80,24 @@ public class Estudante implements DataValidation {
 
     @Override
     public void validateForDataModification() {
-        if (StringUtils.isBlank(this.email) ||
-            this.email.length() > 50) {
-            throw new SeminariosCientificosException("ER0030");
+        if (StringUtils.isBlank(this.email) || this.email.length() > 50) {
+            throw new SeminariosCientificosException(er0030);
         }
 
         if (!this.email.matches(EmailUtils.EMAIL_PATTERN)) { // Regex...
-            throw new SeminariosCientificosException("ER0030");
+            throw new SeminariosCientificosException(er0030);
         }
 
-        if (StringUtils.isBlank(this.nome) ||
-            this.nome.length() > 50) {
-            throw new SeminariosCientificosException("ER0031");
+        if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
+            throw new SeminariosCientificosException(er0031);
         }
 
-        if (StringUtils.isBlank(this.telefone) ||
-            this.telefone.length() > 15) {
-            throw new SeminariosCientificosException("ER0032");
+        if (StringUtils.isBlank(this.telefone) || this.telefone.length() > 15) {
+            throw new SeminariosCientificosException(er0032);
         }
 
         if (this.instituicao == null) {
-            throw new SeminariosCientificosException("ER0003");
+            throw new SeminariosCientificosException(er0003);
         }
 
         this.instituicao.validateForDataModification();
