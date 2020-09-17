@@ -75,20 +75,22 @@ public class Estudante implements DataValidation {
 
     @Override
     public void validateForDataModification() {
-        if (this.email.length() > 50 || StringUtils.isBlank(this.email)) {
+        if (StringUtils.isBlank(this.email) ||
+            this.email.length() > 50) {
             throw new SeminariosCientificosException("ER0030");
         }
 
-        if (!this.email.matches(EmailUtils.EMAIL_PATTERN)) {
-            // Regex...
+        if (!this.email.matches(EmailUtils.EMAIL_PATTERN)) { // Regex...
             throw new SeminariosCientificosException("ER0030");
         }
 
-        if (this.nome.length() > 50 || StringUtils.isBlank(this.nome)) {
+        if (StringUtils.isBlank(this.nome) ||
+            this.nome.length() > 50) {
             throw new SeminariosCientificosException("ER0031");
         }
 
-        if (this.telefone.length() > 15 || StringUtils.isBlank(this.telefone)) {
+        if (StringUtils.isBlank(this.telefone) ||
+            this.telefone.length() > 15) {
             throw new SeminariosCientificosException("ER0032");
         }
 
