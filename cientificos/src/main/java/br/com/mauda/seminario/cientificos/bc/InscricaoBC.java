@@ -11,14 +11,14 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
 
     private static InscricaoBC instance = new InscricaoBC();
 
-    private static String er0003 = "ER0003";
-    private static String er0041 = "ER0041";
-    private static String er0042 = "ER0042";
-    private static String er0043 = "ER0043";
-    private static String er0044 = "ER0044";
-    private static String er0045 = "ER0045";
-    private static String er0046 = "ER0046";
-    private static String er0047 = "ER0047";
+    private static String Er0003 = "ER0003";
+    private static String Er0041 = "ER0041";
+    private static String Er0042 = "ER0042";
+    private static String Er0043 = "ER0043";
+    private static String Er0044 = "ER0044";
+    private static String Er0045 = "ER0045";
+    private static String Er0046 = "ER0046";
+    private static String Er0047 = "ER0047";
 
     private InscricaoBC() {
         // Vazio
@@ -30,23 +30,23 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
 
     public void comprar(Inscricao inscricao, Estudante estudante, Boolean direitoMaterial) {
         if (inscricao == null) {
-            throw new SeminariosCientificosException(er0003);
+            throw new SeminariosCientificosException(Er0003);
         }
 
         if (direitoMaterial == null) {
-            throw new SeminariosCientificosException(er0041);
+            throw new SeminariosCientificosException(Er0041);
         }
 
         if (inscricao.getSituacao() != SituacaoInscricaoEnum.DISPONIVEL) {
-            throw new SeminariosCientificosException(er0042);
+            throw new SeminariosCientificosException(Er0042);
         }
 
         if (inscricao.getSeminario().getData().before(new Date())) {
-            throw new SeminariosCientificosException(er0043);
+            throw new SeminariosCientificosException(Er0043);
         }
 
         if (estudante == null) {
-            throw new SeminariosCientificosException(er0003);
+            throw new SeminariosCientificosException(Er0003);
         }
 
         estudante.validateForDataModification();
@@ -55,15 +55,15 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
 
     public void cancelarCompra(Inscricao inscricao) {
         if (inscricao == null) {
-            throw new SeminariosCientificosException(er0003);
+            throw new SeminariosCientificosException(Er0003);
         }
 
         if (inscricao.getSituacao() != SituacaoInscricaoEnum.COMPRADO) {
-            throw new SeminariosCientificosException(er0044);
+            throw new SeminariosCientificosException(Er0044);
         }
 
         if (inscricao.getSeminario().getData().before(new Date())) {
-            throw new SeminariosCientificosException(er0045);
+            throw new SeminariosCientificosException(Er0045);
         }
 
         inscricao.cancelarCompra();
@@ -71,15 +71,15 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
 
     public void realizarCheckIn(Inscricao inscricao) {
         if (inscricao == null) {
-            throw new SeminariosCientificosException(er0003);
+            throw new SeminariosCientificosException(Er0003);
         }
 
         if (inscricao.getSituacao() != SituacaoInscricaoEnum.COMPRADO) {
-            throw new SeminariosCientificosException(er0046);
+            throw new SeminariosCientificosException(Er0046);
         }
 
         if (inscricao.getSeminario().getData().before(new Date())) {
-            throw new SeminariosCientificosException(er0047);
+            throw new SeminariosCientificosException(Er0047);
         }
 
         inscricao.realizarCheckIn();
