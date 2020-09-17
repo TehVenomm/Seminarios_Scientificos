@@ -15,12 +15,12 @@ public class Seminario implements DataValidation {
     private Date data;
     private String descricao;
     private Boolean mesaRedonda;
-    private int qtdInscricoes;
+    private Integer qtdInscricoes;
     private List<Professor> professores = new ArrayList<>();
     private List<AreaCientifica> areasCientificas = new ArrayList<>();
     private List<Inscricao> inscricoes = new ArrayList<>();
 
-    public Seminario(AreaCientifica areaCientifica, Professor professor, int qtdInscricoes) {
+    public Seminario(AreaCientifica areaCientifica, Professor professor, Integer qtdInscricoes) {
         this.areasCientificas.add(areaCientifica);
         this.professores.add(professor);
         professor.adicionarSeminario(this);
@@ -99,6 +99,12 @@ public class Seminario implements DataValidation {
         return this.qtdInscricoes;
     }
 
+    // Fui previamente instruido a retirar este metodo pois era redundante, mas os novos testes estao utilizando o setQtdInscricoes agora
+    // Não sei se foi erro meu ou do professor, mas decidi resolver o erro que o eclipse estava acusando no projeto.
+    public void setQtdInscricoes(Integer qtdInscricoes) {
+        this.qtdInscricoes = qtdInscricoes;
+    }
+
     public List<Inscricao> getInscricoes() {
         return this.inscricoes;
     }
@@ -129,15 +135,19 @@ public class Seminario implements DataValidation {
             throw new SeminariosCientificosException("ER0073");
         }
 
-        if (this.qtdInscricoes == 0 || this.qtdInscricoes < 0) {
+        if (this.qtdInscricoes == null || this.qtdInscricoes == 0 || this.qtdInscricoes < 0) {
             throw new SeminariosCientificosException("ER0074");
         }
 
-        if (this.professores.isEmpty() || this.professores == null) {
+        if (this.professores == null || this.professores.isEmpty()) {
             throw new SeminariosCientificosException("ER0075");
         }
 
-        for (Professor item : this.professores) {
+        if (this.areasCientificas == null || this.areasCientificas.isEmpty()) {
+            throw new SeminariosCientificosException("ER0076");
+        }
+
+        for (AreaCientifica item : this.areasCientificas) {
             if (item == null) {
                 throw new SeminariosCientificosException("ER0003");
             }
@@ -145,11 +155,7 @@ public class Seminario implements DataValidation {
             item.validateForDataModification();
         }
 
-        if (this.areasCientificas.isEmpty() || this.areasCientificas == null) {
-            throw new SeminariosCientificosException("ER0076");
-        }
-
-        for (AreaCientifica item : this.areasCientificas) {
+        for (Professor item : this.professores) {
             if (item == null) {
                 throw new SeminariosCientificosException("ER0003");
             }

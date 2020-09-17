@@ -73,8 +73,6 @@ public class Inscricao implements DataValidation {
             throw new SeminariosCientificosException("ER0003");
         }
 
-        this.seminario.validateForDataModification();
-
         if (this.situacao != SituacaoInscricaoEnum.DISPONIVEL) {
             if (this.direitoMaterial == null) {
                 throw new SeminariosCientificosException("ER0041");
@@ -86,5 +84,7 @@ public class Inscricao implements DataValidation {
         }
 
         this.estudante.validateForDataModification();
+
+        this.seminario.validateForDataModification();
     }
 }

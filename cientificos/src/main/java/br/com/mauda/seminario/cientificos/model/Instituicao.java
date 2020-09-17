@@ -109,7 +109,7 @@ public class Instituicao implements Serializable, DataValidation {
             throw new SeminariosCientificosException("ER0051");
         }
 
-        if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
+        if (StringUtils.isBlank(this.nome) || this.nome.length() > 100) {
             throw new SeminariosCientificosException("ER0052");
         }
 
@@ -117,7 +117,7 @@ public class Instituicao implements Serializable, DataValidation {
             throw new SeminariosCientificosException("ER0053");
         }
 
-        if (StringUtils.isBlank(this.sigla) || this.sigla.length() > 50) {
+        if (StringUtils.isBlank(this.sigla) || this.sigla.length() > 10) {
             throw new SeminariosCientificosException("ER0054");
         }
     }
