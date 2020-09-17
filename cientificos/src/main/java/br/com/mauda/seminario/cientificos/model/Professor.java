@@ -18,6 +18,12 @@ public class Professor implements DataValidation {
     private Instituicao instituicao;
     private List<Seminario> seminarios = new ArrayList<>();
 
+    private static String er0003 = "ER0003";
+    private static String er0060 = "ER0060";
+    private static String er0061 = "ER0061";
+    private static String er0062 = "ER0062";
+    private static String er0063 = "ER0063";
+
     public Professor(Instituicao instituicao) {
         this.instituicao = instituicao;
     }
@@ -81,26 +87,33 @@ public class Professor implements DataValidation {
     @Override
     public void validateForDataModification() {
         if (StringUtils.isBlank(this.email) || this.email.length() > 50) {
-            throw new SeminariosCientificosException("ER0060");
+            throw new SeminariosCientificosException(er0060);
+
         }
+
         if (!this.email.matches(EmailUtils.EMAIL_PATTERN)) { // Regex...
-            throw new SeminariosCientificosException("ER0060");
+            throw new SeminariosCientificosException(er0060);
+
         }
 
         if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
-            throw new SeminariosCientificosException("ER0061");
+            throw new SeminariosCientificosException(er0061);
+
         }
 
         if (StringUtils.isBlank(this.telefone) || this.telefone.length() > 15) {
-            throw new SeminariosCientificosException("ER0062");
+            throw new SeminariosCientificosException(er0062);
+
         }
 
         if (this.salario == null || this.salario < 0 || this.salario == 0) {
-            throw new SeminariosCientificosException("ER0063");
+            throw new SeminariosCientificosException(er0063);
+
         }
 
         if (this.instituicao == null) {
-            throw new SeminariosCientificosException("ER0003");
+            throw new SeminariosCientificosException(er0003);
+
         }
 
         this.instituicao.validateForDataModification();

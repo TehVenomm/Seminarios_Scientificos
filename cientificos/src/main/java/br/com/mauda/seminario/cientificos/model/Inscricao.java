@@ -11,6 +11,10 @@ public class Inscricao implements DataValidation {
     private Seminario seminario;
     private SituacaoInscricaoEnum situacao;
 
+    private static String er0003 = "ER0003";
+    private static String er0040 = "ER0040";
+    private static String er0041 = "ER0041";
+
     public Inscricao(Seminario seminario) {
         this.seminario = seminario;
         this.seminario.adicionarInscricao(this);
@@ -66,20 +70,20 @@ public class Inscricao implements DataValidation {
     @Override
     public void validateForDataModification() {
         if (this.situacao == null) {
-            throw new SeminariosCientificosException("ER0040");
+            throw new SeminariosCientificosException(er0040);
         }
 
         if (this.seminario == null) {
-            throw new SeminariosCientificosException("ER0003");
+            throw new SeminariosCientificosException(er0003);
         }
 
         if (this.situacao != SituacaoInscricaoEnum.DISPONIVEL) {
             if (this.direitoMaterial == null) {
-                throw new SeminariosCientificosException("ER0041");
+                throw new SeminariosCientificosException(er0041);
             }
 
             if (this.estudante == null) {
-                throw new SeminariosCientificosException("ER0003");
+                throw new SeminariosCientificosException(er0003);
             }
         }
 
