@@ -76,22 +76,27 @@ public class Estudante implements DataValidation {
     @Override
     public void validateForDataModification() {
         if (StringUtils.isBlank(this.email) || this.email.length() > 50) {
+
             throw new SeminariosCientificosException("ER0030");
         }
 
         if (!this.email.matches(EmailUtils.EMAIL_PATTERN)) { // Regex...
+
             throw new SeminariosCientificosException("ER0030");
         }
 
         if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
+
             throw new SeminariosCientificosException("ER0031");
         }
 
         if (StringUtils.isBlank(this.telefone) || this.telefone.length() > 15) {
+
             throw new SeminariosCientificosException("ER0032");
         }
 
         if (this.instituicao == null) {
+
             throw new SeminariosCientificosException("ER0003");
         }
 
