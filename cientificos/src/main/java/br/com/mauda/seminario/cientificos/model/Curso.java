@@ -10,9 +10,6 @@ public class Curso implements DataValidation {
     private String nome;
     private AreaCientifica areaCientifica;
 
-    private static String er0003 = "ER0003";
-    private static String er0020 = "ER0020";
-
     public Curso(AreaCientifica areaCientifica) {
         this.areaCientifica = areaCientifica;
         this.areaCientifica.adicionarCurso(this);
@@ -41,11 +38,11 @@ public class Curso implements DataValidation {
     @Override
     public void validateForDataModification() {
         if (StringUtils.isBlank(this.nome) || this.nome.length() > 50) {
-            throw new SeminariosCientificosException(er0020);
+            throw new SeminariosCientificosException("ER0020");
         }
 
         if (this.areaCientifica == null) {
-            throw new SeminariosCientificosException(er0003);
+            throw new SeminariosCientificosException("ER0003");
         }
 
         this.areaCientifica.validateForDataModification();
