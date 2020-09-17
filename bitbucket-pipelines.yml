@@ -7,15 +7,18 @@ definitions:
   caches:
     sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
   steps:
-    - step: &build-test-sonarcloud
-        name: Build, test and analyze on SonarCloud
-        caches:
-          - maven
-          - sonar
-        script:
-          - mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-        artifacts:
-          - target/**
+    - step: &buildAndTestSonarCloud
+            name: Analyze with SonarCloud
+            caches:
+              - node
+              - sonar
+            script:
+              - npm update && npm install  
+              - pipe: sonarsource/sonarcloud-scan:1.1.0
+                SONAR_TOKEN: '7c893ed1238413656ea7b997f0f3381dc32d4118'
+                EXTRA_ARGS: '-Dsonar.sources=src/app'
+                SONAR_SCANNER_OPTS: -Xmx512m
+                DEBUG: "false"
 
 pipelines:                 # More info here: https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html
   branches:
