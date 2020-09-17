@@ -20,14 +20,7 @@ public class Seminario implements DataValidation {
     private List<AreaCientifica> areasCientificas = new ArrayList<>();
     private List<Inscricao> inscricoes = new ArrayList<>();
 
-    private static String ER0003 = "ER0003";
-    private static String ER0070 = "ER0070";
-    private static String ER0071 = "ER0071";
-    private static String ER0072 = "ER0072";
-    private static String ER0073 = "ER0073";
-    private static String ER0074 = "ER0074";
-    private static String ER0075 = "ER0075";
-    private static String ER0076 = "ER0076";
+    private static String er0003 = "ER0003";
 
     public Seminario(AreaCientifica areaCientifica, Professor professor, Integer qtdInscricoes) {
         this.areasCientificas.add(areaCientifica);
@@ -129,36 +122,36 @@ public class Seminario implements DataValidation {
     @Override
     public void validateForDataModification() {
         if (this.data == null || this.data.before(new Date())) {
-            throw new SeminariosCientificosException(ER0070);
+            throw new SeminariosCientificosException("ER0070");
         }
 
         if (StringUtils.isBlank(this.descricao) || this.descricao.length() > 200) {
-            throw new SeminariosCientificosException(ER0071);
+            throw new SeminariosCientificosException("ER0071");
         }
 
         if (StringUtils.isBlank(this.titulo) || this.titulo.length() > 50) {
-            throw new SeminariosCientificosException(ER0072);
+            throw new SeminariosCientificosException("ER0072");
         }
 
         if (this.mesaRedonda == null) {
-            throw new SeminariosCientificosException(ER0073);
+            throw new SeminariosCientificosException("ER0073");
         }
 
         if (this.qtdInscricoes == null || this.qtdInscricoes == 0 || this.qtdInscricoes < 0) {
-            throw new SeminariosCientificosException(ER0074);
+            throw new SeminariosCientificosException("ER0074");
         }
 
         if (this.professores == null || this.professores.isEmpty()) {
-            throw new SeminariosCientificosException(ER0075);
+            throw new SeminariosCientificosException("ER0075");
         }
 
         if (this.areasCientificas == null || this.areasCientificas.isEmpty()) {
-            throw new SeminariosCientificosException(ER0076);
+            throw new SeminariosCientificosException("ER0076");
         }
 
         for (AreaCientifica item : this.areasCientificas) {
             if (item == null) {
-                throw new SeminariosCientificosException(ER0003);
+                throw new SeminariosCientificosException(er0003);
             }
 
             item.validateForDataModification();
@@ -166,7 +159,7 @@ public class Seminario implements DataValidation {
 
         for (Professor item : this.professores) {
             if (item == null) {
-                throw new SeminariosCientificosException(ER0003);
+                throw new SeminariosCientificosException(er0003);
             }
 
             item.validateForDataModification();

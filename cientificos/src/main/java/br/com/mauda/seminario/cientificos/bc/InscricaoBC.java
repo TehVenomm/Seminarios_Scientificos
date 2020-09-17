@@ -10,6 +10,7 @@ import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 public class InscricaoBC extends PatternCrudBC<Inscricao> {
 
     private static InscricaoBC instance = new InscricaoBC();
+    private static String er0003 = "ER0003";
 
     private InscricaoBC() {
         // Vazio
@@ -21,7 +22,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
 
     public void comprar(Inscricao inscricao, Estudante estudante, Boolean direitoMaterial) {
         if (inscricao == null) {
-            throw new SeminariosCientificosException("ER0003");
+            throw new SeminariosCientificosException(er0003);
         }
 
         if (direitoMaterial == null) {
@@ -37,7 +38,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
         }
 
         if (estudante == null) {
-            throw new SeminariosCientificosException("ER0003");
+            throw new SeminariosCientificosException(er0003);
         }
 
         estudante.validateForDataModification();
@@ -46,7 +47,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
 
     public void cancelarCompra(Inscricao inscricao) {
         if (inscricao == null) {
-            throw new SeminariosCientificosException("ER0003");
+            throw new SeminariosCientificosException(er0003);
         }
 
         if (inscricao.getSituacao() != SituacaoInscricaoEnum.COMPRADO) {
@@ -62,7 +63,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
 
     public void realizarCheckIn(Inscricao inscricao) {
         if (inscricao == null) {
-            throw new SeminariosCientificosException("ER0003");
+            throw new SeminariosCientificosException(er0003);
         }
 
         if (inscricao.getSituacao() != SituacaoInscricaoEnum.COMPRADO) {
