@@ -7,7 +7,7 @@ public class SeminarioBC extends PatternCrudBC<Seminario> {
     private static SeminarioBC instance = new SeminarioBC();
 
     private SeminarioBC() {
-        // Vazio
+        super();
     }
 
     public static SeminarioBC getInstance() {

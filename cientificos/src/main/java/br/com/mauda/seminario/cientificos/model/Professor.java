@@ -101,7 +101,7 @@ public class Professor implements DataValidation {
             throw new SeminariosCientificosException(er0062);
         }
 
-        if (this.salario == null || this.salario < 0 || this.salario == 0) {
+        if (this.salario == null || this.salario <= 0) {
             throw new SeminariosCientificosException(er0063);
         }
 

@@ -172,7 +172,7 @@ public class Seminario implements DataValidation {
             throw new SeminariosCientificosException(er0073);
         }
 
-        if (this.qtdInscricoes == null || this.qtdInscricoes == 0 || this.qtdInscricoes < 0) {
+        if (this.qtdInscricoes == null || this.qtdInscricoes <= 0) {
             throw new SeminariosCientificosException(er0074);
         }
 

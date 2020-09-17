@@ -13,7 +13,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
     private static String er0003 = "ER0003";
 
     private InscricaoBC() {
-        // Vazio
+        super();
     }
 
     public static InscricaoBC getInstance() {
@@ -29,7 +29,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
             throw new SeminariosCientificosException("ER0041");
         }
 
-        if (inscricao.getSituacao() != SituacaoInscricaoEnum.DISPONIVEL) {
+        if (!SituacaoInscricaoEnum.DISPONIVEL.equals(inscricao.getSituacao())) {
             throw new SeminariosCientificosException("ER0042");
         }
 
@@ -50,7 +50,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
             throw new SeminariosCientificosException(er0003);
         }
 
-        if (inscricao.getSituacao() != SituacaoInscricaoEnum.COMPRADO) {
+        if (!SituacaoInscricaoEnum.COMPRADO.equals(inscricao.getSituacao())) {
             throw new SeminariosCientificosException("ER0044");
         }
 
@@ -66,7 +66,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao> {
             throw new SeminariosCientificosException(er0003);
         }
 
-        if (inscricao.getSituacao() != SituacaoInscricaoEnum.COMPRADO) {
+        if (!SituacaoInscricaoEnum.COMPRADO.equals(inscricao.getSituacao())) {
             throw new SeminariosCientificosException("ER0046");
         }
 

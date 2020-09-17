@@ -7,7 +7,7 @@ public class CursoBC extends PatternCrudBC<Curso> {
     private static CursoBC instance = new CursoBC();
 
     private CursoBC() {
-        // Vazio
+        super();
     }
 
     public static CursoBC getInstance() {

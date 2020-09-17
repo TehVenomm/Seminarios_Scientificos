@@ -7,7 +7,7 @@ public class EstudanteBC extends PatternCrudBC<Estudante> {
     private static EstudanteBC instance = new EstudanteBC();
 
     private EstudanteBC() {
-        // Vazio
+        super();
     }
 
     public static EstudanteBC getInstance() {

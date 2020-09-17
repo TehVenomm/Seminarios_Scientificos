@@ -7,7 +7,7 @@ public class AreaCientificaBC extends PatternCrudBC<AreaCientifica> {
     private static AreaCientificaBC instance = new AreaCientificaBC();
 
     private AreaCientificaBC() {
-        // Vazio
+        super();
     }
 
     public static AreaCientificaBC getInstance() {
