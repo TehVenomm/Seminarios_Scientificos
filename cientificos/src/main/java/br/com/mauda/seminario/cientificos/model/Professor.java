@@ -3,19 +3,38 @@ package br.com.mauda.seminario.cientificos.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang3.StringUtils;
 
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.util.EmailUtils;
 
+@Entity
+@Table(name = "TB_PROFESSOR")
 public class Professor implements DataValidation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String email;
     private String nome;
     private Double salario;
     private String telefone;
+
+    @OneToOne
+    @JoinColumn(name = "ID_INSTITUICAO")
     private Instituicao instituicao;
+
+    @ManyToMany(mappedBy = "professores")
     private List<Seminario> seminarios = new ArrayList<>();
 
     private static String er0003 = "ER0003";
@@ -23,6 +42,9 @@ public class Professor implements DataValidation {
     private static String er0061 = "ER0061";
     private static String er0062 = "ER0062";
     private static String er0063 = "ER0063";
+
+    private Professor() {
+    }
 
     public Professor(Instituicao instituicao) {
         this.instituicao = instituicao;
@@ -80,6 +102,7 @@ public class Professor implements DataValidation {
         return this.instituicao;
     }
 
+    @ManyToMany(mappedBy = "professores")
     public List<Seminario> getSeminarios() {
         return this.seminarios;
     }

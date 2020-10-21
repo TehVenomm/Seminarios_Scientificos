@@ -1,19 +1,49 @@
 package br.com.mauda.seminario.cientificos.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 
+@Entity
+@Table(name = "TB_INSCRICAO")
 public class Inscricao implements DataValidation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "DIREITO_MATERIAL")
     private Boolean direitoMaterial;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_ESTUDANTE")
     private Estudante estudante;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_SEMINARIO")
     private Seminario seminario;
+
+    @Enumerated(EnumType.STRING)
     private SituacaoInscricaoEnum situacao;
 
     private static String er0003 = "ER0003";
     private static String er0040 = "ER0040";
     private static String er0041 = "ER0041";
+
+    @SuppressWarnings("unused")
+    private Inscricao() {
+        super();
+    }
 
     public Inscricao(Seminario seminario) {
         this.seminario = seminario;

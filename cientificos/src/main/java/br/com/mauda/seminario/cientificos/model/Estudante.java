@@ -3,18 +3,36 @@ package br.com.mauda.seminario.cientificos.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import org.apache.commons.lang3.StringUtils;
 
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.util.EmailUtils;
 
+@Entity
+@Table(name = "TB_ESTUDANTE")
 public class Estudante implements DataValidation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String telefone;
     private String email;
+
+    @OneToOne
+    @JoinColumn(name = "ID_INSTITUICAO")
     private Instituicao instituicao;
+
+    @OneToMany(mappedBy = "estudante")
     private List<Inscricao> inscricoes = new ArrayList<>();
 
     private static String er0003 = "ER0003";
@@ -24,6 +42,10 @@ public class Estudante implements DataValidation {
 
     public Estudante(Instituicao instituicao) {
         this.instituicao = instituicao;
+    }
+
+    @SuppressWarnings("unused")
+    private Estudante() {
     }
 
     public void adicionarInscricao(Inscricao inscricao) {

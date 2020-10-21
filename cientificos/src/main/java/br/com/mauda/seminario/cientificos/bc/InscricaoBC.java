@@ -2,18 +2,19 @@ package br.com.mauda.seminario.cientificos.bc;
 
 import java.util.Date;
 
+import br.com.mauda.seminario.cientificos.dao.InscricaoDAO;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.Estudante;
 import br.com.mauda.seminario.cientificos.model.Inscricao;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 
-public class InscricaoBC extends PatternCrudBC<Inscricao> {
+public class InscricaoBC extends PatternCrudBC<Inscricao, InscricaoDAO> {
 
     private static InscricaoBC instance = new InscricaoBC();
     private static String er0003 = "ER0003";
 
     private InscricaoBC() {
-        super();
+        this.dao = InscricaoDAO.getInstance();
     }
 
     public static InscricaoBC getInstance() {

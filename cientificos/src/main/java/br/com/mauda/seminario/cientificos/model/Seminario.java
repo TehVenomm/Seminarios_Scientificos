@@ -4,20 +4,54 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import org.apache.commons.lang3.StringUtils;
 
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 
+@Entity
+@Table(name = "TB_SEMINARIO")
 public class Seminario implements DataValidation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titulo;
+
+    @Temporal(TemporalType.DATE)
     private Date data;
     private String descricao;
+
+    @Column(name = "MESA_REDONDA")
     private Boolean mesaRedonda;
+
+    @Column(name = "QTD_INSCRICOES")
     private Integer qtdInscricoes;
+
+    @ManyToMany
+    @JoinTable(name = "TB_PROFESSOR_SEMINARIO", joinColumns = {@JoinColumn(name = "ID_SEMINARIO") },
+        inverseJoinColumns = {@JoinColumn(name = "ID_PROFESSOR") })
     private List<Professor> professores = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "TB_SEMINARIO_AREA_CIENTIFICA", joinColumns = {@JoinColumn(name = "ID_SEMINARIO") },
+        inverseJoinColumns = {@JoinColumn(name = "ID_AREA_CIENTIFICA") })
     private List<AreaCientifica> areasCientificas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "seminario", cascade = CascadeType.ALL)
     private List<Inscricao> inscricoes = new ArrayList<>();
 
     private static String er0003 = "ER0003";
@@ -28,6 +62,10 @@ public class Seminario implements DataValidation {
     private static String er0074 = "ER0074";
     private static String er0075 = "ER0075";
     private static String er0076 = "ER0076";
+
+    private Seminario() {
+
+    }
 
     public Seminario(AreaCientifica areaCientifica, Professor professor, Integer qtdInscricoes) {
         this.areasCientificas.add(areaCientifica);
