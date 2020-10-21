@@ -2,7 +2,11 @@ package br.com.mauda.seminario.cientificos.model;
 
 import java.io.Serializable;
 
-public class Instituicao implements Serializable {
+import org.apache.commons.lang3.StringUtils;
+
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
+
+public class Instituicao implements Serializable, DataValidation {
 
     private static final long serialVersionUID = 997084310847650620L;
 
@@ -12,6 +16,16 @@ public class Instituicao implements Serializable {
     private String cidade;
     private String estado;
     private String pais;
+
+    private static String er0050 = "ER0050";
+    private static String er0051 = "ER0051";
+    private static String er0052 = "ER0052";
+    private static String er0053 = "ER0053";
+    private static String er0054 = "ER0054";
+
+    public Instituicao() {
+        super();
+    }
 
     public Long getId() {
         return this.id;
@@ -89,5 +103,28 @@ public class Instituicao implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void validateForDataModification() {
+        if (StringUtils.isBlank(this.cidade) || this.cidade.length() > 50) {
+            throw new SeminariosCientificosException(er0050);
+        }
+
+        if (StringUtils.isBlank(this.estado) || this.estado.length() > 50) {
+            throw new SeminariosCientificosException(er0051);
+        }
+
+        if (StringUtils.isBlank(this.nome) || this.nome.length() > 100) {
+            throw new SeminariosCientificosException(er0052);
+        }
+
+        if (StringUtils.isBlank(this.pais) || this.pais.length() > 50) {
+            throw new SeminariosCientificosException(er0053);
+        }
+
+        if (StringUtils.isBlank(this.sigla) || this.sigla.length() > 10) {
+            throw new SeminariosCientificosException(er0054);
+        }
     }
 }

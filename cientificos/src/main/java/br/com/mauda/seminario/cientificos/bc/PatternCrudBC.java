@@ -20,6 +20,7 @@ public abstract class PatternCrudBC<T extends DataValidation, F extends FilterVa
      */
     protected D dao;
 
+    private static String er0003 = "ER0003";
     ///////////////////////////////////////////////////////////////////
     // METODOS DE MODIFICACAO
     ///////////////////////////////////////////////////////////////////
@@ -33,7 +34,7 @@ public abstract class PatternCrudBC<T extends DataValidation, F extends FilterVa
      */
     public void insert(T object) {
         if (object == null) {
-            throw new SeminariosCientificosException("ER0003");
+            throw new SeminariosCientificosException(er0003);
         }
         object.validateForDataModification();
         this.dao.insert(object);
