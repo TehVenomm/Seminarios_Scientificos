@@ -1,5 +1,7 @@
 package br.com.mauda.seminario.cientificos.dao;
 
+import org.hibernate.Hibernate;
+
 import br.com.mauda.seminario.cientificos.model.Instituicao;
 
 public class InstituicaoDAO extends PatternCrudDAO<Instituicao> {
@@ -17,5 +19,6 @@ public class InstituicaoDAO extends PatternCrudDAO<Instituicao> {
 
     @Override
     public void inicializaLazyObjects(Instituicao instituicao) {
+        Hibernate.initialize(instituicao);
     }
 }
