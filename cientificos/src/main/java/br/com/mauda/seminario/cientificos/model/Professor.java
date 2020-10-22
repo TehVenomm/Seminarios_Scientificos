@@ -43,6 +43,7 @@ public class Professor implements DataValidation {
     private static String er0062 = "ER0062";
     private static String er0063 = "ER0063";
 
+    @SuppressWarnings("unused")
     private Professor() {
     }
 

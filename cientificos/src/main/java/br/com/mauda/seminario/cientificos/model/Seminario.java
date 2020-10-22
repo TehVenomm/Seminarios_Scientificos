@@ -33,6 +33,7 @@ public class Seminario implements DataValidation {
 
     @Temporal(TemporalType.DATE)
     private Date data;
+
     private String descricao;
 
     @Column(name = "MESA_REDONDA")
@@ -63,6 +64,7 @@ public class Seminario implements DataValidation {
     private static String er0075 = "ER0075";
     private static String er0076 = "ER0076";
 
+    @SuppressWarnings("unused")
     private Seminario() {
 
     }

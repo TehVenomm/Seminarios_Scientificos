@@ -22,8 +22,6 @@ public class ProfessorDAO extends PatternCrudDAO<Professor> {
     public void inicializaLazyObjects(Professor professor) {
         for (Seminario seminario : professor.getSeminarios()) {
             Hibernate.initialize(seminario.getProfessores());
-            Hibernate.initialize(professor.getInstituicao());
-            Hibernate.initialize(professor.getSeminarios());
         }
     }
 }

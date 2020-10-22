@@ -25,7 +25,6 @@ public class SeminarioDAO extends PatternCrudDAO<Seminario> {
 
         for (Professor professor : seminario.getProfessores()) {
             Hibernate.initialize(professor.getSeminarios());
-
         }
     }
 }
