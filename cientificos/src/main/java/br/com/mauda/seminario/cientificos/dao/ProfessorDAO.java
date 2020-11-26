@@ -91,7 +91,7 @@ public class ProfessorDAO extends PatternCrudDAO<Professor, ProfessorDTO> {
             return collection;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw e;
         } finally {
             session.close();
         }

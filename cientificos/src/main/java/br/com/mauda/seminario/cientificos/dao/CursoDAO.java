@@ -72,7 +72,7 @@ public class CursoDAO extends PatternCrudDAO<Curso, CursoDTO> {
             return collection;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            throw e;
         } finally {
             session.close();
         }
