@@ -96,11 +96,7 @@ public class SeminarioDTO implements FilterValidation {
             return true;
         }
 
-        if (StringUtils.isNotBlank(this.titulo)) {
-            return true;
-        }
-
-        return false;
+        return StringUtils.isNotBlank(this.titulo);
     }
 
 }

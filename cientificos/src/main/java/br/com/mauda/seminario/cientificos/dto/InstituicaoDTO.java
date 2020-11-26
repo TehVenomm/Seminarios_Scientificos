@@ -81,10 +81,6 @@ public class InstituicaoDTO implements FilterValidation {
             return true;
         }
 
-        if (StringUtils.isNotBlank(this.sigla)) {
-            return true;
-        }
-
-        return false;
+        return StringUtils.isNotBlank(this.sigla);
     }
 }

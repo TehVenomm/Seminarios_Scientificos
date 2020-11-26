@@ -107,11 +107,7 @@ public class EstudanteDTO implements FilterValidation {
             return true;
         }
 
-        if (StringUtils.isNotBlank(this.telefone)) {
-            return true;
-        }
-
-        return false;
+        return StringUtils.isNotBlank(this.telefone);
     }
 
 }

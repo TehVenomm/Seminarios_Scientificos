@@ -44,22 +44,26 @@ public class ProfessorDAO extends PatternCrudDAO<Professor, ProfessorDTO> {
 
         try {
             Criteria c = session.createCriteria(Professor.class);
-            Criteria cInstituicao = c.createCriteria("instituicao");
 
-            if (StringUtils.isNotBlank(filter.getCidade())) {
-                cInstituicao.add(Restrictions.like("cidade", filter.getCidade(), MatchMode.ANYWHERE));
-            }
+            if (StringUtils.isNotBlank(filter.getCidade()) || StringUtils.isNotBlank(filter.getEstado()) || StringUtils.isNotBlank(filter.getPais())
+                || StringUtils.isNotBlank(filter.getNomeInstituicao())) {
+                Criteria cInstituicao = c.createCriteria("instituicao");
 
-            if (StringUtils.isNotBlank(filter.getEstado())) {
-                cInstituicao.add(Restrictions.like("estado", filter.getEstado(), MatchMode.ANYWHERE));
-            }
+                if (StringUtils.isNotBlank(filter.getCidade())) {
+                    cInstituicao.add(Restrictions.like("cidade", filter.getCidade(), MatchMode.ANYWHERE));
+                }
 
-            if (StringUtils.isNotBlank(filter.getNomeInstituicao())) {
-                cInstituicao.add(Restrictions.like("nome", filter.getNomeInstituicao(), MatchMode.ANYWHERE));
-            }
+                if (StringUtils.isNotBlank(filter.getEstado())) {
+                    cInstituicao.add(Restrictions.like("estado", filter.getEstado(), MatchMode.ANYWHERE));
+                }
 
-            if (StringUtils.isNotBlank(filter.getPais())) {
-                cInstituicao.add(Restrictions.like("pais", filter.getPais(), MatchMode.ANYWHERE));
+                if (StringUtils.isNotBlank(filter.getNomeInstituicao())) {
+                    cInstituicao.add(Restrictions.like("nome", filter.getNomeInstituicao(), MatchMode.ANYWHERE));
+                }
+
+                if (StringUtils.isNotBlank(filter.getPais())) {
+                    cInstituicao.add(Restrictions.like("pais", filter.getPais(), MatchMode.ANYWHERE));
+                }
             }
 
             if (StringUtils.isNotBlank(filter.getEmail())) {
@@ -90,7 +94,6 @@ public class ProfessorDAO extends PatternCrudDAO<Professor, ProfessorDTO> {
 
             return collection;
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             session.close();

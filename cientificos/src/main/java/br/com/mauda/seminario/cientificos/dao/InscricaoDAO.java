@@ -84,7 +84,6 @@ public class InscricaoDAO extends PatternCrudDAO<Inscricao, InscricaoDTO> {
 
             return collection;
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         } finally {
             session.close();

@@ -55,10 +55,6 @@ public class CursoDTO implements FilterValidation {
             return true;
         }
 
-        if (StringUtils.isNotBlank(this.nomeAreaCientifica)) {
-            return true;
-        }
-
-        return false;
+        return StringUtils.isNotBlank(this.nomeAreaCientifica);
     }
 }

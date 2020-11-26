@@ -100,11 +100,7 @@ public class InscricaoDTO implements FilterValidation {
             return true;
         }
 
-        if (StringUtils.isNotBlank(this.nome)) {
-            return true;
-        }
-
-        return false;
+        return StringUtils.isNotBlank(this.nome);
     }
 
 }
