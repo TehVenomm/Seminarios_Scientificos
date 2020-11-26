@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 
 import br.com.mauda.seminario.cientificos.dao.util.HibernateUtil;
 import br.com.mauda.seminario.cientificos.dto.ProfessorDTO;
+import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.Professor;
 import br.com.mauda.seminario.cientificos.model.Seminario;
 
@@ -94,7 +95,7 @@ public class ProfessorDAO extends PatternCrudDAO<Professor, ProfessorDTO> {
 
             return collection;
         } catch (Exception e) {
-            throw e;
+            throw new SeminariosCientificosException(e);
         } finally {
             session.close();
         }
