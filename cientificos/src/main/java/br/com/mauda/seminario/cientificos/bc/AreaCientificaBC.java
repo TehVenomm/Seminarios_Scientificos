@@ -1,9 +1,10 @@
 package br.com.mauda.seminario.cientificos.bc;
 
 import br.com.mauda.seminario.cientificos.dao.AreaCientificaDAO;
+import br.com.mauda.seminario.cientificos.dto.AreaCientificaDTO;
 import br.com.mauda.seminario.cientificos.model.AreaCientifica;
 
-public class AreaCientificaBC extends PatternCrudBC<AreaCientifica, AreaCientificaDAO> {
+public class AreaCientificaBC extends PatternCrudBC<AreaCientifica, AreaCientificaDTO, AreaCientificaDAO> {
 
     private static AreaCientificaBC instance = new AreaCientificaBC();
 
@@ -14,5 +15,4 @@ public class AreaCientificaBC extends PatternCrudBC<AreaCientifica, AreaCientifi
     public static AreaCientificaBC getInstance() {
         return instance;
     }
-
 }

@@ -3,12 +3,13 @@ package br.com.mauda.seminario.cientificos.bc;
 import java.util.Date;
 
 import br.com.mauda.seminario.cientificos.dao.InscricaoDAO;
+import br.com.mauda.seminario.cientificos.dto.InscricaoDTO;
 import br.com.mauda.seminario.cientificos.exception.SeminariosCientificosException;
 import br.com.mauda.seminario.cientificos.model.Estudante;
 import br.com.mauda.seminario.cientificos.model.Inscricao;
 import br.com.mauda.seminario.cientificos.model.enums.SituacaoInscricaoEnum;
 
-public class InscricaoBC extends PatternCrudBC<Inscricao, InscricaoDAO> {
+public class InscricaoBC extends PatternCrudBC<Inscricao, InscricaoDTO, InscricaoDAO> {
 
     private static InscricaoBC instance = new InscricaoBC();
     private static String er0003 = "ER0003";
@@ -44,6 +45,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao, InscricaoDAO> {
 
         estudante.validateForDataModification();
         inscricao.comprar(estudante, direitoMaterial);
+        this.update(inscricao);
     }
 
     public void cancelarCompra(Inscricao inscricao) {
@@ -60,6 +62,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao, InscricaoDAO> {
         }
 
         inscricao.cancelarCompra();
+        this.update(inscricao);
     }
 
     public void realizarCheckIn(Inscricao inscricao) {
@@ -76,6 +79,7 @@ public class InscricaoBC extends PatternCrudBC<Inscricao, InscricaoDAO> {
         }
 
         inscricao.realizarCheckIn();
+        this.update(inscricao);
     }
 
 }
