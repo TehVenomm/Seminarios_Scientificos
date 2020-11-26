@@ -32,7 +32,7 @@ public class InscricaoDAO extends PatternCrudDAO<Inscricao, InscricaoDTO> {
             Hibernate.initialize(object.getSeminario().getProfessores());
             object.getSeminario().getProfessores().forEach(p -> Hibernate.initialize(p.getSeminarios()));
             Hibernate.initialize(object.getSeminario().getAreasCientificas());
-            object.getSeminario().getInscricoes().forEach(i -> Hibernate.initialize(i.getSeminario()));
+            Hibernate.initialize(object.getSeminario().getInscricoes());
 
             if (object.getEstudante() != null) {
                 Hibernate.initialize(object.getEstudante().getInscricoes());

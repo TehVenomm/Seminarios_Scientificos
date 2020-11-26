@@ -42,8 +42,33 @@ public class EstudanteDAO extends PatternCrudDAO<Estudante, EstudanteDTO> {
         Session session = HibernateUtil.getSession();
 
         try {
-            StringBuilder sb = new StringBuilder("SELECT e FROM Estudante e JOIN e.instituicao i WHERE 1=1 ");
+            StringBuilder sb = new StringBuilder("SELECT e FROM Estudante e WHERE 1=1 ");
             Map<String, Object> parameters = new HashMap<>();
+
+            if (StringUtils.isNotBlank(filter.getCidade()) || StringUtils.isNotBlank(filter.getEstado()) || StringUtils.isNotBlank(filter.getPais())
+                || StringUtils.isNotBlank(filter.getNomeInstituicao())) {
+                sb = new StringBuilder("SELECT e FROM Estudante e JOIN e.instituicao i WHERE 1=1 ");
+
+                if (StringUtils.isNotBlank(filter.getCidade())) {
+                    sb.append(" AND i.cidade like :cidade ");
+                    parameters.put("cidade", "%" + filter.getCidade() + "%");
+                }
+
+                if (StringUtils.isNotBlank(filter.getEstado())) {
+                    sb.append(" AND i.estado like :estado ");
+                    parameters.put("estado", "%" + filter.getEstado() + "%");
+                }
+
+                if (StringUtils.isNotBlank(filter.getPais())) {
+                    sb.append(" AND i.pais like :pais ");
+                    parameters.put("pais", "%" + filter.getPais() + "%");
+                }
+
+                if (StringUtils.isNotBlank(filter.getNomeInstituicao())) {
+                    sb.append(" AND i.nome like :nomeInstituicao ");
+                    parameters.put("nomeInstituicao", "%" + filter.getNomeInstituicao() + "%");
+                }
+            }
 
             if (filter.getId() != null) {
                 sb.append(" AND e.id = :id ");
@@ -53,26 +78,6 @@ public class EstudanteDAO extends PatternCrudDAO<Estudante, EstudanteDTO> {
             if (StringUtils.isNotBlank(filter.getNome())) {
                 sb.append(" AND e.nome like :nomeEstudante ");
                 parameters.put("nomeEstudante", "%" + filter.getNome() + "%");
-            }
-
-            if (StringUtils.isNotBlank(filter.getCidade())) {
-                sb.append(" AND i.cidade like :cidade ");
-                parameters.put("cidade", "%" + filter.getCidade() + "%");
-            }
-
-            if (StringUtils.isNotBlank(filter.getEstado())) {
-                sb.append(" AND i.estado like :estado ");
-                parameters.put("estado", "%" + filter.getEstado() + "%");
-            }
-
-            if (StringUtils.isNotBlank(filter.getPais())) {
-                sb.append(" AND i.pais like :pais ");
-                parameters.put("pais", "%" + filter.getPais() + "%");
-            }
-
-            if (StringUtils.isNotBlank(filter.getNomeInstituicao())) {
-                sb.append(" AND i.nome like :nomeInstituicao ");
-                parameters.put("nomeInstituicao", "%" + filter.getNomeInstituicao() + "%");
             }
 
             if (StringUtils.isNotBlank(filter.getEmail())) {
