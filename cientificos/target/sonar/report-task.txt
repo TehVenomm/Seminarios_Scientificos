@@ -1,0 +1,7 @@
+organization=gabrielbrazesantos
+projectKey=GabrielBrazeSantos_seminarioscientificos_2020_2
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.12128
+dashboardUrl=https://sonarcloud.io/dashboard?id=GabrielBrazeSantos_seminarioscientificos_2020_2
+ceTaskId=AXSdRtKs6PBu7gNl1za4
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXSdRtKs6PBu7gNl1za4

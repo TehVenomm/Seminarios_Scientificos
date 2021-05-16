@@ -1,0 +1,450 @@
+
+Qbr.com.mauda.seminario.cientificos.model.Seminario#validateForDataModification()Vì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÇ Ç(+"31*å
+24ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaã0 ã(4¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaã0 ã(;
+%17java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+tituloÊ„
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaã0 ã(D
+
+%18int"java.lang.String#length()I*
+
+%17java.lang.String2length()*
+22
+23*›
+25ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaã ã(¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaã  ã(+
+%15java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+titulo∑
+¥
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaã ã(,
+%16boolean"Gorg.apache.commons.lang3.StringUtils#isBlank(Ljava/lang/CharSequence;)Z*("&
+$org.apache.commons.lang3.StringUtils*
+
+%15java.lang.String*
+24
+23*ÿ
+26ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaà5 à(;¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaà5 à(;
+%12java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+ER0071∫∑
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaà à(4R
+%13Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException"Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException˙
+˜
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaà à(<
+%14"gbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException#<init>(Ljava/lang/String;)V*T
+R
+%13Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException*
+
+%12java.lang.String*
+0*è
+27ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaá3 á(7ˇ
+¸
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaá3 á(A
+%10java.lang.String"__id*E*C4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+	descricaoÊ„
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaá3 á(J
+
+%11int"java.lang.String#length()I*
+
+%10java.lang.String2length()*
+25
+26*›
+28ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaá á(˛
+˚
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaá  á(.
+%8java.lang.String"__id*E*C4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+	descricaoµ
+≤
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaá á(/
+%9boolean"Gorg.apache.commons.lang3.StringUtils#isBlank(Ljava/lang/CharSequence;)Z*("&
+$org.apache.commons.lang3.StringUtils*
+
+%8java.lang.String*
+26
+27*”
+29ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÑ5 Ñ(;˚
+¯
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÑ5 Ñ(;
+%5java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+ER0070π∂
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÑ Ñ(4Q
+%6Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException"Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException˜
+Ù
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÑ Ñ(<
+%7"gbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException#<init>(Ljava/lang/String;)V*S
+Q
+%6Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException*
+
+%5java.lang.String*
+0*”
+30ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÉ! É(%˜
+Ù
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÉ! É(*
+%1java.util.Date"__id*@*>4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+dataøº
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÉ6 É(:
+%2java.util.Date"java.util.Date—
+Œ
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÉ2 É(<
+%3"java.util.Date#<init>()V*
+
+%2java.util.Dateúô
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÉ! É(=
+%4boolean"(java.util.Date#before(Ljava/util/Date;)Z*
+
+%1java.util.Date*
+
+%2java.util.Date2before(Ljava/util/Date;)*
+28
+29*û
+31ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÉ É(˜
+Ù
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÉ É(
+%0java.util.Date"__id*@*>4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+data*
+29
+30*¶
+10ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaü# ü('Ñ
+Å
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaü# ü(8
+%44java.util.List"__id*L*J4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+areasCientificas*
+6*ÿ
+11ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaú5 ú(;¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaú5 ú(;
+%41java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+ER0076∫∑
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaú ú(4R
+%42Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException"Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException˙
+˜
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaú ú(<
+%43"gbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException#<init>(Ljava/lang/String;)V*T
+R
+%42Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException*
+
+%41java.lang.String*
+0*ñ
+12ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaõ- õ(1Ñ
+Å
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaõ- õ(B
+%39java.util.List"__id*L*J4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+areasCientificasËÂ
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaõ- õ(L
+%40boolean"java.util.List#isEmpty()Z*
+
+%39java.util.List2	isEmpty()*
+10
+11*´
+13ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaõ õ(Ñ
+Å
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaõ õ(!
+%38java.util.List"__id*L*J4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+areasCientificas*
+11
+12*ÿ
+14ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaò5 ò(;¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaò5 ò(;
+%35java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+ER0075∫∑
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaò ò(4R
+%36Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException"Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException˙
+˜
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaò ò(<
+%37"gbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException#<init>(Ljava/lang/String;)V*T
+R
+%36Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException*
+
+%35java.lang.String*
+0*ë
+15ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaó( ó(,ˇ
+¸
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaó( ó(8
+%33java.util.List"__id*G*E4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+professoresËÂ
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaó( ó(B
+%34boolean"java.util.List#isEmpty()Z*
+
+%33java.util.List2	isEmpty()*
+13
+14*¶
+16ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaó ó(ˇ
+¸
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaó ó(
+%32java.util.List"__id*G*E4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+professores*
+14
+15*ÿ
+17ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaî5 î(;¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaî5 î(;
+%29java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+ER0074∫∑
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaî î(4R
+%30Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException"Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException˙
+˜
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaî î(<
+%31"gbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException#<init>(Ljava/lang/String;)V*T
+R
+%30Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException*
+
+%29java.lang.String*
+0*´
+18ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaìE ì(IÑ
+Å
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaìE ì(W
+%28java.lang.Integer"__id*I*G4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+qtdInscricoes*
+16
+17*´
+19ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaì* ì(.Ñ
+Å
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaì* ì(<
+%27java.lang.Integer"__id*I*G4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+qtdInscricoes*
+17
+18*≥
+0 "´
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaÆ Æ(
+implicit return*è
+1ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaß ß(„
+‡
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaß ß(:
+item2br.com.mauda.seminario.cientificos.model.Professor"__id*
+""Ç
+ˇ
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaß ß(:
+item2br.com.mauda.seminario.cientificos.model.Professor"
+__arrayGet*
+
+%49java.util.List*
+""*	
+2
+3
+0*˜
+2ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java¨ ¨(÷”
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java¨ ¨(.
+%53void"Qbr.com.mauda.seminario.cientificos.model.Professor#validateForDataModification()V*<
+:
+item2br.com.mauda.seminario.cientificos.model.Professor2validateForDataModification()*
+1*◊
+3ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java©9 ©(?¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java©9 ©(?
+%50java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+ER0003∫∑
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java© ©(8R
+%51Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException"Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException˙
+˜
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java© ©(@
+%52"gbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException#<init>(Ljava/lang/String;)V*T
+R
+%51Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException*
+
+%50java.lang.String*
+0*†
+5ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaß ß("ˇ
+¸
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaß ß(.
+%49java.util.List"__id*G*E4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+professores*
+1*ô
+6ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaü ü( Ë
+Â
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaü ü( ?
+item7br.com.mauda.seminario.cientificos.model.AreaCientifica"__id*
+""á
+Ñ
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaü ü( ?
+item7br.com.mauda.seminario.cientificos.model.AreaCientifica"
+__arrayGet*
+
+%44java.util.List*
+""*	
+5
+7
+8*Å
+7ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java§ §(‡›
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java§ §(.
+%48void"Vbr.com.mauda.seminario.cientificos.model.AreaCientifica#validateForDataModification()V*A
+?
+item7br.com.mauda.seminario.cientificos.model.AreaCientifica2validateForDataModification()*
+6*◊
+8ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java°9 °(?¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java°9 °(?
+%45java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+ER0003∫∑
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java° °(8R
+%46Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException"Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException˙
+˜
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java° °(@
+%47"gbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException#<init>(Ljava/lang/String;)V*T
+R
+%46Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException*
+
+%45java.lang.String*
+0*´
+20ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaì ì(Ñ
+Å
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaì ì(
+%26java.lang.Integer"__id*I*G4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+qtdInscricoes*
+17
+19*ÿ
+21ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaê5 ê(;¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaê5 ê(;
+%23java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+ER0073∫∑
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaê ê(4R
+%24Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException"Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException˙
+˜
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaê ê(<
+%25"gbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException#<init>(Ljava/lang/String;)V*T
+R
+%24Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException*
+
+%23java.lang.String*
+0*©
+22ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaè è(Ç
+ˇ
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaè è(
+%22java.lang.Boolean"__id*G*E4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+mesaRedonda*
+20
+21*ÿ
+23ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaå5 å(;¸
+˘
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaå5 å(;
+%19java.lang.String"__id*B*@4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+ER0072∫∑
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaå å(4R
+%20Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException"Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException˙
+˜
+ì
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.javaå å(<
+%21"gbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException#<init>(Ljava/lang/String;)V*T
+R
+%20Kbr.com.mauda.seminario.cientificos.exception.SeminariosCientificosException*
+
+%19java.lang.String*
+0B64
+2br.com.mauda.seminario.cientificos.model.Seminario

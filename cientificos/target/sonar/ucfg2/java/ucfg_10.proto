@@ -1,0 +1,24 @@
+
+àbr.com.mauda.seminario.cientificos.model.AreaCientifica#possuiCurso(Lbr/com/mauda/seminario/cientificos/model/Curso;)Ljava/lang/Boolean;ñ
+ãE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/AreaCientifica.java ("1*ö
+1ñ
+ãE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/AreaCientifica.java (Å
+˛
+ñ
+ãE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/AreaCientifica.java (
+%0java.util.List"__id*G*E9
+7br.com.mauda.seminario.cientificos.model.AreaCientifica"
+cursos «
+ñ
+ãE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/AreaCientifica.java (*
+%1boolean",java.util.List#contains(Ljava/lang/Object;)Z*
+
+%0java.util.List*9
+7
+curso.br.com.mauda.seminario.cientificos.model.Curso2contains(Ljava/lang/Object;)"™
+ñ
+ãE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/AreaCientifica.java (+
+
+%1boolean:7
+curso.br.com.mauda.seminario.cientificos.model.CursoB;9
+7br.com.mauda.seminario.cientificos.model.AreaCientifica

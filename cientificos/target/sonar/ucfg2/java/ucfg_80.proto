@@ -1,0 +1,24 @@
+
+‹br.com.mauda.seminario.cientificos.model.Seminario#possuiProfessor(Lbr/com/mauda/seminario/cientificos/model/Professor;)Ljava/lang/Boolean;‘
+†E:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java? ?(""1*Ž
+1‘
+†E:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java@ @(ü
+ù
+‘
+†E:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java@ @(
+%0java.util.List"__id*G*E4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+professoresÍÊ
+‘
+†E:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java@ @(3
+%1boolean",java.util.List#contains(Ljava/lang/Object;)Z*
+
+%0java.util.List*A
+?
+	professor2br.com.mauda.seminario.cientificos.model.Professor2contains(Ljava/lang/Object;)"¥
+‘
+†E:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java@ @(4
+
+%1boolean:?
+	professor2br.com.mauda.seminario.cientificos.model.ProfessorB64
+2br.com.mauda.seminario.cientificos.model.Seminario

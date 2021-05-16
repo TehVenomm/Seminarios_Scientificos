@@ -1,0 +1,25 @@
+
+ãbr.com.mauda.seminario.cientificos.model.Seminario#possuiInscricao(Lbr/com/mauda/seminario/cientificos/model/Inscricao;)Ljava/lang/Boolean;ë
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java; ;(""1*ç
+1ë
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java< <(˚
+¯
+ë
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java< <(
+%0java.util.List"__id*F*D4
+2br.com.mauda.seminario.cientificos.model.Seminario"
+
+inscricoesÕ 
+ë
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java< <(2
+%1boolean",java.util.List#contains(Ljava/lang/Object;)Z*
+
+%0java.util.List*A
+?
+	inscricao2br.com.mauda.seminario.cientificos.model.Inscricao2contains(Ljava/lang/Object;)"•
+ë
+ÜE:/Repositories/Eclipse/seminarioscientificos_2020_2/cientificos/src/main/java/br/com/mauda/seminario/cientificos/model/Seminario.java< <(3
+
+%1boolean:?
+	inscricao2br.com.mauda.seminario.cientificos.model.InscricaoB64
+2br.com.mauda.seminario.cientificos.model.Seminario
